@@ -12,9 +12,13 @@ namespace VroomRental.Backend.DB.QueryServices
             _databaseService = databaseService;
         }
 
-        public List<Employee> GetAllEmployees()
+        public List<Employee> GetAllEmployeesWithRole()
         {
-            string query = "SELECT * FROM tbl_Employees";
+            string query = @"
+        SELECT e.Employee_Id, e.First_Name, e.Last_Name, e.Login, r.Name AS RoleName
+        FROM tbl_Employees e
+        LEFT JOIN tbl_Roles r ON e.Role = r.Position_Id";
+
             DataTable employeeTable = _databaseService.ExecuteQuery(query);
             List<Employee> employees = new List<Employee>();
 
@@ -25,12 +29,12 @@ namespace VroomRental.Backend.DB.QueryServices
                     Id = Convert.ToInt32(row["Employee_Id"]),
                     FirstName = row["First_Name"].ToString(),
                     LastName = row["Last_Name"].ToString(),
-                    Role = (Role)Convert.ToInt32(row["Role"]),
                     Login = row["Login"].ToString(),
-                    Password = row["Password"].ToString()
+                    Role = row["RoleName"].ToString()
                 });
             }
             return employees;
         }
+
     }
 }
