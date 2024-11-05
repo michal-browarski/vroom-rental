@@ -59,6 +59,13 @@ namespace VroomRental.Forms
                 Name = "ColumnPricePerDay"
             });
 
+            dataGridCars.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Body type",
+                DataPropertyName = "BodyType",
+                Name = "ColumnBodyType"
+            });
+
             dataGridCars.CellClick += DataGridCars_CellClick;
         }
 
@@ -92,6 +99,7 @@ namespace VroomRental.Forms
                     StatusTextBox.Text = selectedCar.Status.ToString();
                     MileageTextBox.Text = selectedCar.Mileage.ToString();
                     LastInspectionTextBox.Text = selectedCar.LastInspectionDate.ToString("yyyy-MM-dd");
+                    BodyTypeTextBox.Text = selectedCar.BodyType.ToString();
                 }
             }
         }
