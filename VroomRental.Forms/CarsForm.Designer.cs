@@ -30,6 +30,9 @@
         {
             dataGridCars = new DataGridView();
             CarDetailsGroupBox = new GroupBox();
+            EditButton = new Button();
+            RemoveButton = new Button();
+            AddButton = new Button();
             StatusTextBox = new TextBox();
             LastInspectionTextBox = new TextBox();
             PriceTextBox = new TextBox();
@@ -52,9 +55,6 @@
             SearchButton = new Button();
             SearchComboBox = new ComboBox();
             textBox1 = new TextBox();
-            AddButton = new Button();
-            RemoveButton = new Button();
-            EditButton = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridCars).BeginInit();
             CarDetailsGroupBox.SuspendLayout();
             SearchGroupBox.SuspendLayout();
@@ -98,6 +98,33 @@
             CarDetailsGroupBox.TabIndex = 1;
             CarDetailsGroupBox.TabStop = false;
             CarDetailsGroupBox.Text = "Car";
+            // 
+            // EditButton
+            // 
+            EditButton.Location = new Point(21, 415);
+            EditButton.Name = "EditButton";
+            EditButton.Size = new Size(111, 35);
+            EditButton.TabIndex = 20;
+            EditButton.Text = "Edit";
+            EditButton.UseVisualStyleBackColor = true;
+            // 
+            // RemoveButton
+            // 
+            RemoveButton.Location = new Point(170, 355);
+            RemoveButton.Name = "RemoveButton";
+            RemoveButton.Size = new Size(111, 35);
+            RemoveButton.TabIndex = 19;
+            RemoveButton.Text = "Remove";
+            RemoveButton.UseVisualStyleBackColor = true;
+            // 
+            // AddButton
+            // 
+            AddButton.Location = new Point(21, 355);
+            AddButton.Name = "AddButton";
+            AddButton.Size = new Size(111, 35);
+            AddButton.TabIndex = 18;
+            AddButton.Text = "Add";
+            AddButton.UseVisualStyleBackColor = true;
             // 
             // StatusTextBox
             // 
@@ -278,33 +305,6 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(476, 27);
             textBox1.TabIndex = 0;
-            // 
-            // AddButton
-            // 
-            AddButton.Location = new Point(21, 355);
-            AddButton.Name = "AddButton";
-            AddButton.Size = new Size(111, 35);
-            AddButton.TabIndex = 18;
-            AddButton.Text = "Add";
-            AddButton.UseVisualStyleBackColor = true;
-            // 
-            // RemoveButton
-            // 
-            RemoveButton.Location = new Point(170, 355);
-            RemoveButton.Name = "RemoveButton";
-            RemoveButton.Size = new Size(111, 35);
-            RemoveButton.TabIndex = 19;
-            RemoveButton.Text = "Remove";
-            RemoveButton.UseVisualStyleBackColor = true;
-            // 
-            // EditButton
-            // 
-            EditButton.Location = new Point(21, 415);
-            EditButton.Name = "EditButton";
-            EditButton.Size = new Size(111, 35);
-            EditButton.TabIndex = 20;
-            EditButton.Text = "Edit";
-            EditButton.UseVisualStyleBackColor = true;
             // 
             // CarsForm
             // 
