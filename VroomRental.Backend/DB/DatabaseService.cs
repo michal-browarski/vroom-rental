@@ -23,5 +23,21 @@ namespace VroomRental.Backend.DB
                 return dataTable;
             }
         }
+
+        public void ExecuteNonQuery(string query, Dictionary<string, object> parameters)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    foreach (var param in parameters)
+                    {
+                        command.Parameters.AddWithValue(param.Key, param.Value);
+                    }
+                    command.ExecuteNonQuery();
+                }
+            }
+        }
     }
 }
