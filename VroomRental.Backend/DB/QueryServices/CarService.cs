@@ -30,11 +30,65 @@ namespace VroomRental.Backend.DB.QueryServices
                     Color = row["Color"].ToString(),
                     Mileage = Convert.ToInt32(row["Mileage"]),
                     Status = (CarStatus)Convert.ToInt32(row["Status"]),
+                    FuelType = row["Fuel_Type"].ToString(),
                     PricePerDay = Convert.ToDecimal(row["Price_Per_Day"]),
                     LastInspectionDate = Convert.ToDateTime(row["Last_Inspection_Date"])
                 });
             }
             return cars;
+        }
+
+        public void AddCar(Car car)
+        {
+            string query = "INSERT INTO tbl_Cars (Brand, Model, Production_Year, Body_Type, Color, Mileage, Status, Fuel_Type, Price_Per_Day, Last_Inspection_Date) " +
+                           "VALUES (@Brand, @Model, @ProductionYear, @BodyType, @Color, @Mileage, @Status, @FuelType, @PricePerDay, @LastInspectionDate)";
+
+            var parameters = new Dictionary<string, object>
+            {
+                {"@Brand", car.Brand },
+                {"@Model", car.Model },
+                {"@ProductionYear", car.ProductionYear },
+                {"@BodyType", car.BodyType },
+                {"@Color", car.Color },
+                {"@Mileage", car.Mileage },
+                {"@Status", (int)car.Status },
+                {"@FuelType", car.FuelType },
+                {"@PricePerDay", car.PricePerDay },
+                {"@LastInspectionDate", car.LastInspectionDate }
+            };
+
+            _databaseService.ExecuteNonQuery(query, parameters);
+        }
+
+        public void RemoveCar(int carId)
+        {
+            string query = "DELETE FROM tbl_Cars WHERE Car_Id = @CarId";
+            var parameters = new Dictionary<string, object> { { "@CarId", carId } };
+            _databaseService.ExecuteNonQuery(query, parameters);
+        }
+
+        public void EditCar(Car car)
+        {
+            string query = "UPDATE tbl_Cars SET Brand = @Brand, Model = @Model, Production_Year = @ProductionYear, Body_Type = @BodyType, " +
+                           "Color = @Color, Mileage = @Mileage, Status = @Status, Fuel_Type = @FuelType, Price_Per_Day = @PricePerDay, " +
+                           "Last_Inspection_Date = @LastInspectionDate WHERE Car_Id = @CarId";
+
+            var parameters = new Dictionary<string, object>
+            {
+                {"@CarId", car.Id },
+                {"@Brand", car.Brand },
+                {"@Model", car.Model },
+                {"@ProductionYear", car.ProductionYear },
+                {"@BodyType", car.BodyType },
+                {"@Color", car.Color },
+                {"@Mileage", car.Mileage },
+                {"@Status", (int)car.Status },
+                {"@FuelType", car.FuelType },
+                {"@PricePerDay", car.PricePerDay },
+                {"@LastInspectionDate", car.LastInspectionDate }
+            };
+
+            _databaseService.ExecuteNonQuery(query, parameters);
         }
     }
 }
