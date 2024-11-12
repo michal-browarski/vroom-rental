@@ -30,6 +30,15 @@ namespace VroomRental.Forms
             SearchFuelTypeComboBox.Items.Add("Hybrid");
             SearchFuelTypeComboBox.SelectedIndex = -1;
 
+            SearchPriceNumericUpDown.Minimum = 0;
+            SearchPriceNumericUpDown2.Minimum = 0;
+            SearchPriceNumericUpDown2.Value = 200;
+            SearchYearNumericUpDown.Minimum = 1990;
+            SearchYearNumericUpDown2.Minimum = 1990;
+            SearchYearNumericUpDown2.Value = DateTime.Now.Year;
+            SearchYearNumericUpDown.Maximum = DateTime.Now.Year;
+            SearchYearNumericUpDown2.Maximum = DateTime.Now.Year;
+
             SearchButton.Click += SearchButton_Click;
             ResetButton.Click += ResetButton_Click;
         }
@@ -155,9 +164,9 @@ namespace VroomRental.Forms
                     cars = cars.Where(c => c.Model.Contains(SearchModelTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
                 }
 
-                if (SearchYearNumericUpDown.Value > 0)
+                if (SearchYearNumericUpDown.Value > 0 && SearchYearNumericUpDown2.Value >= SearchYearNumericUpDown.Value)
                 {
-                    cars = cars.Where(c => c.ProductionYear == SearchYearNumericUpDown.Value.ToString()).ToList();
+                    cars = cars.Where(c => Convert.ToInt32(c.ProductionYear) >= SearchYearNumericUpDown.Value && Convert.ToInt32(c.ProductionYear) <= SearchYearNumericUpDown2.Value).ToList();
                 }
 
                 if (!string.IsNullOrWhiteSpace(SearchColorTextBox.Text))
@@ -165,9 +174,9 @@ namespace VroomRental.Forms
                     cars = cars.Where(c => c.Color.Contains(SearchColorTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
                 }
 
-                if (SearchPriceNumericUpDown.Value > 0)
+                if (SearchPriceNumericUpDown.Value >= 0 && SearchPriceNumericUpDown2.Value >= SearchPriceNumericUpDown.Value)
                 {
-                    cars = cars.Where(c => c.PricePerDay <= (decimal)SearchPriceNumericUpDown.Value).ToList();
+                    cars = cars.Where(c => c.PricePerDay >= SearchPriceNumericUpDown.Value && c.PricePerDay <= SearchPriceNumericUpDown2.Value).ToList();
                 }
 
                 if (!string.IsNullOrWhiteSpace(SearchBodyTypeTextBox.Text))
@@ -208,8 +217,10 @@ namespace VroomRental.Forms
             SearchColorTextBox.Clear();
             SearchBodyTypeTextBox.Clear();
 
-            SearchYearNumericUpDown.Value = 0;
+            SearchYearNumericUpDown.Value = 1990;
+            SearchYearNumericUpDown2.Value = 2024;
             SearchPriceNumericUpDown.Value = 0;
+            SearchPriceNumericUpDown2.Value = 200;
             SearchStatusComboBox.SelectedIndex = -1;
             SearchFuelTypeComboBox.SelectedIndex = -1;
         }

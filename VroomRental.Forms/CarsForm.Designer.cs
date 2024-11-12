@@ -59,6 +59,8 @@
             RemoveButton = new Button();
             EditButton = new Button();
             SearchGroupBox = new GroupBox();
+            SearchYearNumericUpDown2 = new NumericUpDown();
+            SearchPriceNumericUpDown2 = new NumericUpDown();
             SearchFuelTypeComboBox = new ComboBox();
             label9 = new Label();
             ResetButton = new Button();
@@ -83,6 +85,8 @@
             TextBoxesGroupBox.SuspendLayout();
             ActionsGroupBox.SuspendLayout();
             SearchGroupBox.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)SearchYearNumericUpDown2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)SearchPriceNumericUpDown2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SearchPriceNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)SearchYearNumericUpDown).BeginInit();
             CarsTableLayout.SuspendLayout();
@@ -408,6 +412,8 @@
             // 
             // SearchGroupBox
             // 
+            SearchGroupBox.Controls.Add(SearchYearNumericUpDown2);
+            SearchGroupBox.Controls.Add(SearchPriceNumericUpDown2);
             SearchGroupBox.Controls.Add(SearchFuelTypeComboBox);
             SearchGroupBox.Controls.Add(label9);
             SearchGroupBox.Controls.Add(ResetButton);
@@ -433,11 +439,33 @@
             SearchGroupBox.TabIndex = 2;
             SearchGroupBox.TabStop = false;
             // 
+            // SearchYearNumericUpDown2
+            // 
+            SearchYearNumericUpDown2.Font = new Font("Segoe UI", 18F);
+            SearchYearNumericUpDown2.Location = new Point(1139, 190);
+            SearchYearNumericUpDown2.Margin = new Padding(3, 4, 3, 4);
+            SearchYearNumericUpDown2.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
+            SearchYearNumericUpDown2.Name = "SearchYearNumericUpDown2";
+            SearchYearNumericUpDown2.Size = new Size(238, 47);
+            SearchYearNumericUpDown2.TabIndex = 23;
+            // 
+            // SearchPriceNumericUpDown2
+            // 
+            SearchPriceNumericUpDown2.DecimalPlaces = 2;
+            SearchPriceNumericUpDown2.Font = new Font("Segoe UI", 18F);
+            SearchPriceNumericUpDown2.Location = new Point(1139, 66);
+            SearchPriceNumericUpDown2.Margin = new Padding(3, 4, 3, 4);
+            SearchPriceNumericUpDown2.Maximum = new decimal(new int[] { 100000000, 0, 0, 0 });
+            SearchPriceNumericUpDown2.Name = "SearchPriceNumericUpDown2";
+            SearchPriceNumericUpDown2.Size = new Size(238, 47);
+            SearchPriceNumericUpDown2.TabIndex = 22;
+            SearchPriceNumericUpDown2.ThousandsSeparator = true;
+            // 
             // SearchFuelTypeComboBox
             // 
             SearchFuelTypeComboBox.Font = new Font("Segoe UI", 18F);
             SearchFuelTypeComboBox.FormattingEnabled = true;
-            SearchFuelTypeComboBox.Location = new Point(1165, 187);
+            SearchFuelTypeComboBox.Location = new Point(580, 191);
             SearchFuelTypeComboBox.Margin = new Padding(3, 4, 3, 4);
             SearchFuelTypeComboBox.Name = "SearchFuelTypeComboBox";
             SearchFuelTypeComboBox.Size = new Size(239, 49);
@@ -447,7 +475,7 @@
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 18F);
-            label9.Location = new Point(1165, 135);
+            label9.Location = new Point(580, 146);
             label9.Name = "label9";
             label9.Size = new Size(144, 41);
             label9.TabIndex = 20;
@@ -469,7 +497,7 @@
             // 
             SearchPriceNumericUpDown.DecimalPlaces = 2;
             SearchPriceNumericUpDown.Font = new Font("Segoe UI", 18F);
-            SearchPriceNumericUpDown.Location = new Point(848, 189);
+            SearchPriceNumericUpDown.Location = new Point(862, 68);
             SearchPriceNumericUpDown.Margin = new Padding(3, 4, 3, 4);
             SearchPriceNumericUpDown.Maximum = new decimal(new int[] { 100000000, 0, 0, 0 });
             SearchPriceNumericUpDown.Name = "SearchPriceNumericUpDown";
@@ -480,7 +508,7 @@
             // SearchYearNumericUpDown
             // 
             SearchYearNumericUpDown.Font = new Font("Segoe UI", 18F);
-            SearchYearNumericUpDown.Location = new Point(848, 67);
+            SearchYearNumericUpDown.Location = new Point(862, 191);
             SearchYearNumericUpDown.Margin = new Padding(3, 4, 3, 4);
             SearchYearNumericUpDown.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
             SearchYearNumericUpDown.Name = "SearchYearNumericUpDown";
@@ -491,7 +519,7 @@
             // 
             SearchStatusComboBox.Font = new Font("Segoe UI", 18F);
             SearchStatusComboBox.FormattingEnabled = true;
-            SearchStatusComboBox.Location = new Point(1165, 65);
+            SearchStatusComboBox.Location = new Point(581, 69);
             SearchStatusComboBox.Margin = new Padding(3, 4, 3, 4);
             SearchStatusComboBox.Name = "SearchStatusComboBox";
             SearchStatusComboBox.Size = new Size(239, 49);
@@ -501,7 +529,7 @@
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 18F);
-            label8.Location = new Point(1165, 16);
+            label8.Location = new Point(581, 23);
             label8.Name = "label8";
             label8.Size = new Size(98, 41);
             label8.TabIndex = 15;
@@ -511,7 +539,7 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 18F);
-            label5.Location = new Point(848, 144);
+            label5.Location = new Point(1084, 23);
             label5.Name = "label5";
             label5.Size = new Size(82, 41);
             label5.TabIndex = 13;
@@ -521,7 +549,7 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 18F);
-            label6.Location = new Point(848, 23);
+            label6.Location = new Point(1084, 146);
             label6.Name = "label6";
             label6.Size = new Size(73, 41);
             label6.TabIndex = 11;
@@ -531,7 +559,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 18F);
-            label4.Location = new Point(470, 147);
+            label4.Location = new Point(303, 144);
             label4.Name = "label4";
             label4.Size = new Size(157, 41);
             label4.TabIndex = 9;
@@ -540,7 +568,7 @@
             // SearchBodyTypeTextBox
             // 
             SearchBodyTypeTextBox.Font = new Font("Segoe UI", 18F);
-            SearchBodyTypeTextBox.Location = new Point(470, 191);
+            SearchBodyTypeTextBox.Location = new Point(303, 191);
             SearchBodyTypeTextBox.Name = "SearchBodyTypeTextBox";
             SearchBodyTypeTextBox.Size = new Size(239, 47);
             SearchBodyTypeTextBox.TabIndex = 8;
@@ -549,7 +577,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 18F);
-            label3.Location = new Point(470, 25);
+            label3.Location = new Point(303, 23);
             label3.Name = "label3";
             label3.Size = new Size(90, 41);
             label3.TabIndex = 7;
@@ -558,7 +586,7 @@
             // SearchColorTextBox
             // 
             SearchColorTextBox.Font = new Font("Segoe UI", 18F);
-            SearchColorTextBox.Location = new Point(470, 69);
+            SearchColorTextBox.Location = new Point(303, 69);
             SearchColorTextBox.Name = "SearchColorTextBox";
             SearchColorTextBox.Size = new Size(239, 47);
             SearchColorTextBox.TabIndex = 6;
@@ -576,7 +604,7 @@
             // SearchModelTextBox
             // 
             SearchModelTextBox.Font = new Font("Segoe UI", 18F);
-            SearchModelTextBox.Location = new Point(21, 182);
+            SearchModelTextBox.Location = new Point(21, 189);
             SearchModelTextBox.Name = "SearchModelTextBox";
             SearchModelTextBox.Size = new Size(239, 47);
             SearchModelTextBox.TabIndex = 4;
@@ -606,7 +634,7 @@
             // SearchBrandTextBox
             // 
             SearchBrandTextBox.Font = new Font("Segoe UI", 18F);
-            SearchBrandTextBox.Location = new Point(21, 60);
+            SearchBrandTextBox.Location = new Point(21, 71);
             SearchBrandTextBox.Name = "SearchBrandTextBox";
             SearchBrandTextBox.Size = new Size(239, 47);
             SearchBrandTextBox.TabIndex = 0;
@@ -647,6 +675,8 @@
             ActionsGroupBox.ResumeLayout(false);
             SearchGroupBox.ResumeLayout(false);
             SearchGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)SearchYearNumericUpDown2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)SearchPriceNumericUpDown2).EndInit();
             ((System.ComponentModel.ISupportInitialize)SearchPriceNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)SearchYearNumericUpDown).EndInit();
             CarsTableLayout.ResumeLayout(false);
@@ -703,5 +733,7 @@
         private TableLayoutPanel CarsTableLayout;
         private GroupBox ActionsGroupBox;
         private GroupBox TextBoxesGroupBox;
+        private NumericUpDown SearchPriceNumericUpDown2;
+        private NumericUpDown SearchYearNumericUpDown2;
     }
 }
