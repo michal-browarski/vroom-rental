@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Windows.Forms;
+﻿using System.Configuration;
 using VroomRental.Backend.DB;
 using VroomRental.Backend.DB.QueryServices;
 using VroomRental.Backend.Model;
@@ -23,22 +19,18 @@ namespace VroomRental.Forms
             InitializeDataGridView();
             LoadData();
 
-            // Inicjalizacja ComboBox dla Statusu
             SearchStatusComboBox.Items.Add("Available");
             SearchStatusComboBox.Items.Add("Rented");
             SearchStatusComboBox.Items.Add("In Repair");
             SearchStatusComboBox.SelectedIndex = -1;
 
-            // Inicjalizacja ComboBox dla FuelType
             SearchFuelTypeComboBox.Items.Add("Petrol");
             SearchFuelTypeComboBox.Items.Add("Diesel");
             SearchFuelTypeComboBox.Items.Add("Electric");
             SearchFuelTypeComboBox.Items.Add("Hybrid");
             SearchFuelTypeComboBox.SelectedIndex = -1;
 
-            // Obsługa zdarzenia dla przycisku wyszukiwania
             SearchButton.Click += SearchButton_Click;
-            // Obsługa przycisku resetu
             ResetButton.Click += ResetButton_Click;
         }
 
@@ -83,7 +75,7 @@ namespace VroomRental.Forms
 
             dataGridCars.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Body type",
+                HeaderText = "Rodzaj",
                 DataPropertyName = "BodyType",
                 Name = "ColumnBodyType"
             });
@@ -95,6 +87,14 @@ namespace VroomRental.Forms
                 Name = "ColumnStatus"
             });
 
+            dataGridCars.Columns.Add(new DataGridViewTextBoxColumn
+            {
+                HeaderText = "Paliwo        ",
+                DataPropertyName = "FuelType",
+                Name = "ColumnFuelType"
+            });
+
+            dataGridCars.AutoSizeColumnsMode = (DataGridViewAutoSizeColumnsMode)DataGridViewAutoSizeColumnMode.Fill;
             dataGridCars.CellClick += DataGridCars_CellClick;
         }
 
@@ -143,10 +143,8 @@ namespace VroomRental.Forms
         {
             try
             {
-                // Pobierz wszystkie samochody
                 List<Car> cars = _carService.GetAllCars();
 
-                // Filtrowanie według wartości w kontrolkach
                 if (!string.IsNullOrWhiteSpace(SearchBrandTextBox.Text))
                 {
                     cars = cars.Where(c => c.Brand.Contains(SearchBrandTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
@@ -179,7 +177,6 @@ namespace VroomRental.Forms
 
                 if (SearchStatusComboBox.SelectedIndex != -1)
                 {
-                    // Pobierz wybrany status jako string i przekonwertuj go na enum CarStatus
                     CarStatus selectedStatus = (CarStatus)Enum.Parse(typeof(CarStatus), SearchStatusComboBox.SelectedItem.ToString());
                     cars = cars.Where(c => c.Status == selectedStatus).ToList();
                 }
@@ -190,7 +187,6 @@ namespace VroomRental.Forms
                     cars = cars.Where(c => c.FuelType.Equals(selectedFuelType, StringComparison.OrdinalIgnoreCase)).ToList();
                 }
 
-                // Przypisz przefiltrowane dane do DataGridView
                 dataGridCars.DataSource = cars;
             }
             catch (Exception ex)
@@ -207,13 +203,11 @@ namespace VroomRental.Forms
 
         private void ResetFilters()
         {
-            // Wyczyść pola tekstowe
             SearchBrandTextBox.Clear();
             SearchModelTextBox.Clear();
             SearchColorTextBox.Clear();
             SearchBodyTypeTextBox.Clear();
 
-            // Resetuj NumericUpDown i ComboBox
             SearchYearNumericUpDown.Value = 0;
             SearchPriceNumericUpDown.Value = 0;
             SearchStatusComboBox.SelectedIndex = -1;
@@ -222,7 +216,6 @@ namespace VroomRental.Forms
 
         private bool IsInputValid()
         {
-            // Sprawdź, czy wszystkie pola są uzupełnione
             return !string.IsNullOrWhiteSpace(BrandTextBox.Text) &&
                    !string.IsNullOrWhiteSpace(ModelTextBox.Text) &&
                    !string.IsNullOrWhiteSpace(BodyTypeTextBox.Text) &&
@@ -270,8 +263,8 @@ namespace VroomRental.Forms
             {
                 Car car = GetCarFromInputs();
                 _carService.AddCar(car);
-                LoadData(); // Odswieżenie listy po dodaniu
-                ResetInputs(); // Wyczyść pola po dodaniu
+                LoadData();
+                ResetInputs();
             }
             else
             {
@@ -281,26 +274,22 @@ namespace VroomRental.Forms
 
         private void RemoveButton_Click(object sender, EventArgs e)
         {
-            // Sprawdź, czy istnieje wybrana (aktywna) komórka
             if (dataGridCars.CurrentRow != null)
             {
-                // Pobierz bieżący wiersz (aktualnie zaznaczony wiersz, na którym znajduje się aktywna komórka)
                 DataGridViewRow selectedRow = dataGridCars.CurrentRow;
                 Car selectedCar = selectedRow.DataBoundItem as Car;
 
                 if (selectedCar != null)
                 {
-                    // Potwierdzenie usunięcia
                     var confirmResult = MessageBox.Show("Czy na pewno chcesz usunąć ten samochód?",
                                                         "Potwierdzenie usunięcia",
                                                         MessageBoxButtons.YesNo);
 
                     if (confirmResult == DialogResult.Yes)
                     {
-                        // Wywołanie metody usunięcia w CarService
                         _carService.RemoveCar(selectedCar.Id);
-                        LoadData(); // Odświeżenie danych po usunięciu
-                        ResetInputs(); // Wyczyść pola po usunięciu
+                        LoadData();
+                        ResetInputs();
                     }
                 }
             }
@@ -312,16 +301,13 @@ namespace VroomRental.Forms
 
         private void EditButton_Click(object sender, EventArgs e)
         {
-            // Sprawdź, czy istnieje wybrana (aktywna) komórka
             if (dataGridCars.CurrentRow != null && IsInputValid())
             {
-                // Pobierz bieżący wiersz (aktualnie zaznaczony wiersz, na którym znajduje się aktywna komórka)
                 DataGridViewRow selectedRow = dataGridCars.CurrentRow;
                 Car selectedCar = selectedRow.DataBoundItem as Car;
 
                 if (selectedCar != null)
                 {
-                    // Aktualizacja obiektu `Car` na podstawie pól formularza
                     Car carToUpdate = new Car
                     {
                         Id = selectedCar.Id,
@@ -337,10 +323,9 @@ namespace VroomRental.Forms
                         LastInspectionDate = DateTime.Parse(LastInspectionTextBox.Text)
                     };
 
-                    // Wywołanie metody edycji w CarService
                     _carService.EditCar(carToUpdate);
-                    LoadData(); // Odświeżenie danych po edycji
-                    ResetInputs(); // Wyczyść pola po edycji
+                    LoadData();
+                    ResetInputs();
                 }
             }
             else
