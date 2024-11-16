@@ -39,5 +39,24 @@ namespace VroomRental.Backend.DB
                 }
             }
         }
+
+        public object ExecuteScalar(string query, Dictionary<string, object> parameters)
+        {
+            using (SqlConnection connection = new SqlConnection(_connectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    if (parameters != null)
+                    {
+                        foreach (var param in parameters)
+                        {
+                            command.Parameters.AddWithValue(param.Key, param.Value);
+                        }
+                    }
+                    return command.ExecuteScalar();
+                }
+            }
+        }
     }
 }
