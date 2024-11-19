@@ -98,14 +98,28 @@ namespace VroomRental.Forms
 
             dataGridCars.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Paliwo        ",
+                HeaderText = "Paliwo",
                 DataPropertyName = "FuelType",
                 Name = "ColumnFuelType"
             });
 
-            dataGridCars.AutoSizeColumnsMode = (DataGridViewAutoSizeColumnsMode)DataGridViewAutoSizeColumnMode.Fill;
+            // Dodaj kolumnę z przyciskiem do wypożyczenia
+            var rentButtonColumn = new DataGridViewButtonColumn
+            {
+                HeaderText = "Rent",
+                Text = "Rent",
+                UseColumnTextForButtonValue = true,
+                Name = "RentButtonColumn"
+            };
+            dataGridCars.Columns.Add(rentButtonColumn);
+
+            dataGridCars.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridCars.CellClick += DataGridCars_CellClick;
+            dataGridCars.CellContentClick += DataGridCars_CellContentClick;
+            dataGridCars.CellFormatting += DataGridCars_CellFormatting;
+
         }
+
 
         private void LoadData()
         {
@@ -343,6 +357,68 @@ namespace VroomRental.Forms
             {
                 MessageBox.Show("Uzupełnij wszystkie pola i wybierz samochód do edycji.");
             }
+        }
+
+        private void DataGridCars_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dataGridCars.Columns[e.ColumnIndex].Name == "RentButtonColumn" && e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridCars.Rows[e.RowIndex];
+                Car car = row.DataBoundItem as Car;
+
+                if (car != null)
+                {
+                    var cell = row.Cells["RentButtonColumn"] as DataGridViewButtonCell;
+
+                    if (car.Status != CarStatus.Available)
+                    {
+                        // Ustaw styl przycisku jako nieaktywny
+                        cell.Style.BackColor = Color.LightGray;
+                        cell.Style.ForeColor = Color.DarkGray;
+                        cell.FlatStyle = FlatStyle.Flat;
+                    }
+                    else
+                    {
+                        // Przywróć domyślny styl dla aktywnych przycisków
+                        cell.Style.BackColor = Color.LightGreen;
+                        cell.Style.ForeColor = Color.Black;
+                        cell.FlatStyle = FlatStyle.Standard;
+                    }
+                }
+            }
+        }
+
+        private void DataGridCars_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex == dataGridCars.Columns["RentButtonColumn"].Index && e.RowIndex >= 0)
+            {
+                DataGridViewRow row = dataGridCars.Rows[e.RowIndex];
+                Car car = row.DataBoundItem as Car;
+
+                if (car != null && car.Status == CarStatus.Available)
+                {
+                    using (var rentForm = new RentForm(car, GetCurrentEmployeeId()))
+                    {
+                        if (rentForm.ShowDialog() == DialogResult.OK)
+                        {
+                            LoadData();
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("This car is not available for rent.",
+                                    "Unavailable",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        private int GetCurrentEmployeeId()
+        {
+            // Zwróć ID zalogowanego pracownika
+            return 1; // Przykład: domyślny ID
         }
 
         private void ResetCarButton_Click(object sender, EventArgs e)

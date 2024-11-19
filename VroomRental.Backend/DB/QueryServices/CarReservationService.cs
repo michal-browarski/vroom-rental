@@ -77,5 +77,27 @@ namespace VroomRental.Backend.DB.QueryServices
 
             return reservations;
         }
+
+        public void AddReservation(CarReservation reservation)
+        {
+            string query = @"
+                INSERT INTO tbl_Car_Reservations 
+                (Customer_Id, Car_Id, Start_Date, Planned_End_Date, Actual_End_Date, Status, Employee_Id)
+                VALUES 
+                (@CustomerId, @CarId, @StartDate, @PlannedEndDate, @ActualEndDate, @Status, @EmployeeId)";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@CustomerId", reservation.Customer.Id },
+                { "@CarId", reservation.Car.Id },
+                { "@StartDate", reservation.StartDate },
+                { "@PlannedEndDate", reservation.PlannedEndDate },
+                { "@ActualEndDate", reservation.ActualEndDate ?? (object)DBNull.Value },
+                { "@Status", reservation.Status },
+                { "@EmployeeId", reservation.Employee?.Id ?? (object)DBNull.Value }
+            };
+
+            _databaseService.ExecuteNonQuery(query, parameters);
+        }
     }
 }
