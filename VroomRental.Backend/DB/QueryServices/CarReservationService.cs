@@ -99,5 +99,47 @@ namespace VroomRental.Backend.DB.QueryServices
 
             _databaseService.ExecuteNonQuery(query, parameters);
         }
+
+        public List<AdditionalOption> GetOptionsFromReservation(int reservationId)
+        {
+            string query = @$"
+                SELECT o.Option_Id, o.Option_Name, o.Price
+                FROM tbl_Reservation_Options ro
+                JOIN tbl_Additional_Options o ON ro.Option_Id = o.Option_Id
+                WHERE ro.Reservation_Id = @{reservationId}";
+
+            DataTable optionsTable = _databaseService.ExecuteQuery(query);
+            var options = new List<AdditionalOption>();
+
+            foreach (DataRow row in optionsTable.Rows)
+            {
+                options.Add(new AdditionalOption
+                {
+                    Id = Convert.ToInt32(row["Option_Id"]),
+                    Name = row["Option_Name"].ToString(),
+                    Price = Convert.ToDecimal(row["Price"])
+                });
+            }
+
+            return options;
+        }
+
+        public void AddOptionsToReservation(int reservationId, List<AdditionalOption> options)
+        {
+            foreach (var option in options)
+            {
+                string query = @"
+                    INSERT INTO tbl_Reservation_Options (Reservation_Id, Option_Id)
+                    VALUES (@ReservationId, @OptionId)";
+
+                var parameters = new Dictionary<string, object>
+                {
+                    { "@ReservationId", reservationId },
+                    { "@OptionId", option.Id }
+                };
+
+                _databaseService.ExecuteNonQuery(query, parameters);
+            }
+        }
     }
 }
