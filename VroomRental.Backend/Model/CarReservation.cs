@@ -11,5 +11,6 @@
         public Car Car { get; set; }
         public Employee Employee { get; set; }
         public Payment? Payment { get; set; }
+        public List<AdditionalOption> AdditionalOptions { get; set; } = new List<AdditionalOption>();
     }
 }

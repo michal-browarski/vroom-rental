@@ -395,7 +395,7 @@ namespace VroomRental.Forms
 
         private void SearchButton_Click(object sender, EventArgs e)
         {
-           SearchCustomers();
+            SearchCustomers();
         }
 
         private void SearchResetButton_Click(object sender, EventArgs e)
@@ -403,5 +403,42 @@ namespace VroomRental.Forms
             ResetCustomers();
         }
 
+        private void LoadAdditionalOptions()
+        {
+            List<AdditionalOption> options = new List<AdditionalOption>()
+            {
+                new AdditionalOption()
+                {
+                    Id = 1,
+                    Name = "Bagażnik na rowery",
+                    Price = 15m
+                },
+                new AdditionalOption()
+                {
+                    Id = 2,
+                    Name = "Fotelik dziecięcy",
+                    Price = 10m
+                },
+                new AdditionalOption()
+                {
+                    Id = 3,
+                    Name = "Dodatkowe ubezpieczenie",
+                    Price = 15m
+                }
+            };
+
+            OptionsCheckedListBox.Items.Clear();
+
+            foreach (var option in options)
+            {
+                string itemText = $"{option.Name} - {option.Price:C}";
+                OptionsCheckedListBox.Items.Add(itemText);
+            }
+        }
+
+        private void RentForm_Load(object sender, EventArgs e)
+        {
+            LoadAdditionalOptions();
+        }
     }
 }
