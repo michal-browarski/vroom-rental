@@ -176,13 +176,17 @@ namespace VroomRental.Backend.DB.QueryServices
         {
             string query = @"
                 UPDATE tbl_Car_Reservations
-                SET 
+                SET
+                    Start_Date = @StartDate,
+                    Planned_End_Date = @PlannedEndDate,
                     Actual_End_Date = @ActualEndDate,
                     Status = @Status
                 WHERE Reservation_Id = @ReservationId";
 
                     var parameters = new Dictionary<string, object>
             {
+                { "@StartDate", reservation.StartDate },
+                { "@PlannedEndDate", reservation.PlannedEndDate },
                 { "@ActualEndDate", reservation.ActualEndDate ?? (object)DBNull.Value },
                 { "@Status", reservation.Status },
                 { "@ReservationId", reservation.Id }
@@ -190,6 +194,7 @@ namespace VroomRental.Backend.DB.QueryServices
 
             _databaseService.ExecuteNonQuery(query, parameters);
         }
+
 
         public void UpdateCarStatus(int carId, CarStatus status)
         {
@@ -207,5 +212,35 @@ namespace VroomRental.Backend.DB.QueryServices
             _databaseService.ExecuteNonQuery(query, parameters);
         }
 
+        public void UpdateReservationOptions(int reservationId, List<AdditionalOption> options)
+        {
+            // Usuń istniejące opcje dla rezerwacji
+            string deleteQuery = @"
+                DELETE FROM tbl_Reservation_Options
+                WHERE Reservation_Id = @ReservationId";
+
+            var deleteParameters = new Dictionary<string, object>
+            {
+                { "@ReservationId", reservationId }
+            };
+
+            _databaseService.ExecuteNonQuery(deleteQuery, deleteParameters);
+
+            // Dodaj nowe opcje dla rezerwacji
+            foreach (var option in options)
+            {
+                string insertQuery = @"
+                    INSERT INTO tbl_Reservation_Options (Reservation_Id, Option_Id)
+                    VALUES (@ReservationId, @OptionId)";
+
+                var insertParameters = new Dictionary<string, object>
+                {
+                    { "@ReservationId", reservationId },
+                    { "@OptionId", option.Id }
+                };
+
+                _databaseService.ExecuteNonQuery(insertQuery, insertParameters);
+            }
+        }
     }
 }

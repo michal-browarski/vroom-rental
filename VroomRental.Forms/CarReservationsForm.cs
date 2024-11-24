@@ -21,6 +21,15 @@ namespace VroomRental.Forms
             InitializeDataGridView();
             LoadData();
 
+            SearchStatusComboBox.Items.Add("Active");
+            SearchStatusComboBox.Items.Add("Ended");
+            SearchStatusComboBox.Items.Add("Canceled");
+            SearchStatusComboBox.SelectedIndex = -1;
+
+            SearchButton.Click += SearchButton_Click;
+            SearchResetButton.Click += SearchResetButton_Click;
+
+            EditButton.Click += EditButton_Click;
             ResetButton.Click += ResetButton_Click;
         }
 
@@ -83,22 +92,26 @@ namespace VroomRental.Forms
         {
             try
             {
-                List<CarReservation> carReservations = _carReservationService.GetAllCarReservations();
+                // Pobierz wszystkie dane rezerwacji
+                List<CarReservation> reservations = _carReservationService.GetAllCarReservations();
 
-                // Dodaj właściwości niestandardowe dla wyświetlania danych w DataGridView
-                foreach (var reservation in carReservations)
+                // Uzupełnij dynamiczne pola
+                foreach (var reservation in reservations)
                 {
                     reservation.CustomerFullName = $"{reservation.Customer.FirstName} {reservation.Customer.LastName}";
                     reservation.CarDetails = $"{reservation.Car.Brand} {reservation.Car.Model}";
                 }
 
-                dataGridCarReservations.DataSource = carReservations;
+                // Ustaw dane w DataGridView
+                dataGridCarReservations.DataSource = null;
+                dataGridCarReservations.DataSource = reservations;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("An error occurred while loading data: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
 
         private void DataGridCarReservations_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -157,11 +170,11 @@ namespace VroomRental.Forms
 
         private void ResetButton_Click(object sender, EventArgs e)
         {
-            ResetFilters();
+            ResetInputs();
             LoadData();
         }
 
-        private void ResetFilters()
+        private void ResetInputs()
         {
             // Resetuj wszystkie pola tekstowe
             CustomerNameTextBox.Clear();
@@ -262,5 +275,153 @@ namespace VroomRental.Forms
                 }
             }
         }
+
+        private void EditButton_Click(object sender, EventArgs e)
+        {
+            if (dataGridCarReservations.CurrentRow == null)
+            {
+                MessageBox.Show("Please select a reservation to edit.", "No Reservation Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var selectedReservation = dataGridCarReservations.CurrentRow.DataBoundItem as CarReservation;
+
+            if (selectedReservation == null)
+            {
+                MessageBox.Show("Invalid reservation selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            try
+            {
+                // Zaktualizuj dane rezerwacji na podstawie edytowanych pól
+                selectedReservation.StartDate = DateTime.Parse(StartDateTextBox.Text);
+                selectedReservation.PlannedEndDate = DateTime.Parse(PlannedEndDateTextBox.Text);
+
+                // Jeśli pole Actual End Date jest puste lub ma wartość "N/A", pozostaw null
+                if (string.IsNullOrWhiteSpace(ActualEndDateTextBox.Text) || ActualEndDateTextBox.Text == "N/A")
+                {
+                    selectedReservation.ActualEndDate = null;
+                }
+                else
+                {
+                    selectedReservation.ActualEndDate = DateTime.Parse(ActualEndDateTextBox.Text);
+                }
+
+                selectedReservation.Status = (ReservationStatus)Enum.Parse(typeof(ReservationStatus), StatusTextBox.Text);
+
+                // Zapisz aktualizację rezerwacji w bazie danych
+                _carReservationService.UpdateReservation(selectedReservation);
+
+                // Pobierz wybrane opcje dodatkowe z CheckedListBox
+                var selectedOptions = new List<AdditionalOption>();
+                foreach (var item in AdditionalOptionsCheckedListBox.CheckedItems)
+                {
+                    if (item is AdditionalOption option)
+                    {
+                        selectedOptions.Add(option);
+                    }
+                }
+
+                // Zaktualizuj opcje dodatkowe w bazie danych
+                _carReservationService.UpdateReservationOptions(selectedReservation.Id, selectedOptions);
+
+                // Odśwież dane w DataGridView
+                LoadData();
+
+                MessageBox.Show("Reservation updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (FormatException ex)
+            {
+                MessageBox.Show($"Invalid date format: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"An error occurred while updating the reservation: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void SearchButton_Click(object sender, EventArgs e)
+        {
+            SearchReservations();
+        }
+
+        private void SearchResetButton_Click(object sender, EventArgs e)
+        {
+            ResetFilters();
+        }
+
+        private void SearchReservations()
+        {
+            try
+            {
+                // Pobierz wszystkie rezerwacje
+                List<CarReservation> reservations = _carReservationService.GetAllCarReservations();
+
+                // Filtrowanie według imienia i nazwiska klienta
+                if (!string.IsNullOrWhiteSpace(SearchCustomerTextBox.Text))
+                {
+                    reservations = reservations.Where(r =>
+                        $"{r.Customer.FirstName} {r.Customer.LastName}".Contains(SearchCustomerTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+
+                // Filtrowanie według danych samochodu
+                if (!string.IsNullOrWhiteSpace(SearchCarDetailsTextBox.Text))
+                {
+                    reservations = reservations.Where(r =>
+                        $"{r.Car.Brand} {r.Car.Model}".Contains(SearchCarDetailsTextBox.Text, StringComparison.OrdinalIgnoreCase)).ToList();
+                }
+
+                // Filtrowanie według daty rozpoczęcia
+                if (!string.IsNullOrWhiteSpace(SearchStartDateTextBox.Text) && DateTime.TryParse(SearchStartDateTextBox.Text, out var startDate))
+                {
+                    reservations = reservations.Where(r => r.StartDate >= startDate).ToList();
+                }
+
+                // Filtrowanie według daty zakończenia
+                if (!string.IsNullOrWhiteSpace(SearchEndDateTextBox.Text) && DateTime.TryParse(SearchEndDateTextBox.Text, out var endDate))
+                {
+                    reservations = reservations.Where(r => r.PlannedEndDate <= endDate).ToList();
+                }
+
+                // Filtrowanie według statusu
+                if (SearchStatusComboBox.SelectedIndex != -1)
+                {
+                    ReservationStatus selectedStatus = (ReservationStatus)Enum.Parse(typeof(ReservationStatus), SearchStatusComboBox.SelectedItem.ToString());
+                    reservations = reservations.Where(r => r.Status == selectedStatus).ToList();
+                }
+
+                // Uzupełnij dynamiczne pola CustomerFullName i CarDetails
+                foreach (var reservation in reservations)
+                {
+                    reservation.CustomerFullName = $"{reservation.Customer.FirstName} {reservation.Customer.LastName}";
+                    reservation.CarDetails = $"{reservation.Car.Brand} {reservation.Car.Model}";
+                }
+
+                // Przypisz wyniki do DataGridView
+                dataGridCarReservations.DataSource = null; // Wyczyszczenie źródła danych
+                dataGridCarReservations.DataSource = reservations;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred while searching reservations: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+
+
+        private void ResetFilters()
+        {
+            // Wyczyść wszystkie pola wyszukiwania
+            SearchCustomerTextBox.Clear();
+            SearchCarDetailsTextBox.Clear();
+            SearchStartDateTextBox.Clear();
+            SearchEndDateTextBox.Clear();
+            SearchStatusComboBox.SelectedIndex = -1;
+
+            // Załaduj wszystkie dane
+            LoadData();
+        }
+
     }
 }

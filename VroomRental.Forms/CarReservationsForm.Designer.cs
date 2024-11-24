@@ -29,8 +29,18 @@
         private void InitializeComponent()
         {
             SearchGroupBox = new GroupBox();
+            SearchStatusComboBox = new ComboBox();
+            SearchEndDateTextBox = new TextBox();
+            SearchStartDateTextBox = new TextBox();
+            label13 = new Label();
+            SearchCarDetailsTextBox = new TextBox();
+            SearchCustomerTextBox = new TextBox();
+            label12 = new Label();
+            label11 = new Label();
+            label10 = new Label();
+            label9 = new Label();
+            SearchResetButton = new Button();
             SearchButton = new Button();
-            SearchComboBox = new ComboBox();
             CarReservationDetailsGroupBox = new GroupBox();
             StartDateTextBox = new TextBox();
             ResetButton = new Button();
@@ -60,35 +70,127 @@
             // 
             // SearchGroupBox
             // 
+            SearchGroupBox.Controls.Add(SearchStatusComboBox);
+            SearchGroupBox.Controls.Add(SearchEndDateTextBox);
+            SearchGroupBox.Controls.Add(SearchStartDateTextBox);
+            SearchGroupBox.Controls.Add(label13);
+            SearchGroupBox.Controls.Add(SearchCarDetailsTextBox);
+            SearchGroupBox.Controls.Add(SearchCustomerTextBox);
+            SearchGroupBox.Controls.Add(label12);
+            SearchGroupBox.Controls.Add(label11);
+            SearchGroupBox.Controls.Add(label10);
+            SearchGroupBox.Controls.Add(label9);
+            SearchGroupBox.Controls.Add(SearchResetButton);
             SearchGroupBox.Controls.Add(SearchButton);
-            SearchGroupBox.Controls.Add(SearchComboBox);
             SearchGroupBox.Location = new Point(22, 9);
             SearchGroupBox.Margin = new Padding(3, 2, 3, 2);
             SearchGroupBox.Name = "SearchGroupBox";
             SearchGroupBox.Padding = new Padding(3, 2, 3, 2);
-            SearchGroupBox.Size = new Size(842, 51);
+            SearchGroupBox.Size = new Size(842, 104);
             SearchGroupBox.TabIndex = 5;
             SearchGroupBox.TabStop = false;
             SearchGroupBox.Text = "Search";
             // 
+            // SearchStatusComboBox
+            // 
+            SearchStatusComboBox.FormattingEnabled = true;
+            SearchStatusComboBox.Location = new Point(608, 57);
+            SearchStatusComboBox.Name = "SearchStatusComboBox";
+            SearchStatusComboBox.Size = new Size(100, 23);
+            SearchStatusComboBox.TabIndex = 10;
+            // 
+            // SearchEndDateTextBox
+            // 
+            SearchEndDateTextBox.Location = new Point(456, 57);
+            SearchEndDateTextBox.Name = "SearchEndDateTextBox";
+            SearchEndDateTextBox.Size = new Size(113, 23);
+            SearchEndDateTextBox.TabIndex = 9;
+            // 
+            // SearchStartDateTextBox
+            // 
+            SearchStartDateTextBox.Location = new Point(301, 57);
+            SearchStartDateTextBox.Name = "SearchStartDateTextBox";
+            SearchStartDateTextBox.Size = new Size(113, 23);
+            SearchStartDateTextBox.TabIndex = 9;
+            // 
+            // label13
+            // 
+            label13.AutoSize = true;
+            label13.Location = new Point(456, 24);
+            label13.Name = "label13";
+            label13.Size = new Size(54, 15);
+            label13.TabIndex = 7;
+            label13.Text = "End Date";
+            // 
+            // SearchCarDetailsTextBox
+            // 
+            SearchCarDetailsTextBox.Location = new Point(150, 57);
+            SearchCarDetailsTextBox.Name = "SearchCarDetailsTextBox";
+            SearchCarDetailsTextBox.Size = new Size(113, 23);
+            SearchCarDetailsTextBox.TabIndex = 8;
+            // 
+            // SearchCustomerTextBox
+            // 
+            SearchCustomerTextBox.Location = new Point(6, 57);
+            SearchCustomerTextBox.Name = "SearchCustomerTextBox";
+            SearchCustomerTextBox.Size = new Size(113, 23);
+            SearchCustomerTextBox.TabIndex = 7;
+            // 
+            // label12
+            // 
+            label12.AutoSize = true;
+            label12.Location = new Point(608, 24);
+            label12.Name = "label12";
+            label12.Size = new Size(39, 15);
+            label12.TabIndex = 6;
+            label12.Text = "Status";
+            // 
+            // label11
+            // 
+            label11.AutoSize = true;
+            label11.Location = new Point(301, 24);
+            label11.Name = "label11";
+            label11.Size = new Size(58, 15);
+            label11.TabIndex = 6;
+            label11.Text = "Start Date";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(150, 24);
+            label10.Name = "label10";
+            label10.Size = new Size(63, 15);
+            label10.TabIndex = 5;
+            label10.Text = "Car Details";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(6, 24);
+            label9.Name = "label9";
+            label9.Size = new Size(59, 15);
+            label9.TabIndex = 4;
+            label9.Text = "Customer";
+            // 
+            // SearchResetButton
+            // 
+            SearchResetButton.Location = new Point(734, 18);
+            SearchResetButton.Margin = new Padding(3, 2, 3, 2);
+            SearchResetButton.Name = "SearchResetButton";
+            SearchResetButton.Size = new Size(97, 26);
+            SearchResetButton.TabIndex = 3;
+            SearchResetButton.Text = "Reset";
+            SearchResetButton.UseVisualStyleBackColor = true;
+            // 
             // SearchButton
             // 
-            SearchButton.Location = new Point(595, 20);
+            SearchButton.Location = new Point(734, 68);
             SearchButton.Margin = new Padding(3, 2, 3, 2);
             SearchButton.Name = "SearchButton";
-            SearchButton.Size = new Size(144, 21);
+            SearchButton.Size = new Size(97, 26);
             SearchButton.TabIndex = 2;
             SearchButton.Text = "Search";
             SearchButton.UseVisualStyleBackColor = true;
-            // 
-            // SearchComboBox
-            // 
-            SearchComboBox.FormattingEnabled = true;
-            SearchComboBox.Location = new Point(5, 20);
-            SearchComboBox.Margin = new Padding(3, 2, 3, 2);
-            SearchComboBox.Name = "SearchComboBox";
-            SearchComboBox.Size = new Size(133, 23);
-            SearchComboBox.TabIndex = 1;
             // 
             // CarReservationDetailsGroupBox
             // 
@@ -300,7 +402,7 @@
             dataGridCarReservations.AllowUserToDeleteRows = false;
             dataGridCarReservations.AllowUserToResizeRows = false;
             dataGridCarReservations.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridCarReservations.Location = new Point(22, 74);
+            dataGridCarReservations.Location = new Point(22, 212);
             dataGridCarReservations.Margin = new Padding(3, 2, 3, 2);
             dataGridCarReservations.MultiSelect = false;
             dataGridCarReservations.Name = "dataGridCarReservations";
@@ -308,7 +410,7 @@
             dataGridCarReservations.RowHeadersVisible = false;
             dataGridCarReservations.RowHeadersWidth = 51;
             dataGridCarReservations.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridCarReservations.Size = new Size(842, 564);
+            dataGridCarReservations.Size = new Size(842, 426);
             dataGridCarReservations.TabIndex = 3;
             // 
             // CarReservationsForm
@@ -323,6 +425,7 @@
             Name = "CarReservationsForm";
             Text = "CarReservationsForm";
             SearchGroupBox.ResumeLayout(false);
+            SearchGroupBox.PerformLayout();
             CarReservationDetailsGroupBox.ResumeLayout(false);
             CarReservationDetailsGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridCarReservations).EndInit();
@@ -333,7 +436,6 @@
 
         private GroupBox SearchGroupBox;
         private Button SearchButton;
-        private ComboBox SearchComboBox;
         private GroupBox CarReservationDetailsGroupBox;
         private Button EditButton;
         private TextBox StatusTextBox;
@@ -375,5 +477,16 @@
         private Label label8;
         private Button ResetButton;
         private TextBox StartDateTextBox;
+        private Button SearchResetButton;
+        private Label label11;
+        private Label label10;
+        private Label label9;
+        private Label label12;
+        private TextBox SearchCarDetailsTextBox;
+        private TextBox SearchCustomerTextBox;
+        private TextBox SearchEndDateTextBox;
+        private TextBox SearchStartDateTextBox;
+        private Label label13;
+        private ComboBox SearchStatusComboBox;
     }
 }
