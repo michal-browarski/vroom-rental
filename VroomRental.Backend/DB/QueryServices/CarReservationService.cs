@@ -15,22 +15,22 @@ namespace VroomRental.Backend.DB.QueryServices
         public List<CarReservation> GetAllCarReservations()
         {
             string query = @"
-                SELECT 
-                    r.Reservation_Id, r.Start_Date, r.Planned_End_Date, r.Actual_End_Date, r.Status, 
-                    c.Customer_Id, c.First_Name, c.Last_Name, 
-                    car.Car_Id, car.Brand, car.Model, 
-                    e.Employee_Id, e.First_Name, e.Last_Name,
-                    p.Amount, p.Payment_Date
-                FROM 
-                    tbl_Car_Reservations r
-                JOIN 
-                    tbl_Customers c ON r.Customer_Id = c.Customer_Id
-                JOIN 
-                    tbl_Cars car ON r.Car_Id = car.Car_Id
-                LEFT JOIN 
-                    tbl_Employees e ON r.Employee_Id = e.Employee_Id
-                LEFT JOIN 
-                    tbl_Payments p ON r.Reservation_Id = p.Reservation_Id";
+        SELECT 
+            r.Reservation_Id, r.Start_Date, r.Planned_End_Date, r.Actual_End_Date, r.Status, 
+            c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, 
+            car.Car_Id, car.Brand, car.Model, 
+            e.Employee_Id, e.First_Name AS Employee_First_Name, e.Last_Name AS Employee_Last_Name,
+            p.Amount, p.Payment_Date
+        FROM 
+            tbl_Car_Reservations r
+        JOIN 
+            tbl_Customers c ON r.Customer_Id = c.Customer_Id
+        JOIN 
+            tbl_Cars car ON r.Car_Id = car.Car_Id
+        LEFT JOIN 
+            tbl_Employees e ON r.Employee_Id = e.Employee_Id
+        LEFT JOIN 
+            tbl_Payments p ON r.Reservation_Id = p.Reservation_Id";
 
             DataTable reservationTable = _databaseService.ExecuteQuery(query);
             List<CarReservation> reservations = new List<CarReservation>();
@@ -48,8 +48,8 @@ namespace VroomRental.Backend.DB.QueryServices
                     Customer = new Customer
                     {
                         Id = Convert.ToInt32(row["Customer_Id"]),
-                        FirstName = row["First_Name"].ToString(),
-                        LastName = row["Last_Name"].ToString()
+                        FirstName = row["Customer_First_Name"].ToString(),
+                        LastName = row["Customer_Last_Name"].ToString()
                     },
 
                     Car = new Car
@@ -62,21 +62,23 @@ namespace VroomRental.Backend.DB.QueryServices
                     Employee = row.IsNull("Employee_Id") ? null : new Employee
                     {
                         Id = Convert.ToInt32(row["Employee_Id"]),
-                        FirstName = row["First_Name"].ToString(),
-                        LastName = row["Last_Name"].ToString()
+                        FirstName = row.IsNull("Employee_First_Name") ? null : row["Employee_First_Name"].ToString(),
+                        LastName = row.IsNull("Employee_Last_Name") ? null : row["Employee_Last_Name"].ToString()
                     },
 
-                    Payment = row.IsNull("Reservation_Id") ? null : new Payment
+                    Payment = row.IsNull("Amount") ? null : new Payment
                     {
                         CarReservationId = Convert.ToInt32(row["Reservation_Id"]),
-                        Amount = Convert.ToDecimal(row["Amount"]),
-                        PaymentDate = Convert.ToDateTime(row["Payment_Date"])
+                        Amount = row.IsNull("Amount") ? 0 : Convert.ToDecimal(row["Amount"]),
+                        PaymentDate = row.IsNull("Payment_Date") ? (DateTime?)null : Convert.ToDateTime(row["Payment_Date"])
                     }
                 });
             }
 
             return reservations;
         }
+
+
 
         public void AddReservation(CarReservation reservation)
         {
@@ -102,11 +104,57 @@ namespace VroomRental.Backend.DB.QueryServices
 
         public List<AdditionalOption> GetOptionsFromReservation(int reservationId)
         {
-            string query = @$"
-                SELECT o.Option_Id, o.Option_Name, o.Price
-                FROM tbl_Reservation_Options ro
-                JOIN tbl_Additional_Options o ON ro.Option_Id = o.Option_Id
-                WHERE ro.Reservation_Id = @{reservationId}";
+            string query = @"
+        SELECT o.Option_Id, o.Option_Name, o.Price
+        FROM tbl_Reservation_Options ro
+        JOIN tbl_Additional_Options o ON ro.Option_Id = o.Option_Id
+        WHERE ro.Reservation_Id = @ReservationId";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@ReservationId", reservationId }
+            };
+
+            DataTable optionsTable = _databaseService.ExecuteQuery(query, parameters);
+            var options = new List<AdditionalOption>();
+
+            foreach (DataRow row in optionsTable.Rows)
+            {
+                options.Add(new AdditionalOption
+                {
+                    Id = Convert.ToInt32(row["Option_Id"]),
+                    Name = row["Option_Name"].ToString(),
+                    Price = Convert.ToDecimal(row["Price"])
+                });
+            }
+
+            return options;
+        }
+
+
+        public void AddOptionsToReservation(int reservationId, List<AdditionalOption> options)
+        {
+            foreach (var option in options)
+            {
+                string query = @"
+                    INSERT INTO tbl_Reservation_Options (Reservation_Id, Option_Id)
+                    VALUES (@ReservationId, @OptionId)";
+
+                var parameters = new Dictionary<string, object>
+                {
+                    { "@ReservationId", reservationId },
+                    { "@OptionId", option.Id }
+                };
+
+                _databaseService.ExecuteNonQuery(query, parameters);
+            }
+        }
+
+        public List<AdditionalOption> GetAllAdditionalOptions()
+        {
+            string query = @"
+        SELECT Option_Id, Option_Name, Price
+        FROM tbl_Additional_Options";
 
             DataTable optionsTable = _databaseService.ExecuteQuery(query);
             var options = new List<AdditionalOption>();
@@ -124,21 +172,74 @@ namespace VroomRental.Backend.DB.QueryServices
             return options;
         }
 
-        public void AddOptionsToReservation(int reservationId, List<AdditionalOption> options)
+        public void UpdateReservation(CarReservation reservation)
         {
+            string query = @"
+                UPDATE tbl_Car_Reservations
+                SET
+                    Start_Date = @StartDate,
+                    Planned_End_Date = @PlannedEndDate,
+                    Actual_End_Date = @ActualEndDate,
+                    Status = @Status
+                WHERE Reservation_Id = @ReservationId";
+
+                    var parameters = new Dictionary<string, object>
+            {
+                { "@StartDate", reservation.StartDate },
+                { "@PlannedEndDate", reservation.PlannedEndDate },
+                { "@ActualEndDate", reservation.ActualEndDate ?? (object)DBNull.Value },
+                { "@Status", reservation.Status },
+                { "@ReservationId", reservation.Id }
+            };
+
+            _databaseService.ExecuteNonQuery(query, parameters);
+        }
+
+
+        public void UpdateCarStatus(int carId, CarStatus status)
+        {
+            string query = @"
+                UPDATE tbl_Cars
+                SET Status = @Status
+                WHERE Car_Id = @CarId";
+
+                    var parameters = new Dictionary<string, object>
+            {
+                { "@Status", status },
+                { "@CarId", carId }
+            };
+
+            _databaseService.ExecuteNonQuery(query, parameters);
+        }
+
+        public void UpdateReservationOptions(int reservationId, List<AdditionalOption> options)
+        {
+            // Usuń istniejące opcje dla rezerwacji
+            string deleteQuery = @"
+                DELETE FROM tbl_Reservation_Options
+                WHERE Reservation_Id = @ReservationId";
+
+            var deleteParameters = new Dictionary<string, object>
+            {
+                { "@ReservationId", reservationId }
+            };
+
+            _databaseService.ExecuteNonQuery(deleteQuery, deleteParameters);
+
+            // Dodaj nowe opcje dla rezerwacji
             foreach (var option in options)
             {
-                string query = @"
+                string insertQuery = @"
                     INSERT INTO tbl_Reservation_Options (Reservation_Id, Option_Id)
                     VALUES (@ReservationId, @OptionId)";
 
-                var parameters = new Dictionary<string, object>
+                var insertParameters = new Dictionary<string, object>
                 {
                     { "@ReservationId", reservationId },
                     { "@OptionId", option.Id }
                 };
 
-                _databaseService.ExecuteNonQuery(query, parameters);
+                _databaseService.ExecuteNonQuery(insertQuery, insertParameters);
             }
         }
     }

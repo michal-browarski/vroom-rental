@@ -12,5 +12,18 @@
         public Employee Employee { get; set; }
         public Payment? Payment { get; set; }
         public List<AdditionalOption> AdditionalOptions { get; set; } = new List<AdditionalOption>();
+
+        // Właściwości pomocnicze
+        public string CustomerFullName { get; set; }
+        public string CarDetails { get; set; }
+        public string AdditionalOptionsSummary
+        {
+            get
+            {
+                return AdditionalOptions != null && AdditionalOptions.Count > 0
+                    ? string.Join(", ", AdditionalOptions.Select(o => o.Name))
+                    : "No options";
+            }
+        }
     }
 }
