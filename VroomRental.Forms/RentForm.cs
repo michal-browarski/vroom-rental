@@ -198,7 +198,7 @@ namespace VroomRental.Forms
                 _reservationService.AddReservation(newReservation);
 
                 List<AdditionalOption> checkedOptions = OptionsCheckedListBox.CheckedItems.Cast<AdditionalOption>().ToList();
-                _reservationService.AddOptionsToReservation(_reservationService.GetAllCarReservations().Count, checkedOptions);
+                _reservationService.AddOptionsToReservation(_reservationService.GetAllCarReservations().Last().Id, checkedOptions);
 
                 SelectedCar.Status = CarStatus.Rented;
                 _carService.EditCar(SelectedCar);
