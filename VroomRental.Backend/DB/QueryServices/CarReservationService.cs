@@ -70,7 +70,7 @@ namespace VroomRental.Backend.DB.QueryServices
                     {
                         CarReservationId = Convert.ToInt32(row["Reservation_Id"]),
                         Amount = row.IsNull("Amount") ? 0 : Convert.ToDecimal(row["Amount"]),
-                        PaymentDate = row.IsNull("Payment_Date") ? (DateTime?)null : Convert.ToDateTime(row["Payment_Date"])
+                        PaymentDate = (DateTime)(row.IsNull("Payment_Date") ? (DateTime?)null : Convert.ToDateTime(row["Payment_Date"]))
                     }
                 });
             }

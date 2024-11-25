@@ -197,6 +197,9 @@ namespace VroomRental.Forms
 
                 _reservationService.AddReservation(newReservation);
 
+                List<AdditionalOption> checkedOptions = OptionsCheckedListBox.CheckedItems.Cast<AdditionalOption>().ToList();
+                _reservationService.AddOptionsToReservation(_reservationService.GetAllCarReservations().Count, checkedOptions);
+
                 SelectedCar.Status = CarStatus.Rented;
                 _carService.EditCar(SelectedCar);
 
@@ -405,35 +408,11 @@ namespace VroomRental.Forms
 
         private void LoadAdditionalOptions()
         {
-            List<AdditionalOption> options = new List<AdditionalOption>()
-            {
-                new AdditionalOption()
-                {
-                    Id = 1,
-                    Name = "Bagażnik na rowery",
-                    Price = 15m
-                },
-                new AdditionalOption()
-                {
-                    Id = 2,
-                    Name = "Fotelik dziecięcy",
-                    Price = 10m
-                },
-                new AdditionalOption()
-                {
-                    Id = 3,
-                    Name = "Dodatkowe ubezpieczenie",
-                    Price = 15m
-                }
-            };
+            List<AdditionalOption> options = _reservationService.GetAllAdditionalOptions();
 
             OptionsCheckedListBox.Items.Clear();
 
-            foreach (var option in options)
-            {
-                string itemText = $"{option.Name} - {option.Price:C}";
-                OptionsCheckedListBox.Items.Add(itemText);
-            }
+            options.ForEach(option => { OptionsCheckedListBox.Items.Add(option); });
         }
 
         private void RentForm_Load(object sender, EventArgs e)
