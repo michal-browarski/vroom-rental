@@ -396,5 +396,7 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
+# App.config with connection string
+App.config
 # JetBrains Rider
 *.sln.iml
