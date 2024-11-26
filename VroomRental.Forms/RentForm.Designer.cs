@@ -69,6 +69,7 @@
             PlannedEndDateCalendar = new MonthCalendar();
             RentButton = new Button();
             OptionsCheckedListBox = new CheckedListBox();
+            PriceLabel = new Label();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             ActionsGroupBox.SuspendLayout();
@@ -475,10 +476,13 @@
             // PlannedEndDateCalendar
             // 
             PlannedEndDateCalendar.CalendarDimensions = new Size(1, 2);
+            PlannedEndDateCalendar.FirstDayOfWeek = Day.Monday;
             PlannedEndDateCalendar.Location = new Point(1328, 24);
             PlannedEndDateCalendar.Margin = new Padding(10, 12, 10, 12);
             PlannedEndDateCalendar.Name = "PlannedEndDateCalendar";
+            PlannedEndDateCalendar.ShowToday = false;
             PlannedEndDateCalendar.TabIndex = 3;
+            PlannedEndDateCalendar.DateChanged += PlannedEndDateCalendar_DateChanged;
             // 
             // RentButton
             // 
@@ -498,12 +502,24 @@
             OptionsCheckedListBox.Name = "OptionsCheckedListBox";
             OptionsCheckedListBox.Size = new Size(341, 178);
             OptionsCheckedListBox.TabIndex = 25;
+            OptionsCheckedListBox.DoubleClick += OptionsCheckedListBox_DoubleClick;
+            // 
+            // PriceLabel
+            // 
+            PriceLabel.AutoSize = true;
+            PriceLabel.Font = new Font("Segoe UI", 18F);
+            PriceLabel.Location = new Point(1481, 683);
+            PriceLabel.Name = "PriceLabel";
+            PriceLabel.Size = new Size(64, 41);
+            PriceLabel.TabIndex = 26;
+            PriceLabel.Text = "0 zł";
             // 
             // RentForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1673, 841);
+            Controls.Add(PriceLabel);
             Controls.Add(OptionsCheckedListBox);
             Controls.Add(RentButton);
             Controls.Add(PlannedEndDateCalendar);
@@ -521,6 +537,7 @@
             ActionsGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridCustomers).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -566,5 +583,6 @@
         private TextBox SearchPhoneTextBox;
         private Label label11;
         private CheckedListBox OptionsCheckedListBox;
+        private Label PriceLabel;
     }
 }
