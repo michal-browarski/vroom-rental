@@ -2,7 +2,6 @@
 {
     public partial class AdminPanel : Form
     {
-        //private CarReservationsForm? carReservationsFormInstance;
         private Form? activeFormInstance;
         public AdminPanel()
         {
