@@ -124,6 +124,8 @@ namespace VroomRental.Forms
         private void InitializeMonthCalendar()
         {
             PlannedEndDateCalendar.MinDate = DateTime.Now;
+            PlannedEndDateCalendar.MaxDate = DateTime.Now.AddDays(30);
+
         }
 
         private void LoadCustomers()
@@ -418,6 +420,28 @@ namespace VroomRental.Forms
         private void RentForm_Load(object sender, EventArgs e)
         {
             LoadAdditionalOptions();
+        }
+
+        private void PlannedEndDateCalendar_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            PriceLabel.Text = ActualizePriceLabel().ToString() + " zł";
+        }
+
+        private void OptionsCheckedListBox_DoubleClick(object sender, EventArgs e)
+        {
+            PriceLabel.Text = ActualizePriceLabel().ToString() + " zł";
+        }
+
+        private decimal ActualizePriceLabel()
+        {
+            decimal price = SelectedCar.PricePerDay * (PlannedEndDateCalendar.SelectionStart - DateTime.Today).Days;
+
+            foreach (AdditionalOption option in OptionsCheckedListBox.CheckedItems)
+            {
+                price += option.Price;
+            }
+
+            return price;
         }
     }
 }
