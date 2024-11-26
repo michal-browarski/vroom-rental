@@ -103,7 +103,6 @@ namespace VroomRental.Forms
                 Name = "ColumnFuelType"
             });
 
-            // Dodaj kolumnę z przyciskiem do wypożyczenia
             var rentButtonColumn = new DataGridViewButtonColumn
             {
                 HeaderText = "Rent",
@@ -417,8 +416,8 @@ namespace VroomRental.Forms
 
         private int GetCurrentEmployeeId()
         {
-            // Zwróć ID zalogowanego pracownika
-            return 1; // Przykład: domyślny ID
+            // TODO: Zwracaj faktyczne ID zalogowanego pracownika
+            return 1;
         }
 
         private void ResetCarButton_Click(object sender, EventArgs e)

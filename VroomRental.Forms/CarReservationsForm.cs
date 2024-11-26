@@ -1,5 +1,4 @@
 ﻿using System.Configuration;
-using System.Windows.Forms;
 using VroomRental.Backend.DB;
 using VroomRental.Backend.DB.QueryServices;
 using VroomRental.Backend.Model;
@@ -37,7 +36,6 @@ namespace VroomRental.Forms
         {
             dataGridCarReservations.AutoGenerateColumns = false;
 
-            // Konfiguracja kolumn DataGridView
             dataGridCarReservations.Columns.Add(new DataGridViewTextBoxColumn
             {
                 HeaderText = "Customer Name",
@@ -92,17 +90,14 @@ namespace VroomRental.Forms
         {
             try
             {
-                // Pobierz wszystkie dane rezerwacji
                 List<CarReservation> reservations = _carReservationService.GetAllCarReservations();
 
-                // Uzupełnij dynamiczne pola
                 foreach (var reservation in reservations)
                 {
                     reservation.CustomerFullName = $"{reservation.Customer.FirstName} {reservation.Customer.LastName}";
                     reservation.CarDetails = $"{reservation.Car.Brand} {reservation.Car.Model}";
                 }
 
-                // Ustaw dane w DataGridView
                 dataGridCarReservations.DataSource = null;
                 dataGridCarReservations.DataSource = reservations;
             }
@@ -122,7 +117,6 @@ namespace VroomRental.Forms
 
                 if (selectedReservation != null)
                 {
-                    // Wypełnij pola tekstowe szczegółami rezerwacji
                     CustomerNameTextBox.Text = $"{selectedReservation.Customer.FirstName} {selectedReservation.Customer.LastName}";
                     CarDetailsTextBox.Text = $"{selectedReservation.Car.Brand} {selectedReservation.Car.Model}";
                     StartDateTextBox.Text = selectedReservation.StartDate.ToString("dd-MM-yyyy");
@@ -136,7 +130,6 @@ namespace VroomRental.Forms
                         ? $"Amount: {selectedReservation.Payment.Amount:C}, Date: {selectedReservation.Payment.PaymentDate:dd-MM-yyyy}"
                         : "N/A";
 
-                    // Zaktualizuj stan CheckedListBox dla opcji rezerwacji
                     UpdateReservationOptionsCheckedListBox(selectedReservation.Id);
                 }
             }
@@ -146,16 +139,12 @@ namespace VroomRental.Forms
         {
             try
             {
-                // Wyczyszczenie istniejących elementów w CheckedListBox
                 AdditionalOptionsCheckedListBox.Items.Clear();
 
-                // Pobranie wszystkich dostępnych opcji z bazy danych
                 var allOptions = _carReservationService.GetAllAdditionalOptions();
 
-                // Pobranie opcji przypisanych do danego wypożyczenia
                 var reservationOptions = _carReservationService.GetOptionsFromReservation(reservationId);
 
-                // Iteracja po wszystkich opcjach i dodanie ich do CheckedListBox
                 foreach (var option in allOptions)
                 {
                     bool isChecked = reservationOptions.Any(o => o.Id == option.Id);
@@ -176,7 +165,6 @@ namespace VroomRental.Forms
 
         private void ResetInputs()
         {
-            // Resetuj wszystkie pola tekstowe
             CustomerNameTextBox.Clear();
             CarDetailsTextBox.Clear();
             StartDateTextBox.Clear();
@@ -186,7 +174,6 @@ namespace VroomRental.Forms
             EmployeeNameTextBox.Clear();
             PaymentDetailsTextBox.Clear();
 
-            // Odznacz wszystkie opcje w CheckedListBox
             for (int i = 0; i < AdditionalOptionsCheckedListBox.Items.Count; i++)
             {
                 AdditionalOptionsCheckedListBox.SetItemChecked(i, false);
@@ -197,7 +184,6 @@ namespace VroomRental.Forms
         {
             if (e.RowIndex < 0) return;
 
-            // Obsługa przycisku "End Rental"
             if (dataGridCarReservations.Columns[e.ColumnIndex].Name == "EndRentalButtonColumn")
             {
                 var selectedReservation = dataGridCarReservations.Rows[e.RowIndex].DataBoundItem as CarReservation;
@@ -208,14 +194,12 @@ namespace VroomRental.Forms
                     return;
                 }
 
-                // Sprawdzenie, czy rezerwacja może zostać zakończona
                 if (selectedReservation.Status != ReservationStatus.Active)
                 {
                     MessageBox.Show("Only active reservations can be ended.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Potwierdzenie zakończenia wypożyczenia
                 var confirmResult = MessageBox.Show(
                     $"Are you sure you want to end the rental for customer {selectedReservation.Customer.FirstName} {selectedReservation.Customer.LastName}?",
                     "Confirm End Rental",
@@ -226,20 +210,15 @@ namespace VroomRental.Forms
                 {
                     try
                     {
-                        // Aktualizacja bazy danych: zakończenie wypożyczenia
                         selectedReservation.ActualEndDate = DateTime.Now;
                         selectedReservation.Status = ReservationStatus.Ended;
 
-                        // Zaktualizuj rezerwację
                         _carReservationService.UpdateReservation(selectedReservation);
 
-                        // Zaktualizuj status samochodu na "Available"
                         _carReservationService.UpdateCarStatus(selectedReservation.Car.Id, CarStatus.Available);
 
-                        // Sukces
                         MessageBox.Show("Rental has been successfully ended.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Odśwież dane
                         LoadData();
                     }
                     catch (Exception ex)
@@ -294,11 +273,9 @@ namespace VroomRental.Forms
 
             try
             {
-                // Zaktualizuj dane rezerwacji na podstawie edytowanych pól
                 selectedReservation.StartDate = DateTime.Parse(StartDateTextBox.Text);
                 selectedReservation.PlannedEndDate = DateTime.Parse(PlannedEndDateTextBox.Text);
 
-                // Jeśli pole Actual End Date jest puste lub ma wartość "N/A", pozostaw null
                 if (string.IsNullOrWhiteSpace(ActualEndDateTextBox.Text) || ActualEndDateTextBox.Text == "N/A")
                 {
                     selectedReservation.ActualEndDate = null;
@@ -310,10 +287,8 @@ namespace VroomRental.Forms
 
                 selectedReservation.Status = (ReservationStatus)Enum.Parse(typeof(ReservationStatus), StatusTextBox.Text);
 
-                // Zapisz aktualizację rezerwacji w bazie danych
                 _carReservationService.UpdateReservation(selectedReservation);
 
-                // Pobierz wybrane opcje dodatkowe z CheckedListBox
                 var selectedOptions = new List<AdditionalOption>();
                 foreach (var item in AdditionalOptionsCheckedListBox.CheckedItems)
                 {
@@ -323,10 +298,8 @@ namespace VroomRental.Forms
                     }
                 }
 
-                // Zaktualizuj opcje dodatkowe w bazie danych
                 _carReservationService.UpdateReservationOptions(selectedReservation.Id, selectedOptions);
 
-                // Odśwież dane w DataGridView
                 LoadData();
 
                 MessageBox.Show("Reservation updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
