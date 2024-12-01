@@ -129,6 +129,9 @@ namespace VroomRental.Forms
                     PaymentDetailsTextBox.Text = selectedReservation.Payment != null
                         ? $"Amount: {selectedReservation.Payment.Amount:C}, Date: {selectedReservation.Payment.PaymentDate:dd-MM-yyyy}"
                         : "N/A";
+                    MileagePackageTextBox.Text = selectedReservation.DailyMileagePackage != null
+                        ? $"{selectedReservation.DailyMileagePackage.PackageName}"
+                        : "No mileage package";
 
                     UpdateReservationOptionsCheckedListBox(selectedReservation.Id);
                 }
@@ -200,34 +203,16 @@ namespace VroomRental.Forms
                     return;
                 }
 
-                var confirmResult = MessageBox.Show(
-                    $"Are you sure you want to end the rental for customer {selectedReservation.Customer.FirstName} {selectedReservation.Customer.LastName}?",
-                    "Confirm End Rental",
-                    MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Question);
-
-                if (confirmResult == DialogResult.Yes)
+                using (var endRentalForm = new EndRentalForm(_carReservationService, selectedReservation))
                 {
-                    try
+                    if (endRentalForm.ShowDialog() == DialogResult.OK)
                     {
-                        selectedReservation.ActualEndDate = DateTime.Now;
-                        selectedReservation.Status = ReservationStatus.Ended;
-
-                        _carReservationService.UpdateReservation(selectedReservation);
-
-                        _carReservationService.UpdateCarStatus(selectedReservation.Car.Id, CarStatus.Available);
-
-                        MessageBox.Show("Rental has been successfully ended.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                         LoadData();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"An error occurred while ending the rental: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
         }
+
         private void DataGridCarReservations_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
             if (dataGridCarReservations.Columns[e.ColumnIndex].Name == "EndRentalButtonColumn" && e.RowIndex >= 0)

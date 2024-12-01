@@ -32,6 +32,7 @@ namespace VroomRental.Forms
             InitializeMonthCalendar();
 
             LoadCustomers();
+            LoadMileagePackages();
 
             RentButton.Click += RentButton_Click;
             AddButton.Click += AddButton_Click;
@@ -42,6 +43,9 @@ namespace VroomRental.Forms
             SearchResetButton.Click += SearchResetButton_Click;
 
             dataGridCustomers.CellClick += DataGridCustomers_CellClick;
+            MileagePackagesComboBox.SelectedIndexChanged += MileagePackagesComboBox_SelectedIndexChanged;
+
+            OptionsCheckedListBox.ItemCheck += OptionsCheckedListBox_ItemCheck;
         }
 
         private void InitializeDataGridView()
@@ -91,6 +95,26 @@ namespace VroomRental.Forms
             });
 
             dataGridCustomers.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+        }
+
+        private void LoadMileagePackages()
+        {
+            try
+            {
+                var mileagePackages = _reservationService.GetAllMileagePackages();
+
+                MileagePackagesComboBox.Items.Clear();
+                foreach (var package in mileagePackages)
+                {
+                    MileagePackagesComboBox.Items.Add(package);
+                }
+
+                MileagePackagesComboBox.SelectedIndex = -1;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading mileage packages: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void DataGridCustomers_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -146,6 +170,12 @@ namespace VroomRental.Forms
                 return;
             }
 
+            if (MileagePackagesComboBox.SelectedIndex == -1)
+            {
+                MessageBox.Show("Please select a daily mileage package.", "No Package Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var selectedCustomer = dataGridCustomers.CurrentRow.DataBoundItem as Customer;
 
             if (selectedCustomer == null)
@@ -164,6 +194,14 @@ namespace VroomRental.Forms
             if (SelectedCar == null)
             {
                 MessageBox.Show("No car has been selected for rental.", "No Car Selected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Pobranie wybranego pakietu kilometrów
+            var selectedPackage = MileagePackagesComboBox.SelectedItem as DailyMileagePackage;
+            if (selectedPackage == null)
+            {
+                MessageBox.Show("Invalid mileage package selected.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -191,7 +229,8 @@ namespace VroomRental.Forms
                     ActualEndDate = null,
                     Status = ReservationStatus.Active,
                     Employee = new Employee { Id = CurrentEmployeeId },
-                    Payment = null
+                    Payment = null,
+                    DailyMileagePackage = selectedPackage
                 };
 
                 _reservationService.AddReservation(newReservation);
@@ -202,7 +241,7 @@ namespace VroomRental.Forms
                 SelectedCar.Status = CarStatus.Rented;
                 _carService.EditCar(SelectedCar);
 
-                MessageBox.Show($"Car has been successfully rented to {selectedCustomer.FirstName} {selectedCustomer.LastName} until {plannedEndDate:yyyy-MM-dd}!",
+                MessageBox.Show($"Car has been successfully rented to {selectedCustomer.FirstName} {selectedCustomer.LastName} until {plannedEndDate:yyyy-MM-dd}! Mileage package: {selectedPackage.PackageName}.",
                                 "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                 DialogResult = DialogResult.OK;
@@ -424,21 +463,44 @@ namespace VroomRental.Forms
             PriceLabel.Text = ActualizePriceLabel().ToString() + " zł";
         }
 
-        private void OptionsCheckedListBox_DoubleClick(object sender, EventArgs e)
+        private void OptionsCheckedListBox_ItemCheck(object sender, ItemCheckEventArgs e)
+        {
+            // Wstrzymaj chwilowo aktualizację (stan aktualny jeszcze się nie zmienił)
+            BeginInvoke(new Action(() =>
+            {
+                // Zaktualizuj wartość w label po zmianie stanu zaznaczenia
+                PriceLabel.Text = ActualizePriceLabel().ToString() + " zł";
+            }));
+        }
+
+        private void MileagePackagesComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             PriceLabel.Text = ActualizePriceLabel().ToString() + " zł";
         }
 
         private decimal ActualizePriceLabel()
         {
+            // Cena bazowa: cena za dzień samochodu pomnożona przez liczbę dni wypożyczenia
             decimal price = SelectedCar.PricePerDay * (PlannedEndDateCalendar.SelectionStart - DateTime.Today).Days;
 
+            // Dodaj koszt opcji dodatkowych
             foreach (AdditionalOption option in OptionsCheckedListBox.CheckedItems)
             {
                 price += option.Price;
             }
 
+            // Dodaj koszt pakietu kilometrów, jeśli wybrany
+            if (MileagePackagesComboBox.SelectedIndex >= 0)
+            {
+                var selectedPackage = MileagePackagesComboBox.SelectedItem as DailyMileagePackage;
+                if (selectedPackage != null)
+                {
+                    price += selectedPackage.Price * (PlannedEndDateCalendar.SelectionStart - DateTime.Today).Days;
+                }
+            }
+
             return price;
         }
+
     }
 }

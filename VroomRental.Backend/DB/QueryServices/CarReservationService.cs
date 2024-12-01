@@ -18,9 +18,10 @@ namespace VroomRental.Backend.DB.QueryServices
         SELECT 
             r.Reservation_Id, r.Start_Date, r.Planned_End_Date, r.Actual_End_Date, r.Status, 
             c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, 
-            car.Car_Id, car.Brand, car.Model, 
+            car.Car_Id, car.Brand, car.Model, car.Price_Per_Day, -- Dodano Price_Per_Day
             e.Employee_Id, e.First_Name AS Employee_First_Name, e.Last_Name AS Employee_Last_Name,
-            p.Amount, p.Payment_Date
+            p.Amount, p.Payment_Date,
+            dmp.Package_Id, dmp.Package_Name, dmp.Max_Kilometers_Per_Day, dmp.Price AS Package_Price
         FROM 
             tbl_Car_Reservations r
         JOIN 
@@ -30,7 +31,9 @@ namespace VroomRental.Backend.DB.QueryServices
         LEFT JOIN 
             tbl_Employees e ON r.Employee_Id = e.Employee_Id
         LEFT JOIN 
-            tbl_Payments p ON r.Reservation_Id = p.Reservation_Id";
+            tbl_Payments p ON r.Reservation_Id = p.Reservation_Id
+        LEFT JOIN
+            tbl_DailyMileagePackages dmp ON r.DailyMileagePackage_Id = dmp.Package_Id";
 
             DataTable reservationTable = _databaseService.ExecuteQuery(query);
             List<CarReservation> reservations = new List<CarReservation>();
@@ -56,7 +59,8 @@ namespace VroomRental.Backend.DB.QueryServices
                     {
                         Id = Convert.ToInt32(row["Car_Id"]),
                         Brand = row["Brand"].ToString(),
-                        Model = row["Model"].ToString()
+                        Model = row["Model"].ToString(),
+                        PricePerDay = Convert.ToDecimal(row["Price_Per_Day"]) // Dodano mapowanie PricePerDay
                     },
 
                     Employee = row.IsNull("Employee_Id") ? null : new Employee
@@ -70,7 +74,15 @@ namespace VroomRental.Backend.DB.QueryServices
                     {
                         CarReservationId = Convert.ToInt32(row["Reservation_Id"]),
                         Amount = row.IsNull("Amount") ? 0 : Convert.ToDecimal(row["Amount"]),
-                        PaymentDate = (DateTime)(row.IsNull("Payment_Date") ? (DateTime?)null : Convert.ToDateTime(row["Payment_Date"]))
+                        PaymentDate = row.IsNull("Payment_Date") ? (DateTime?)null : Convert.ToDateTime(row["Payment_Date"])
+                    },
+
+                    DailyMileagePackage = row.IsNull("Package_Id") ? null : new DailyMileagePackage
+                    {
+                        Id = Convert.ToInt32(row["Package_Id"]),
+                        PackageName = row["Package_Name"].ToString(),
+                        MaxKilometersPerDay = Convert.ToInt32(row["Max_Kilometers_Per_Day"]),
+                        Price = Convert.ToDecimal(row["Package_Price"])
                     }
                 });
             }
@@ -84,11 +96,11 @@ namespace VroomRental.Backend.DB.QueryServices
         {
             string query = @"
                 INSERT INTO tbl_Car_Reservations 
-                (Customer_Id, Car_Id, Start_Date, Planned_End_Date, Actual_End_Date, Status, Employee_Id)
+                (Customer_Id, Car_Id, Start_Date, Planned_End_Date, Actual_End_Date, Status, Employee_Id, DailyMileagePackage_Id)
                 VALUES 
-                (@CustomerId, @CarId, @StartDate, @PlannedEndDate, @ActualEndDate, @Status, @EmployeeId)";
+                (@CustomerId, @CarId, @StartDate, @PlannedEndDate, @ActualEndDate, @Status, @EmployeeId, @DailyMileagePackageId)";
 
-            var parameters = new Dictionary<string, object>
+                    var parameters = new Dictionary<string, object>
             {
                 { "@CustomerId", reservation.Customer.Id },
                 { "@CarId", reservation.Car.Id },
@@ -96,11 +108,13 @@ namespace VroomRental.Backend.DB.QueryServices
                 { "@PlannedEndDate", reservation.PlannedEndDate },
                 { "@ActualEndDate", reservation.ActualEndDate ?? (object)DBNull.Value },
                 { "@Status", reservation.Status },
-                { "@EmployeeId", reservation.Employee?.Id ?? (object)DBNull.Value }
+                { "@EmployeeId", reservation.Employee?.Id ?? (object)DBNull.Value },
+                { "@DailyMileagePackageId", reservation.DailyMileagePackage?.Id ?? (object)DBNull.Value }
             };
 
             _databaseService.ExecuteNonQuery(query, parameters);
         }
+
 
         public List<AdditionalOption> GetOptionsFromReservation(int reservationId)
         {
@@ -241,6 +255,44 @@ namespace VroomRental.Backend.DB.QueryServices
 
                 _databaseService.ExecuteNonQuery(insertQuery, insertParameters);
             }
+        }
+
+        public List<DailyMileagePackage> GetAllMileagePackages()
+        {
+            string query = @"
+                SELECT Package_Id, Package_Name, Max_Kilometers_Per_Day, Price
+                FROM tbl_DailyMileagePackages";
+
+            DataTable packageTable = _databaseService.ExecuteQuery(query);
+            var packages = new List<DailyMileagePackage>();
+
+            foreach (DataRow row in packageTable.Rows)
+            {
+                packages.Add(new DailyMileagePackage
+                {
+                    Id = Convert.ToInt32(row["Package_Id"]),
+                    PackageName = row["Package_Name"].ToString(),
+                    MaxKilometersPerDay = Convert.ToInt32(row["Max_Kilometers_Per_Day"]),
+                    Price = Convert.ToDecimal(row["Price"])
+                });
+            }
+
+            return packages;
+        }
+
+        public void AddRepairCost(int reservationId, decimal cost)
+        {
+            string query = @"
+                INSERT INTO tbl_RepairCosts (Reservation_Id, Cost)
+                VALUES (@ReservationId, @Cost)";
+
+                    var parameters = new Dictionary<string, object>
+            {
+                { "@ReservationId", reservationId },
+                { "@Cost", cost }
+            };
+
+            _databaseService.ExecuteNonQuery(query, parameters);
         }
     }
 }
