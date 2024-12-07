@@ -18,7 +18,7 @@ namespace VroomRental.Backend.DB.QueryServices
         SELECT 
             r.Reservation_Id, r.Start_Date, r.Planned_End_Date, r.Actual_End_Date, r.Status, 
             c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, 
-            car.Car_Id, car.Brand, car.Model, car.Price_Per_Day, -- Dodano Price_Per_Day
+            car.Car_Id, car.Brand, car.Model, car.Price_Per_Day, car.Mileage,
             e.Employee_Id, e.First_Name AS Employee_First_Name, e.Last_Name AS Employee_Last_Name,
             p.Amount, p.Payment_Date,
             dmp.Package_Id, dmp.Package_Name, dmp.Max_Kilometers_Per_Day, dmp.Price AS Package_Price
@@ -60,7 +60,8 @@ namespace VroomRental.Backend.DB.QueryServices
                         Id = Convert.ToInt32(row["Car_Id"]),
                         Brand = row["Brand"].ToString(),
                         Model = row["Model"].ToString(),
-                        PricePerDay = Convert.ToDecimal(row["Price_Per_Day"]) // Dodano mapowanie PricePerDay
+                        Mileage = Convert.ToInt32(row["Mileage"]),
+                        PricePerDay = Convert.ToDecimal(row["Price_Per_Day"])
                     },
 
                     Employee = row.IsNull("Employee_Id") ? null : new Employee

@@ -135,6 +135,16 @@ namespace VroomRental.Forms
                 }
             }
 
+            // Oblicz różnicę między końcowym a początkowym stanem licznika
+            int mileageUsed = finalMileage - reservation.Car.Mileage;
+
+            // Sprawdź, czy różnica jest prawidłowa
+            if (mileageUsed < 0)
+            {
+                MileageStatusLabel.Text = "Invalid final mileage. Final mileage must be greater than or equal to the starting mileage.";
+                return totalPrice;
+            }
+
             // Dodaj koszt pakietu kilometrów
             if (reservation.DailyMileagePackage != null)
             {
@@ -142,10 +152,10 @@ namespace VroomRental.Forms
 
                 // Oblicz, czy limit kilometrów został przekroczony
                 int allowedMileage = reservation.DailyMileagePackage.MaxKilometersPerDay * rentalDays;
-                if (finalMileage > allowedMileage)
+                if (mileageUsed > allowedMileage)
                 {
-                    int overage = finalMileage - allowedMileage;
-                    decimal overageCost = overage * PenaltyPerKilometer; // Użycie stałej wartości kary
+                    int overage = mileageUsed - allowedMileage;
+                    decimal overageCost = overage * PenaltyPerKilometer;
                     totalPrice += overageCost;
 
                     MileageStatusLabel.Text = $"Mileage exceeded. Penalty: {overageCost:C}";
@@ -155,6 +165,11 @@ namespace VroomRental.Forms
                     MileageStatusLabel.Text = "Mileage within allowed limit.";
                 }
             }
+            else
+            {
+                MileageStatusLabel.Text = "No mileage package selected.";
+            }
+
 
             // Dodaj koszt naprawy, jeśli wymagane
             if (requiresRepair)
