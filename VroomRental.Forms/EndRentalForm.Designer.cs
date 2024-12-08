@@ -41,6 +41,7 @@
             BlikRadioButton = new RadioButton();
             label2 = new Label();
             BlikCodeTextBox = new TextBox();
+            RepairDescriptionTextBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)FinalMileageNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RepairCostNumericUpDown).BeginInit();
             SuspendLayout();
@@ -178,11 +179,21 @@
             BlikCodeTextBox.Size = new Size(100, 35);
             BlikCodeTextBox.TabIndex = 12;
             // 
+            // RepairDescriptionTextBox
+            // 
+            RepairDescriptionTextBox.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            RepairDescriptionTextBox.Location = new Point(12, 419);
+            RepairDescriptionTextBox.Name = "RepairDescriptionTextBox";
+            RepairDescriptionTextBox.PlaceholderText = "Repair Description";
+            RepairDescriptionTextBox.Size = new Size(393, 35);
+            RepairDescriptionTextBox.TabIndex = 13;
+            // 
             // EndRentalForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(417, 718);
+            Controls.Add(RepairDescriptionTextBox);
             Controls.Add(BlikCodeTextBox);
             Controls.Add(label2);
             Controls.Add(BlikRadioButton);
@@ -220,5 +231,6 @@
         private RadioButton BlikRadioButton;
         private Label label2;
         private TextBox BlikCodeTextBox;
+        private TextBox RepairDescriptionTextBox;
     }
 }

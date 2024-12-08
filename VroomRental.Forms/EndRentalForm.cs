@@ -30,6 +30,7 @@ namespace VroomRental.Forms
             FinalMileageNumericUpDown.Value = _selectedReservation.Car.Mileage;
 
             RepairCostNumericUpDown.Enabled = false;
+            RepairDescriptionTextBox.Enabled = false;
             TotalAmountLabel.Text = "Total Amount: 0 zł";
             MileageStatusLabel.Text = "Mileage within allowed limit.";
 
@@ -43,9 +44,9 @@ namespace VroomRental.Forms
             BlikRadioButton.CheckedChanged += PaymentMethodChanged;
 
             // Ustawienia radiobuttonów
-            CashRadioButton.Checked = true; // Domyślnie gotówka
-            BlikCodeTextBox.Enabled = false; // Pole kodu Blik domyślnie wyłączone
-            GeneratedBlikCode = null; // Reset kodu Blik
+            CashRadioButton.Checked = true;
+            BlikCodeTextBox.Enabled = false;
+            GeneratedBlikCode = null;
 
             UpdateTotalAmountLabel();
         }
@@ -91,6 +92,18 @@ namespace VroomRental.Forms
                     _reservationService.UpdateReservation(_selectedReservation);
                     _reservationService.UpdateCarStatus(_selectedReservation.Car.Id, CarStatus.Available);
 
+                    // Zapis płatności w bazie danych
+                    int paymentMethodId = BlikRadioButton.Checked ? 1 : 2; // 1 = Blik, 2 = Cash
+                    _reservationService.SavePayment(_selectedReservation.Id, totalPrice, paymentMethodId);
+
+                    // Zapis naprawy, jeśli zaznaczono
+                    if (requiresRepair)
+                    {
+                        string repairDescription = RepairDescriptionTextBox.Text;
+
+                        _reservationService.SaveRepair(_selectedReservation.Car.Id, repairDescription, 1);
+                    }
+
                     MessageBox.Show($"Rental has been successfully ended.\nTotal Amount Paid: {totalPrice:C}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     DialogResult = DialogResult.OK;
@@ -111,8 +124,10 @@ namespace VroomRental.Forms
         private void RepairCheckbox_CheckedChanged(object sender, EventArgs e)
         {
             RepairCostNumericUpDown.Enabled = RepairCheckBox.Checked;
+            RepairDescriptionTextBox.Enabled = RepairCheckBox.Checked;
             UpdateTotalAmountLabel();
         }
+
 
         private void RepairCostNumericUpDown_ValueChanged(object sender, EventArgs e)
         {

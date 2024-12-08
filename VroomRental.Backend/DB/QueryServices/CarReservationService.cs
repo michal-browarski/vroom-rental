@@ -283,19 +283,48 @@ namespace VroomRental.Backend.DB.QueryServices
             return packages;
         }
 
-        public void AddRepairCost(int reservationId, decimal cost)
+        public void SaveRepair(int carId, string description, int employeeId)
         {
             string query = @"
-                INSERT INTO tbl_RepairCosts (Reservation_Id, Cost)
-                VALUES (@ReservationId, @Cost)";
+                INSERT INTO tbl_Repairs (Car_Id, Report_Date, Description, Status, Employee_Id)
+                VALUES (@CarId, @ReportDate, @Description, @Status, @EmployeeId)";
 
                     var parameters = new Dictionary<string, object>
             {
-                { "@ReservationId", reservationId },
-                { "@Cost", cost }
+                { "@CarId", carId },
+                { "@ReportDate", DateTime.Now },
+                { "@Description", description },
+                { "@Status", 1 }, // Status: 1 = Open
+                { "@EmployeeId", employeeId }
             };
 
             _databaseService.ExecuteNonQuery(query, parameters);
         }
+
+
+        public void SavePayment(int reservationId, decimal amount, int paymentMethodId)
+        {
+            string query = @"
+                INSERT INTO tbl_Payments (Reservation_Id, Amount, Payment_Date, Payment_Method)
+                VALUES (@ReservationId, @Amount, @PaymentDate, @PaymentMethod)";
+
+                    var parameters = new Dictionary<string, object>
+            {
+                { "@ReservationId", reservationId },
+                { "@Amount", amount },
+                { "@PaymentDate", DateTime.Now },
+                { "@PaymentMethod", paymentMethodId }
+            };
+
+            try
+            {
+                _databaseService.ExecuteNonQuery(query, parameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to save payment: {ex.Message}");
+            }
+        }
+
     }
 }
