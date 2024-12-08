@@ -15,25 +15,25 @@ namespace VroomRental.Backend.DB.QueryServices
         public List<CarReservation> GetAllCarReservations()
         {
             string query = @"
-        SELECT 
-            r.Reservation_Id, r.Start_Date, r.Planned_End_Date, r.Actual_End_Date, r.Status, 
-            c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, 
-            car.Car_Id, car.Brand, car.Model, car.Price_Per_Day, car.Mileage,
-            e.Employee_Id, e.First_Name AS Employee_First_Name, e.Last_Name AS Employee_Last_Name,
-            p.Amount, p.Payment_Date,
-            dmp.Package_Id, dmp.Package_Name, dmp.Max_Kilometers_Per_Day, dmp.Price AS Package_Price
-        FROM 
-            tbl_Car_Reservations r
-        JOIN 
-            tbl_Customers c ON r.Customer_Id = c.Customer_Id
-        JOIN 
-            tbl_Cars car ON r.Car_Id = car.Car_Id
-        LEFT JOIN 
-            tbl_Employees e ON r.Employee_Id = e.Employee_Id
-        LEFT JOIN 
-            tbl_Payments p ON r.Reservation_Id = p.Reservation_Id
-        LEFT JOIN
-            tbl_DailyMileagePackages dmp ON r.DailyMileagePackage_Id = dmp.Package_Id";
+                SELECT 
+                    r.Reservation_Id, r.Start_Date, r.Planned_End_Date, r.Actual_End_Date, r.Status, 
+                    c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, c.Email AS Customer_Email,
+                    car.Car_Id, car.Brand, car.Model, car.Price_Per_Day, car.Mileage,
+                    e.Employee_Id, e.First_Name AS Employee_First_Name, e.Last_Name AS Employee_Last_Name,
+                    p.Amount, p.Payment_Date,
+                    dmp.Package_Id, dmp.Package_Name, dmp.Max_Kilometers_Per_Day, dmp.Price AS Package_Price
+                FROM 
+                    tbl_Car_Reservations r
+                JOIN 
+                    tbl_Customers c ON r.Customer_Id = c.Customer_Id
+                JOIN 
+                    tbl_Cars car ON r.Car_Id = car.Car_Id
+                LEFT JOIN 
+                    tbl_Employees e ON r.Employee_Id = e.Employee_Id
+                LEFT JOIN 
+                    tbl_Payments p ON r.Reservation_Id = p.Reservation_Id
+                LEFT JOIN
+                    tbl_DailyMileagePackages dmp ON r.DailyMileagePackage_Id = dmp.Package_Id";
 
             DataTable reservationTable = _databaseService.ExecuteQuery(query);
             List<CarReservation> reservations = new List<CarReservation>();
@@ -52,7 +52,8 @@ namespace VroomRental.Backend.DB.QueryServices
                     {
                         Id = Convert.ToInt32(row["Customer_Id"]),
                         FirstName = row["Customer_First_Name"].ToString(),
-                        LastName = row["Customer_Last_Name"].ToString()
+                        LastName = row["Customer_Last_Name"].ToString(),
+                        Email = row["Customer_Email"].ToString()
                     },
 
                     Car = new Car
@@ -90,6 +91,7 @@ namespace VroomRental.Backend.DB.QueryServices
 
             return reservations;
         }
+
 
 
 

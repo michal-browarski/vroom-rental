@@ -37,6 +37,10 @@
             RepairCostNumericUpDown = new NumericUpDown();
             TotalAmountLabel = new Label();
             ConfirmPaymentButton = new Button();
+            CashRadioButton = new RadioButton();
+            BlikRadioButton = new RadioButton();
+            label2 = new Label();
+            BlikCodeTextBox = new TextBox();
             ((System.ComponentModel.ISupportInitialize)FinalMileageNumericUpDown).BeginInit();
             ((System.ComponentModel.ISupportInitialize)RepairCostNumericUpDown).BeginInit();
             SuspendLayout();
@@ -116,7 +120,7 @@
             // 
             TotalAmountLabel.AutoSize = true;
             TotalAmountLabel.Font = new Font("Segoe UI", 15.75F);
-            TotalAmountLabel.Location = new Point(12, 463);
+            TotalAmountLabel.Location = new Point(12, 629);
             TotalAmountLabel.Name = "TotalAmountLabel";
             TotalAmountLabel.Size = new Size(181, 30);
             TotalAmountLabel.TabIndex = 7;
@@ -125,18 +129,64 @@
             // ConfirmPaymentButton
             // 
             ConfirmPaymentButton.Font = new Font("Segoe UI", 15.75F);
-            ConfirmPaymentButton.Location = new Point(12, 502);
+            ConfirmPaymentButton.Location = new Point(12, 662);
             ConfirmPaymentButton.Name = "ConfirmPaymentButton";
             ConfirmPaymentButton.Size = new Size(225, 42);
             ConfirmPaymentButton.TabIndex = 8;
             ConfirmPaymentButton.Text = "Confirm Payment";
             ConfirmPaymentButton.UseVisualStyleBackColor = true;
             // 
+            // CashRadioButton
+            // 
+            CashRadioButton.AutoSize = true;
+            CashRadioButton.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            CashRadioButton.Location = new Point(12, 520);
+            CashRadioButton.Name = "CashRadioButton";
+            CashRadioButton.Size = new Size(76, 34);
+            CashRadioButton.TabIndex = 9;
+            CashRadioButton.TabStop = true;
+            CashRadioButton.Text = "Cash";
+            CashRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // BlikRadioButton
+            // 
+            BlikRadioButton.AutoSize = true;
+            BlikRadioButton.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            BlikRadioButton.Location = new Point(12, 560);
+            BlikRadioButton.Name = "BlikRadioButton";
+            BlikRadioButton.Size = new Size(63, 34);
+            BlikRadioButton.TabIndex = 10;
+            BlikRadioButton.TabStop = true;
+            BlikRadioButton.Text = "Blik";
+            BlikRadioButton.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 15.75F);
+            label2.Location = new Point(12, 487);
+            label2.Name = "label2";
+            label2.Size = new Size(166, 30);
+            label2.TabIndex = 11;
+            label2.Text = "Forma płatności:";
+            // 
+            // BlikCodeTextBox
+            // 
+            BlikCodeTextBox.Font = new Font("Segoe UI", 15.75F, FontStyle.Regular, GraphicsUnit.Point, 238);
+            BlikCodeTextBox.Location = new Point(12, 591);
+            BlikCodeTextBox.Name = "BlikCodeTextBox";
+            BlikCodeTextBox.Size = new Size(100, 35);
+            BlikCodeTextBox.TabIndex = 12;
+            // 
             // EndRentalForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(417, 556);
+            ClientSize = new Size(417, 718);
+            Controls.Add(BlikCodeTextBox);
+            Controls.Add(label2);
+            Controls.Add(BlikRadioButton);
+            Controls.Add(CashRadioButton);
             Controls.Add(ConfirmPaymentButton);
             Controls.Add(TotalAmountLabel);
             Controls.Add(RepairCostNumericUpDown);
@@ -166,5 +216,9 @@
         private NumericUpDown RepairCostNumericUpDown;
         private Label TotalAmountLabel;
         private Button ConfirmPaymentButton;
+        private RadioButton CashRadioButton;
+        private RadioButton BlikRadioButton;
+        private Label label2;
+        private TextBox BlikCodeTextBox;
     }
 }

@@ -2,6 +2,8 @@
 using System.Windows.Forms;
 using VroomRental.Backend.Model;
 using VroomRental.Backend.DB.QueryServices;
+using System.Net;
+using System.Net.Mail;
 
 namespace VroomRental.Forms
 {
@@ -9,6 +11,8 @@ namespace VroomRental.Forms
     {
         private readonly CarReservationService _reservationService;
         private readonly CarReservation _selectedReservation;
+
+        private string GeneratedBlikCode;
 
         public EndRentalForm(CarReservationService reservationService, CarReservation selectedReservation)
         {
@@ -35,11 +39,34 @@ namespace VroomRental.Forms
 
             ConfirmPaymentButton.Click += ConfirmPaymentButton_Click;
 
+            CashRadioButton.CheckedChanged += PaymentMethodChanged;
+            BlikRadioButton.CheckedChanged += PaymentMethodChanged;
+
+            // Ustawienia radiobuttonów
+            CashRadioButton.Checked = true; // Domyślnie gotówka
+            BlikCodeTextBox.Enabled = false; // Pole kodu Blik domyślnie wyłączone
+            GeneratedBlikCode = null; // Reset kodu Blik
+
             UpdateTotalAmountLabel();
         }
 
         private void ConfirmPaymentButton_Click(object sender, EventArgs e)
         {
+            if (BlikRadioButton.Checked)
+            {
+                if (string.IsNullOrWhiteSpace(BlikCodeTextBox.Text))
+                {
+                    MessageBox.Show("Please enter the Blik code.", "Blik Code Missing", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (BlikCodeTextBox.Text != GeneratedBlikCode)
+                {
+                    MessageBox.Show("Invalid Blik code. Please try again.", "Verification Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+            }
+
             var confirmResult = MessageBox.Show(
                 "Are you sure you want to confirm this payment?",
                 "Confirm Payment",
@@ -50,15 +77,13 @@ namespace VroomRental.Forms
             {
                 try
                 {
-                    // Pobierz dane z formularza
+                    // Finalizacja płatności
                     int finalMileage = (int)FinalMileageNumericUpDown.Value;
                     bool requiresRepair = RepairCheckBox.Checked;
                     decimal repairCost = requiresRepair ? RepairCostNumericUpDown.Value : 0;
 
-                    // Oblicz koszt całkowity
                     decimal totalPrice = CalculateTotalPrice(_selectedReservation, finalMileage, requiresRepair, repairCost);
 
-                    // Aktualizacja stanu rezerwacji
                     _selectedReservation.ActualEndDate = DateTime.Now;
                     _selectedReservation.Status = ReservationStatus.Ended;
                     _selectedReservation.Car.Mileage = finalMileage;
@@ -179,5 +204,73 @@ namespace VroomRental.Forms
 
             return totalPrice;
         }
+
+        private string GenerateBlikCode()
+        {
+            Random random = new Random();
+            return random.Next(100000, 999999).ToString();
+        }
+
+        private void SendBlikCodeToEmail(string email, string blikCode)
+        {
+            // Konfiguracja SMTP
+            string smtpServer = "smtp.sendgrid.net";
+            int smtpPort = 587;
+            string apiKey = "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";
+
+            MailMessage mail = new MailMessage
+            {
+                From = new MailAddress("vroomrentalpayments@gmail.com", "VroomRental"),
+                Subject = "Your Blik Code",
+                Body = $"Your Blik code is: {blikCode}",
+                IsBodyHtml = false
+            };
+            mail.To.Add(email);
+
+            using (SmtpClient smtp = new SmtpClient(smtpServer, smtpPort))
+            {
+                smtp.Credentials = new NetworkCredential("apikey", apiKey);
+                smtp.EnableSsl = true;
+                smtp.Send(mail);
+            }
+        }
+
+        private void PaymentMethodChanged(object sender, EventArgs e)
+        {
+            if (BlikRadioButton.Checked)
+            {
+                if (GeneratedBlikCode == null)
+                {
+                    BlikCodeTextBox.Enabled = true;
+
+                    // Generowanie i wysyłanie kodu BLIK
+                    GeneratedBlikCode = GenerateBlikCode();
+                    try
+                    {
+                        if (string.IsNullOrWhiteSpace(_selectedReservation.Customer.Email))
+                        {
+                            MessageBox.Show("The customer's email address is missing. Please verify the reservation details.",
+                                            "Missing Email", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                            return;
+                        }
+
+                        SendBlikCodeToEmail(_selectedReservation.Customer.Email, GeneratedBlikCode);
+                        MessageBox.Show($"Blik code sent to {_selectedReservation.Customer.Email}", "Blik Code Sent",
+                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Failed to send Blik code: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                // Reset, jeśli wybrano gotówkę
+                BlikCodeTextBox.Enabled = false;
+                GeneratedBlikCode = null;
+            }
+        }
+
     }
 }
