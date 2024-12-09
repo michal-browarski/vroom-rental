@@ -15,22 +15,25 @@ namespace VroomRental.Backend.DB.QueryServices
         public List<CarReservation> GetAllCarReservations()
         {
             string query = @"
-        SELECT 
-            r.Reservation_Id, r.Start_Date, r.Planned_End_Date, r.Actual_End_Date, r.Status, 
-            c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, 
-            car.Car_Id, car.Brand, car.Model, 
-            e.Employee_Id, e.First_Name AS Employee_First_Name, e.Last_Name AS Employee_Last_Name,
-            p.Amount, p.Payment_Date
-        FROM 
-            tbl_Car_Reservations r
-        JOIN 
-            tbl_Customers c ON r.Customer_Id = c.Customer_Id
-        JOIN 
-            tbl_Cars car ON r.Car_Id = car.Car_Id
-        LEFT JOIN 
-            tbl_Employees e ON r.Employee_Id = e.Employee_Id
-        LEFT JOIN 
-            tbl_Payments p ON r.Reservation_Id = p.Reservation_Id";
+                SELECT 
+                    r.Reservation_Id, r.Start_Date, r.Planned_End_Date, r.Actual_End_Date, r.Status, 
+                    c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, c.Email AS Customer_Email,
+                    car.Car_Id, car.Brand, car.Model, car.Price_Per_Day, car.Mileage,
+                    e.Employee_Id, e.First_Name AS Employee_First_Name, e.Last_Name AS Employee_Last_Name,
+                    p.Amount, p.Payment_Date,
+                    dmp.Package_Id, dmp.Package_Name, dmp.Max_Kilometers_Per_Day, dmp.Price AS Package_Price
+                FROM 
+                    tbl_Car_Reservations r
+                JOIN 
+                    tbl_Customers c ON r.Customer_Id = c.Customer_Id
+                JOIN 
+                    tbl_Cars car ON r.Car_Id = car.Car_Id
+                LEFT JOIN 
+                    tbl_Employees e ON r.Employee_Id = e.Employee_Id
+                LEFT JOIN 
+                    tbl_Payments p ON r.Reservation_Id = p.Reservation_Id
+                LEFT JOIN
+                    tbl_DailyMileagePackages dmp ON r.DailyMileagePackage_Id = dmp.Package_Id";
 
             DataTable reservationTable = _databaseService.ExecuteQuery(query);
             List<CarReservation> reservations = new List<CarReservation>();
@@ -49,14 +52,17 @@ namespace VroomRental.Backend.DB.QueryServices
                     {
                         Id = Convert.ToInt32(row["Customer_Id"]),
                         FirstName = row["Customer_First_Name"].ToString(),
-                        LastName = row["Customer_Last_Name"].ToString()
+                        LastName = row["Customer_Last_Name"].ToString(),
+                        Email = row["Customer_Email"].ToString()
                     },
 
                     Car = new Car
                     {
                         Id = Convert.ToInt32(row["Car_Id"]),
                         Brand = row["Brand"].ToString(),
-                        Model = row["Model"].ToString()
+                        Model = row["Model"].ToString(),
+                        Mileage = Convert.ToInt32(row["Mileage"]),
+                        PricePerDay = Convert.ToDecimal(row["Price_Per_Day"])
                     },
 
                     Employee = row.IsNull("Employee_Id") ? null : new Employee
@@ -70,7 +76,15 @@ namespace VroomRental.Backend.DB.QueryServices
                     {
                         CarReservationId = Convert.ToInt32(row["Reservation_Id"]),
                         Amount = row.IsNull("Amount") ? 0 : Convert.ToDecimal(row["Amount"]),
-                        PaymentDate = (DateTime)(row.IsNull("Payment_Date") ? (DateTime?)null : Convert.ToDateTime(row["Payment_Date"]))
+                        PaymentDate = row.IsNull("Payment_Date") ? (DateTime?)null : Convert.ToDateTime(row["Payment_Date"])
+                    },
+
+                    DailyMileagePackage = row.IsNull("Package_Id") ? null : new DailyMileagePackage
+                    {
+                        Id = Convert.ToInt32(row["Package_Id"]),
+                        PackageName = row["Package_Name"].ToString(),
+                        MaxKilometersPerDay = Convert.ToInt32(row["Max_Kilometers_Per_Day"]),
+                        Price = Convert.ToDecimal(row["Package_Price"])
                     }
                 });
             }
@@ -80,15 +94,16 @@ namespace VroomRental.Backend.DB.QueryServices
 
 
 
+
         public void AddReservation(CarReservation reservation)
         {
             string query = @"
                 INSERT INTO tbl_Car_Reservations 
-                (Customer_Id, Car_Id, Start_Date, Planned_End_Date, Actual_End_Date, Status, Employee_Id)
+                (Customer_Id, Car_Id, Start_Date, Planned_End_Date, Actual_End_Date, Status, Employee_Id, DailyMileagePackage_Id)
                 VALUES 
-                (@CustomerId, @CarId, @StartDate, @PlannedEndDate, @ActualEndDate, @Status, @EmployeeId)";
+                (@CustomerId, @CarId, @StartDate, @PlannedEndDate, @ActualEndDate, @Status, @EmployeeId, @DailyMileagePackageId)";
 
-            var parameters = new Dictionary<string, object>
+                    var parameters = new Dictionary<string, object>
             {
                 { "@CustomerId", reservation.Customer.Id },
                 { "@CarId", reservation.Car.Id },
@@ -96,11 +111,13 @@ namespace VroomRental.Backend.DB.QueryServices
                 { "@PlannedEndDate", reservation.PlannedEndDate },
                 { "@ActualEndDate", reservation.ActualEndDate ?? (object)DBNull.Value },
                 { "@Status", reservation.Status },
-                { "@EmployeeId", reservation.Employee?.Id ?? (object)DBNull.Value }
+                { "@EmployeeId", reservation.Employee?.Id ?? (object)DBNull.Value },
+                { "@DailyMileagePackageId", reservation.DailyMileagePackage?.Id ?? (object)DBNull.Value }
             };
 
             _databaseService.ExecuteNonQuery(query, parameters);
         }
+
 
         public List<AdditionalOption> GetOptionsFromReservation(int reservationId)
         {
@@ -242,5 +259,72 @@ namespace VroomRental.Backend.DB.QueryServices
                 _databaseService.ExecuteNonQuery(insertQuery, insertParameters);
             }
         }
+
+        public List<DailyMileagePackage> GetAllMileagePackages()
+        {
+            string query = @"
+                SELECT Package_Id, Package_Name, Max_Kilometers_Per_Day, Price
+                FROM tbl_DailyMileagePackages";
+
+            DataTable packageTable = _databaseService.ExecuteQuery(query);
+            var packages = new List<DailyMileagePackage>();
+
+            foreach (DataRow row in packageTable.Rows)
+            {
+                packages.Add(new DailyMileagePackage
+                {
+                    Id = Convert.ToInt32(row["Package_Id"]),
+                    PackageName = row["Package_Name"].ToString(),
+                    MaxKilometersPerDay = Convert.ToInt32(row["Max_Kilometers_Per_Day"]),
+                    Price = Convert.ToDecimal(row["Price"])
+                });
+            }
+
+            return packages;
+        }
+
+        public void SaveRepair(int carId, string description, int employeeId)
+        {
+            string query = @"
+                INSERT INTO tbl_Repairs (Car_Id, Report_Date, Description, Status, Employee_Id)
+                VALUES (@CarId, @ReportDate, @Description, @Status, @EmployeeId)";
+
+                    var parameters = new Dictionary<string, object>
+            {
+                { "@CarId", carId },
+                { "@ReportDate", DateTime.Now },
+                { "@Description", description },
+                { "@Status", 1 }, // Status: 1 = Open
+                { "@EmployeeId", employeeId }
+            };
+
+            _databaseService.ExecuteNonQuery(query, parameters);
+        }
+
+
+        public void SavePayment(int reservationId, decimal amount, int paymentMethodId)
+        {
+            string query = @"
+                INSERT INTO tbl_Payments (Reservation_Id, Amount, Payment_Date, Payment_Method)
+                VALUES (@ReservationId, @Amount, @PaymentDate, @PaymentMethod)";
+
+                    var parameters = new Dictionary<string, object>
+            {
+                { "@ReservationId", reservationId },
+                { "@Amount", amount },
+                { "@PaymentDate", DateTime.Now },
+                { "@PaymentMethod", paymentMethodId }
+            };
+
+            try
+            {
+                _databaseService.ExecuteNonQuery(query, parameters);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Failed to save payment: {ex.Message}");
+            }
+        }
+
     }
 }

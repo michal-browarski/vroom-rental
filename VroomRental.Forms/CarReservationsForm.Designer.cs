@@ -42,6 +42,8 @@
             SearchResetButton = new Button();
             SearchButton = new Button();
             CarReservationDetailsGroupBox = new GroupBox();
+            label14 = new Label();
+            MileagePackageTextBox = new TextBox();
             StartDateTextBox = new TextBox();
             ResetButton = new Button();
             label8 = new Label();
@@ -194,6 +196,8 @@
             // 
             // CarReservationDetailsGroupBox
             // 
+            CarReservationDetailsGroupBox.Controls.Add(label14);
+            CarReservationDetailsGroupBox.Controls.Add(MileagePackageTextBox);
             CarReservationDetailsGroupBox.Controls.Add(StartDateTextBox);
             CarReservationDetailsGroupBox.Controls.Add(ResetButton);
             CarReservationDetailsGroupBox.Controls.Add(label8);
@@ -222,6 +226,23 @@
             CarReservationDetailsGroupBox.TabIndex = 4;
             CarReservationDetailsGroupBox.TabStop = false;
             CarReservationDetailsGroupBox.Text = "Car reservation";
+            // 
+            // label14
+            // 
+            label14.AutoSize = true;
+            label14.Location = new Point(28, 244);
+            label14.Name = "label14";
+            label14.Size = new Size(96, 15);
+            label14.TabIndex = 36;
+            label14.Text = "Mileage Package";
+            // 
+            // MileagePackageTextBox
+            // 
+            MileagePackageTextBox.Location = new Point(148, 241);
+            MileagePackageTextBox.Margin = new Padding(3, 2, 3, 2);
+            MileagePackageTextBox.Name = "MileagePackageTextBox";
+            MileagePackageTextBox.Size = new Size(110, 23);
+            MileagePackageTextBox.TabIndex = 35;
             // 
             // StartDateTextBox
             // 
@@ -253,7 +274,7 @@
             // AdditionalOptionsCheckedListBox
             // 
             AdditionalOptionsCheckedListBox.FormattingEnabled = true;
-            AdditionalOptionsCheckedListBox.Location = new Point(24, 272);
+            AdditionalOptionsCheckedListBox.Location = new Point(25, 310);
             AdditionalOptionsCheckedListBox.Name = "AdditionalOptionsCheckedListBox";
             AdditionalOptionsCheckedListBox.Size = new Size(234, 130);
             AdditionalOptionsCheckedListBox.TabIndex = 30;
@@ -261,7 +282,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(33, 254);
+            label7.Location = new Point(34, 292);
             label7.Name = "label7";
             label7.Size = new Size(100, 15);
             label7.TabIndex = 29;
@@ -488,5 +509,7 @@
         private TextBox SearchStartDateTextBox;
         private Label label13;
         private ComboBox SearchStatusComboBox;
+        private Label label14;
+        private TextBox MileagePackageTextBox;
     }
 }

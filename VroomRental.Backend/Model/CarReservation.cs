@@ -12,6 +12,7 @@
         public Employee Employee { get; set; }
         public Payment? Payment { get; set; }
         public List<AdditionalOption> AdditionalOptions { get; set; } = new List<AdditionalOption>();
+        public DailyMileagePackage DailyMileagePackage { get; set; }
 
         // Właściwości pomocnicze
         public string CustomerFullName { get; set; }
@@ -23,6 +24,17 @@
                 return AdditionalOptions != null && AdditionalOptions.Count > 0
                     ? string.Join(", ", AdditionalOptions.Select(o => o.Name))
                     : "No options";
+            }
+        }
+
+        // Właściwość pomocnicza dla nazwy pakietu kilometrów
+        public string MileagePackageDetails
+        {
+            get
+            {
+                return DailyMileagePackage != null
+                    ? $"{DailyMileagePackage.PackageName}"
+                    : "No package selected";
             }
         }
     }
