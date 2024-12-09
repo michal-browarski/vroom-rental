@@ -198,7 +198,7 @@ namespace VroomRental.Forms
                     decimal overageCost = overage * PenaltyPerKilometer;
                     totalPrice += overageCost;
 
-                    MileageStatusLabel.Text = $"Mileage exceeded. Penalty: {overageCost:C}";
+                    MileageStatusLabel.Text = $"Mileage exceeded.\nPenalty:\n{overageCost:C}";
                 }
                 else
                 {
@@ -286,6 +286,5 @@ namespace VroomRental.Forms
                 GeneratedBlikCode = null;
             }
         }
-
     }
 }
