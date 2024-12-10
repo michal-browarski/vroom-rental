@@ -40,8 +40,11 @@
             DailyReportButton = new Button();
             sqlCommandBuilder1 = new Microsoft.Data.SqlClient.SqlCommandBuilder();
             DailyPanel = new Panel();
-            ProgressLabel = new Label();
+            RepairCarsProgressBar = new ProgressBar();
+            RepairCarLabel = new Label();
+            AvailableCarsLabel = new Label();
             CarsAvaiableProgressBar = new ProgressBar();
+            LateReturnLabel = new Label();
             panel1.SuspendLayout();
             ReportPanel.SuspendLayout();
             DailyPanel.SuspendLayout();
@@ -105,7 +108,7 @@
             PeriodPanel.BorderStyle = BorderStyle.FixedSingle;
             PeriodPanel.Location = new Point(26, 155);
             PeriodPanel.Name = "PeriodPanel";
-            PeriodPanel.Size = new Size(1472, 1176);
+            PeriodPanel.Size = new Size(1839, 1176);
             PeriodPanel.TabIndex = 3;
             // 
             // ReportPanel
@@ -152,31 +155,66 @@
             // DailyPanel
             // 
             DailyPanel.BorderStyle = BorderStyle.FixedSingle;
-            DailyPanel.Controls.Add(ProgressLabel);
+            DailyPanel.Controls.Add(LateReturnLabel);
+            DailyPanel.Controls.Add(RepairCarsProgressBar);
+            DailyPanel.Controls.Add(RepairCarLabel);
+            DailyPanel.Controls.Add(AvailableCarsLabel);
             DailyPanel.Controls.Add(CarsAvaiableProgressBar);
-            DailyPanel.Location = new Point(1528, 155);
+            DailyPanel.Location = new Point(1885, 155);
             DailyPanel.Name = "DailyPanel";
-            DailyPanel.Size = new Size(990, 1176);
+            DailyPanel.Size = new Size(633, 1176);
             DailyPanel.TabIndex = 5;
             // 
-            // ProgressLabel
+            // RepairCarsProgressBar
             // 
-            ProgressLabel.AutoSize = true;
-            ProgressLabel.Font = new Font("Segoe UI", 25F);
-            ProgressLabel.Location = new Point(13, 31);
-            ProgressLabel.Name = "ProgressLabel";
-            ProgressLabel.Size = new Size(503, 57);
-            ProgressLabel.TabIndex = 1;
-            ProgressLabel.Text = "Dostępne samochody 0/0";
+            RepairCarsProgressBar.Location = new Point(123, 317);
+            RepairCarsProgressBar.MarqueeAnimationSpeed = 0;
+            RepairCarsProgressBar.Name = "RepairCarsProgressBar";
+            RepairCarsProgressBar.Size = new Size(474, 63);
+            RepairCarsProgressBar.Step = 1;
+            RepairCarsProgressBar.TabIndex = 3;
+            // 
+            // RepairCarLabel
+            // 
+            RepairCarLabel.AutoSize = true;
+            RepairCarLabel.Font = new Font("Segoe UI", 25F);
+            RepairCarLabel.Location = new Point(59, 241);
+            RepairCarLabel.Name = "RepairCarLabel";
+            RepairCarLabel.Size = new Size(538, 57);
+            RepairCarLabel.TabIndex = 2;
+            RepairCarLabel.Text = "Samochody w naprawie 0/0";
+            RepairCarLabel.TextAlign = ContentAlignment.TopRight;
+            // 
+            // AvailableCarsLabel
+            // 
+            AvailableCarsLabel.AutoSize = true;
+            AvailableCarsLabel.Font = new Font("Segoe UI", 25F);
+            AvailableCarsLabel.Location = new Point(110, 48);
+            AvailableCarsLabel.Name = "AvailableCarsLabel";
+            AvailableCarsLabel.Size = new Size(503, 57);
+            AvailableCarsLabel.TabIndex = 1;
+            AvailableCarsLabel.Text = "Dostępne samochody 0/0";
+            AvailableCarsLabel.TextAlign = ContentAlignment.TopRight;
             // 
             // CarsAvaiableProgressBar
             // 
-            CarsAvaiableProgressBar.Location = new Point(571, 31);
+            CarsAvaiableProgressBar.Location = new Point(123, 128);
             CarsAvaiableProgressBar.MarqueeAnimationSpeed = 0;
             CarsAvaiableProgressBar.Name = "CarsAvaiableProgressBar";
-            CarsAvaiableProgressBar.Size = new Size(399, 63);
+            CarsAvaiableProgressBar.Size = new Size(474, 63);
             CarsAvaiableProgressBar.Step = 1;
             CarsAvaiableProgressBar.TabIndex = 0;
+            // 
+            // LateReturnLabel
+            // 
+            LateReturnLabel.AutoSize = true;
+            LateReturnLabel.Font = new Font("Segoe UI", 25F);
+            LateReturnLabel.Location = new Point(207, 428);
+            LateReturnLabel.Name = "LateReturnLabel";
+            LateReturnLabel.Size = new Size(390, 57);
+            LateReturnLabel.TabIndex = 4;
+            LateReturnLabel.Text = "Zalegające zwroty 0";
+            LateReturnLabel.TextAlign = ContentAlignment.TopRight;
             // 
             // StatsForm
             // 
@@ -215,6 +253,9 @@
         private Microsoft.Data.SqlClient.SqlCommandBuilder sqlCommandBuilder1;
         private Panel DailyPanel;
         private ProgressBar CarsAvaiableProgressBar;
-        private Label ProgressLabel;
+        private Label AvailableCarsLabel;
+        private Label RepairCarLabel;
+        private ProgressBar RepairCarsProgressBar;
+        private Label LateReturnLabel;
     }
 }
