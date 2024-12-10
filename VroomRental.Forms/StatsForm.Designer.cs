@@ -40,11 +40,15 @@
             DailyReportButton = new Button();
             sqlCommandBuilder1 = new Microsoft.Data.SqlClient.SqlCommandBuilder();
             DailyPanel = new Panel();
+            TodayPopularBrand = new Label();
+            TodayPaymentsLabel = new Label();
+            TodayRentalsLabel = new Label();
+            DailyPlotView = new OxyPlot.WindowsForms.PlotView();
+            LateReturnLabel = new Label();
             RepairCarsProgressBar = new ProgressBar();
             RepairCarLabel = new Label();
             AvailableCarsLabel = new Label();
             CarsAvaiableProgressBar = new ProgressBar();
-            LateReturnLabel = new Label();
             panel1.SuspendLayout();
             ReportPanel.SuspendLayout();
             DailyPanel.SuspendLayout();
@@ -108,7 +112,7 @@
             PeriodPanel.BorderStyle = BorderStyle.FixedSingle;
             PeriodPanel.Location = new Point(26, 155);
             PeriodPanel.Name = "PeriodPanel";
-            PeriodPanel.Size = new Size(1839, 1176);
+            PeriodPanel.Size = new Size(1339, 1186);
             PeriodPanel.TabIndex = 3;
             // 
             // ReportPanel
@@ -155,22 +159,81 @@
             // DailyPanel
             // 
             DailyPanel.BorderStyle = BorderStyle.FixedSingle;
+            DailyPanel.Controls.Add(TodayPopularBrand);
+            DailyPanel.Controls.Add(TodayPaymentsLabel);
+            DailyPanel.Controls.Add(TodayRentalsLabel);
+            DailyPanel.Controls.Add(DailyPlotView);
             DailyPanel.Controls.Add(LateReturnLabel);
             DailyPanel.Controls.Add(RepairCarsProgressBar);
             DailyPanel.Controls.Add(RepairCarLabel);
             DailyPanel.Controls.Add(AvailableCarsLabel);
             DailyPanel.Controls.Add(CarsAvaiableProgressBar);
-            DailyPanel.Location = new Point(1885, 155);
+            DailyPanel.Location = new Point(1397, 155);
             DailyPanel.Name = "DailyPanel";
-            DailyPanel.Size = new Size(633, 1176);
+            DailyPanel.Size = new Size(1102, 1186);
             DailyPanel.TabIndex = 5;
+            // 
+            // TodayPopularBrand
+            // 
+            TodayPopularBrand.AutoSize = true;
+            TodayPopularBrand.Font = new Font("Segoe UI", 25F);
+            TodayPopularBrand.Location = new Point(36, 278);
+            TodayPopularBrand.Name = "TodayPopularBrand";
+            TodayPopularBrand.Size = new Size(384, 57);
+            TodayPopularBrand.TabIndex = 8;
+            TodayPopularBrand.Text = "Top brand: Testowa";
+            TodayPopularBrand.TextAlign = ContentAlignment.TopRight;
+            // 
+            // TodayPaymentsLabel
+            // 
+            TodayPaymentsLabel.AutoSize = true;
+            TodayPaymentsLabel.Font = new Font("Segoe UI", 25F);
+            TodayPaymentsLabel.Location = new Point(36, 388);
+            TodayPaymentsLabel.Name = "TodayPaymentsLabel";
+            TodayPaymentsLabel.Size = new Size(436, 57);
+            TodayPaymentsLabel.TabIndex = 7;
+            TodayPaymentsLabel.Text = "Zapłacono dzisiaj 0,00";
+            TodayPaymentsLabel.TextAlign = ContentAlignment.TopRight;
+            // 
+            // TodayRentalsLabel
+            // 
+            TodayRentalsLabel.AutoSize = true;
+            TodayRentalsLabel.Font = new Font("Segoe UI", 25F);
+            TodayRentalsLabel.Location = new Point(563, 278);
+            TodayRentalsLabel.Name = "TodayRentalsLabel";
+            TodayRentalsLabel.Size = new Size(503, 57);
+            TodayRentalsLabel.TabIndex = 6;
+            TodayRentalsLabel.Text = "Dzisiejsze wypożyczenia 0";
+            TodayRentalsLabel.TextAlign = ContentAlignment.TopRight;
+            // 
+            // DailyPlotView
+            // 
+            DailyPlotView.Location = new Point(46, 487);
+            DailyPlotView.Name = "DailyPlotView";
+            DailyPlotView.PanCursor = Cursors.Hand;
+            DailyPlotView.Size = new Size(1020, 678);
+            DailyPlotView.TabIndex = 5;
+            DailyPlotView.ZoomHorizontalCursor = Cursors.SizeWE;
+            DailyPlotView.ZoomRectangleCursor = Cursors.SizeNWSE;
+            DailyPlotView.ZoomVerticalCursor = Cursors.SizeNS;
+            // 
+            // LateReturnLabel
+            // 
+            LateReturnLabel.AutoSize = true;
+            LateReturnLabel.Font = new Font("Segoe UI", 25F);
+            LateReturnLabel.Location = new Point(690, 388);
+            LateReturnLabel.Name = "LateReturnLabel";
+            LateReturnLabel.Size = new Size(390, 57);
+            LateReturnLabel.TabIndex = 4;
+            LateReturnLabel.Text = "Zalegające zwroty 0";
+            LateReturnLabel.TextAlign = ContentAlignment.TopRight;
             // 
             // RepairCarsProgressBar
             // 
-            RepairCarsProgressBar.Location = new Point(123, 317);
+            RepairCarsProgressBar.Location = new Point(673, 155);
             RepairCarsProgressBar.MarqueeAnimationSpeed = 0;
             RepairCarsProgressBar.Name = "RepairCarsProgressBar";
-            RepairCarsProgressBar.Size = new Size(474, 63);
+            RepairCarsProgressBar.Size = new Size(407, 63);
             RepairCarsProgressBar.Step = 1;
             RepairCarsProgressBar.TabIndex = 3;
             // 
@@ -178,7 +241,7 @@
             // 
             RepairCarLabel.AutoSize = true;
             RepairCarLabel.Font = new Font("Segoe UI", 25F);
-            RepairCarLabel.Location = new Point(59, 241);
+            RepairCarLabel.Location = new Point(27, 155);
             RepairCarLabel.Name = "RepairCarLabel";
             RepairCarLabel.Size = new Size(538, 57);
             RepairCarLabel.TabIndex = 2;
@@ -189,7 +252,7 @@
             // 
             AvailableCarsLabel.AutoSize = true;
             AvailableCarsLabel.Font = new Font("Segoe UI", 25F);
-            AvailableCarsLabel.Location = new Point(110, 48);
+            AvailableCarsLabel.Location = new Point(27, 48);
             AvailableCarsLabel.Name = "AvailableCarsLabel";
             AvailableCarsLabel.Size = new Size(503, 57);
             AvailableCarsLabel.TabIndex = 1;
@@ -198,29 +261,18 @@
             // 
             // CarsAvaiableProgressBar
             // 
-            CarsAvaiableProgressBar.Location = new Point(123, 128);
+            CarsAvaiableProgressBar.Location = new Point(673, 48);
             CarsAvaiableProgressBar.MarqueeAnimationSpeed = 0;
             CarsAvaiableProgressBar.Name = "CarsAvaiableProgressBar";
-            CarsAvaiableProgressBar.Size = new Size(474, 63);
+            CarsAvaiableProgressBar.Size = new Size(407, 63);
             CarsAvaiableProgressBar.Step = 1;
             CarsAvaiableProgressBar.TabIndex = 0;
-            // 
-            // LateReturnLabel
-            // 
-            LateReturnLabel.AutoSize = true;
-            LateReturnLabel.Font = new Font("Segoe UI", 25F);
-            LateReturnLabel.Location = new Point(207, 428);
-            LateReturnLabel.Name = "LateReturnLabel";
-            LateReturnLabel.Size = new Size(390, 57);
-            LateReturnLabel.TabIndex = 4;
-            LateReturnLabel.Text = "Zalegające zwroty 0";
-            LateReturnLabel.TextAlign = ContentAlignment.TopRight;
             // 
             // StatsForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(2542, 1343);
+            ClientSize = new Size(2542, 1353);
             Controls.Add(DailyPanel);
             Controls.Add(ReportPanel);
             Controls.Add(PeriodPanel);
@@ -257,5 +309,9 @@
         private Label RepairCarLabel;
         private ProgressBar RepairCarsProgressBar;
         private Label LateReturnLabel;
+        private OxyPlot.WindowsForms.PlotView DailyPlotView;
+        private Label TodayRentalsLabel;
+        private Label TodayPaymentsLabel;
+        private Label TodayPopularBrand;
     }
 }
