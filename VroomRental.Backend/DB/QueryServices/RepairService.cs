@@ -15,7 +15,7 @@ namespace VroomRental.Backend.DB.QueryServices
         {
             string query = @"
                 SELECT 
-                    r.Repair_Id, r.Report_Date, r.Description, r.Status, r.End_Date, 
+                    r.Repair_Id, r.Report_Date, r.Description, r.Status, r.End_Date, r.Cost
                     e.Employee_Id, e.First_Name, e.Last_Name,
                     c.Car_Id, c.Brand, c.Model
                 FROM 
@@ -37,6 +37,7 @@ namespace VroomRental.Backend.DB.QueryServices
                     Description = row["Description"].ToString(),
                     Status = (RepairStatus)Enum.Parse(typeof(RepairStatus), row["Status"].ToString()),
                     EndDate = row.IsNull("End_Date") ? null : Convert.ToDateTime(row["End_Date"]),
+                    Cost = Convert.ToDecimal(row["Cost"]),
 
                     Employee = new Employee
                     {

@@ -283,11 +283,11 @@ namespace VroomRental.Backend.DB.QueryServices
             return packages;
         }
 
-        public void SaveRepair(int carId, string description, int employeeId)
+        public void SaveRepair(int carId, string description, int employeeId, decimal cost)
         {
             string query = @"
-                INSERT INTO tbl_Repairs (Car_Id, Report_Date, Description, Status, Employee_Id)
-                VALUES (@CarId, @ReportDate, @Description, @Status, @EmployeeId)";
+                INSERT INTO tbl_Repairs (Car_Id, Report_Date, Description, Status, Employee_Id, Cost)
+                VALUES (@CarId, @ReportDate, @Description, @Status, @EmployeeId, @Cost)";
 
                     var parameters = new Dictionary<string, object>
             {
@@ -295,7 +295,8 @@ namespace VroomRental.Backend.DB.QueryServices
                 { "@ReportDate", DateTime.Now },
                 { "@Description", description },
                 { "@Status", 1 }, // Status: 1 = Open
-                { "@EmployeeId", employeeId }
+                { "@EmployeeId", employeeId },
+                { "@Cost", cost },
             };
 
             _databaseService.ExecuteNonQuery(query, parameters);

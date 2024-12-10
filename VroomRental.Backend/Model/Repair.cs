@@ -7,6 +7,7 @@
         public string Description { get; set; }
         public RepairStatus Status { get; set; }
         public DateTime? EndDate { get; set; }
+        public decimal Cost { get; set; }
         public Employee Employee { get; set; }
         public Car Car { get; set; }
     }

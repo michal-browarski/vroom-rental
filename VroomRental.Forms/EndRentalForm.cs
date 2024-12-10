@@ -101,7 +101,7 @@ namespace VroomRental.Forms
                     {
                         string repairDescription = RepairDescriptionTextBox.Text;
 
-                        _reservationService.SaveRepair(_selectedReservation.Car.Id, repairDescription, 1);
+                        _reservationService.SaveRepair(_selectedReservation.Car.Id, repairDescription, 1, repairCost);
                     }
 
                     MessageBox.Show($"Rental has been successfully ended.\nTotal Amount Paid: {totalPrice:C}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
