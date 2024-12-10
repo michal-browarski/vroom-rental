@@ -17,7 +17,7 @@ namespace VroomRental.Backend.DB.QueryServices
             string query = @"
                 SELECT 
                     r.Reservation_Id, r.Start_Date, r.Planned_End_Date, r.Actual_End_Date, r.Status, 
-                    c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, c.Email AS Customer_Email,
+                    c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, c.Email AS Customer_Email, c.Registration_Date AS Customer_Registration_Date,
                     car.Car_Id, car.Brand, car.Model, car.Price_Per_Day, car.Mileage,
                     e.Employee_Id, e.First_Name AS Employee_First_Name, e.Last_Name AS Employee_Last_Name,
                     p.Amount, p.Payment_Date,
@@ -53,7 +53,8 @@ namespace VroomRental.Backend.DB.QueryServices
                         Id = Convert.ToInt32(row["Customer_Id"]),
                         FirstName = row["Customer_First_Name"].ToString(),
                         LastName = row["Customer_Last_Name"].ToString(),
-                        Email = row["Customer_Email"].ToString()
+                        Email = row["Customer_Email"].ToString(),
+                        RegistrationDate = (DateTime)row["Customer_Registration_Date"]
                     },
 
                     Car = new Car

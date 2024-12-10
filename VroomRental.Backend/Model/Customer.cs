@@ -8,6 +8,7 @@ public class Customer
     public string Phone { get; set; }
     public string Email { get; set; }
     public string DriverLicenceNumber { get; set; }
+    public DateTime RegistrationDate { get; set; }
     public Address Address { get; set; }
     public string FullAddress
     {
