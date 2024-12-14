@@ -190,7 +190,7 @@ namespace VroomRental.Backend.DB.QueryServices
             return options;
         }
 
-        public void UpdateReservation(CarReservation reservation)
+        public void UpdateReservation(CarReservation reservation, int? traveledKilometers = null)
         {
             string query = @"
                 UPDATE tbl_Car_Reservations
@@ -198,7 +198,8 @@ namespace VroomRental.Backend.DB.QueryServices
                     Start_Date = @StartDate,
                     Planned_End_Date = @PlannedEndDate,
                     Actual_End_Date = @ActualEndDate,
-                    Status = @Status
+                    Status = @Status,
+                    Traveled_Kilometers = @TraveledKilometers
                 WHERE Reservation_Id = @ReservationId";
 
                     var parameters = new Dictionary<string, object>
@@ -207,12 +208,28 @@ namespace VroomRental.Backend.DB.QueryServices
                 { "@PlannedEndDate", reservation.PlannedEndDate },
                 { "@ActualEndDate", reservation.ActualEndDate ?? (object)DBNull.Value },
                 { "@Status", reservation.Status },
+                { "@TraveledKilometers", traveledKilometers ?? (object)DBNull.Value },
                 { "@ReservationId", reservation.Id }
             };
 
             _databaseService.ExecuteNonQuery(query, parameters);
         }
 
+        public void UpdateCarMileage(int carId, int finalmileage)
+        {
+            string query = @"
+                UPDATE tbl_Cars
+                SET Mileage = @Mileage
+                WHERE Car_Id = @CarId";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@Mileage", finalmileage },
+                { "@CarId", carId }
+            };
+
+            _databaseService.ExecuteNonQuery(query, parameters);
+        }
 
         public void UpdateCarStatus(int carId, CarStatus status)
         {

@@ -26,17 +26,111 @@ namespace VroomRental.Forms
             _paymentService = new PaymentService(databaseService);
             _customerService = new CustomerService(databaseService);
 
-            EndDateMaskedTextBox.Text = startDate.ToString("dd.MM.yyyy");
-            StartDateMaskedTextBox.Text = endDate.ToString("dd.MM.yyyy");
+            EndDatePicker.MaxDate = DateTime.Now;
+            EndDatePicker.Value = startDate;
+            StartDatePicker.Value = endDate;
+            InitializeDateRangeComboBox();
 
             InitializeDailyStats();
             InitializePeriodStats();
+
+            StartDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
+            EndDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
+        }
+
+        private void InitializeDateRangeComboBox()
+        {
+            DateRangeComboBox.Items.Add("1 tydzień");
+            DateRangeComboBox.Items.Add("1 miesiąc");
+            DateRangeComboBox.Items.Add("Obecny miesiąc");
+            DateRangeComboBox.Items.Add("Poprzedni miesiąc");
+            DateRangeComboBox.Items.Add("Obecny kwartał");
+            DateRangeComboBox.Items.Add("Poprzedni kwartał");
+            DateRangeComboBox.SelectedIndex = 0;
+
+            DateRangeComboBox.SelectedIndexChanged += DateRangeComboBox_SelectedIndexChanged;
+
+            // Ustaw początkowe wartości dla zakresu dat
+            SetDateRangeForSelection("1 tydzień");
+        }
+
+        private void DateRangeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            string selectedRange = DateRangeComboBox.SelectedItem.ToString();
+            SetDateRangeForSelection(selectedRange);
+
+            InitializePeriodStats();
+        }
+
+        private void SetDateRangeForSelection(string range)
+        {
+            DateTime now = DateTime.Now.Date;
+
+            switch (range)
+            {
+                case "1 tydzień":
+                    StartDatePicker.Value = now.AddDays(-7);
+                    EndDatePicker.Value = now;
+                    break;
+
+                case "1 miesiąc":
+                    StartDatePicker.Value = now.AddMonths(-1);
+                    EndDatePicker.Value = now;
+                    break;
+
+                case "Obecny miesiąc":
+                    StartDatePicker.Value = new DateTime(now.Year, now.Month, 1);
+                    EndDatePicker.Value = now;
+                    break;
+
+                case "Poprzedni miesiąc":
+                    DateTime firstDayOfPreviousMonth = new DateTime(now.Year, now.Month, 1).AddMonths(-1);
+                    StartDatePicker.Value = firstDayOfPreviousMonth;
+                    EndDatePicker.Value = firstDayOfPreviousMonth.AddMonths(1).AddDays(-1) > now
+                                          ? now
+                                          : firstDayOfPreviousMonth.AddMonths(1).AddDays(-1);
+                    break;
+
+                case "Obecny kwartał":
+                    int currentQuarter = (now.Month - 1) / 3 + 1;
+                    int firstMonthOfQuarter = (currentQuarter - 1) * 3 + 1;
+                    DateTime firstDayOfQuarter = new DateTime(now.Year, firstMonthOfQuarter, 1);
+                    DateTime lastDayOfQuarter = firstDayOfQuarter.AddMonths(3).AddDays(-1);
+                    StartDatePicker.Value = firstDayOfQuarter;
+                    EndDatePicker.Value = lastDayOfQuarter > now ? now : lastDayOfQuarter;
+                    break;
+
+                case "Poprzedni kwartał":
+                    int previousQuarter = ((now.Month - 1) / 3);
+                    if (previousQuarter == 0)
+                    {
+                        previousQuarter = 4;
+                        DateTime firstDayOfPreviousQuarter = new DateTime(now.Year - 1, (previousQuarter - 1) * 3 + 1, 1);
+                        StartDatePicker.Value = firstDayOfPreviousQuarter;
+                        EndDatePicker.Value = firstDayOfPreviousQuarter.AddMonths(3).AddDays(-1);
+                    }
+                    else
+                    {
+                        DateTime firstDayOfPreviousQuarter = new DateTime(now.Year, (previousQuarter - 1) * 3 + 1, 1);
+                        StartDatePicker.Value = firstDayOfPreviousQuarter;
+                        EndDatePicker.Value = firstDayOfPreviousQuarter.AddMonths(3).AddDays(-1);
+                    }
+                    break;
+
+                default:
+                    StartDatePicker.Value = now.AddDays(-7);
+                    EndDatePicker.Value = now;
+                    break;
+            }
         }
 
         private void DateResetButton_Click(object sender, EventArgs e)
         {
-            EndDateMaskedTextBox.Text = DateTime.Now.ToString("dd.MM.yyyy");
-            StartDateMaskedTextBox.Text = DateTime.Now.AddDays(-7).ToString("dd.MM.yyyy");
+            DateTime now = DateTime.Now.Date;
+
+            EndDatePicker.Value = now;
+            StartDatePicker.Value = DateTime.Now.AddDays(-7);
+            DateRangeComboBox.SelectedIndex = 0;
             InitializePeriodStats();
         }
 
@@ -102,11 +196,8 @@ namespace VroomRental.Forms
             var customers = _customerService.GetAllCustomersWithAddress();
 
             // Pobranie daty początkowej i końcowej
-            startDate = DateTime.ParseExact(StartDateMaskedTextBox.Text, "dd.MM.yyyy",
-                System.Globalization.CultureInfo.InvariantCulture);
-
-            endDate = DateTime.ParseExact(EndDateMaskedTextBox.Text, "dd.MM.yyyy",
-                System.Globalization.CultureInfo.InvariantCulture, System.Globalization.DateTimeStyles.None);
+            startDate = StartDatePicker.Value.Date;
+            endDate = EndDatePicker.Value.Date;
 
             // Zysk
             decimal sumPayment = payments
@@ -135,6 +226,8 @@ namespace VroomRental.Forms
                 .Select(r => (r.ActualEndDate.Value - r.StartDate).TotalDays)
                 .DefaultIfEmpty(0)
                 .Average();
+
+            averageRentalDuration = Math.Round(averageRentalDuration, 0);
 
             MeanRentalTimeLabel.Text = $"Średni czas wypożyczenia: {averageRentalDuration} dni";
 

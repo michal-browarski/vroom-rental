@@ -85,12 +85,15 @@ namespace VroomRental.Forms
 
                     decimal totalPrice = CalculateTotalPrice(_selectedReservation, finalMileage, requiresRepair, repairCost);
 
+                    int traveledKilometers = finalMileage - _selectedReservation.Car.Mileage;
+
                     _selectedReservation.ActualEndDate = DateTime.Now;
                     _selectedReservation.Status = ReservationStatus.Ended;
                     _selectedReservation.Car.Mileage = finalMileage;
 
-                    _reservationService.UpdateReservation(_selectedReservation);
+                    _reservationService.UpdateReservation(_selectedReservation, traveledKilometers);
                     _reservationService.UpdateCarStatus(_selectedReservation.Car.Id, CarStatus.Available);
+                    _reservationService.UpdateCarMileage(_selectedReservation.Car.Id, finalMileage);
 
                     // Zapis płatności w bazie danych
                     int paymentMethodId = BlikRadioButton.Checked ? 1 : 2; // 1 = Blik, 2 = Cash
