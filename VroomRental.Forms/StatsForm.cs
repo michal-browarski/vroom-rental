@@ -223,9 +223,9 @@ namespace VroomRental.Forms
                 .DefaultIfEmpty(0)
                 .Average();
 
-            averageRentalDuration = Math.Round(averageRentalDuration, 0);
+            averageRentalDuration = Math.Round(averageRentalDuration, 1);
 
-            MeanRentalTimeLabel.Text = $"Średni czas wypożyczenia: {averageRentalDuration} dni";
+            MeanRentalTimeLabel.Text = $"Średni czas wypożyczenia: {averageRentalDuration}";
 
             // Nowi klienci
             int newCustomers = customers
