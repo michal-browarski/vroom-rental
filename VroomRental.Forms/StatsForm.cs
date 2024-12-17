@@ -264,6 +264,7 @@ namespace VroomRental.Forms
                 .SelectMany(r => _carReservationService.GetOptionsFromReservation(r.Id))
                 .GroupBy(o => o.Name)
                 .Select(g => new { Name = g.Key, Count = g.Count() })
+                .OrderBy(g => g.Count)
                 .ToList();
 
             var plotModel = new PlotModel() { Title = "Opcje dodatkowe" };
@@ -300,6 +301,7 @@ namespace VroomRental.Forms
             var fuelTypeCounts = reservations
                 .GroupBy(r => r.Car.FuelType)
                 .Select(g => new { FuelType = g.Key, Count = g.Count() })
+                .OrderBy(g => g.Count)
                 .ToList();
 
             var plotModel = new PlotModel() { Title = "Rodzaje paliwa" };
@@ -336,6 +338,7 @@ namespace VroomRental.Forms
             var topBrands = reservations
                 .GroupBy(r => r.Car.Brand)
                 .Select(g => new { Brand = g.Key, Count = g.Count() })
+                .OrderBy(g => g.Count)
                 .ToList();
 
             var plotModel = new PlotModel() { Title = "Topowe marki" };
@@ -367,6 +370,7 @@ namespace VroomRental.Forms
             var topCars = reservations
                 .GroupBy(r => $"{r.Car.Brand} {r.Car.Model} {r.Car.FuelType}")
                 .Select(g => new { CarName = g.Key, Count = g.Count() })
+                .OrderBy(g => g.Count)
                 .ToList();
 
             var plotModel = new PlotModel() { Title = "Topowe samochody" };
