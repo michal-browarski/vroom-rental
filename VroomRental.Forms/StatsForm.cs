@@ -1,7 +1,9 @@
 ﻿using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
+using System;
 using System.Configuration;
+using System.Diagnostics;
 using VroomRental.Backend.DB;
 using VroomRental.Backend.DB.QueryServices;
 using VroomRental.Backend.Model;
@@ -388,6 +390,20 @@ namespace VroomRental.Forms
             }
             plotModel.Series.Add(columnSeries);
 
+            PeriodPlotView.Model = plotModel;
+        }
+
+        private void PaymentTypePlotButton_Click(object sender, EventArgs e)
+        {
+            var payments = _paymentService.GetAllPayments()
+                .Where(p => p.PaymentDate.HasValue && p.PaymentDate.Value.Date >= startDate && p.PaymentDate.Value.Date <= endDate)
+                .ToList();
+
+            var plotModel = new PlotModel() { Title = "Metody płatności" };
+            PieSeries paymentPlot = new() { InsideLabelPosition = 0.5, AngleSpan = 360, StartAngle = 0, FontSize = 25 };
+            paymentPlot.Slices.Add(new PieSlice("Blik", payments.Where(p => p.PaymentMethod == PaymentMethod.Card).Count()) { Fill = OxyColor.FromRgb(0, 255, 0) }); // Zielony
+            paymentPlot.Slices.Add(new PieSlice("Gotówka", payments.Where(p => p.PaymentMethod == PaymentMethod.Cash).Count()) { Fill = OxyColor.FromRgb(255, 255, 0) }); // Żółty
+            plotModel.Series.Add(paymentPlot);
             PeriodPlotView.Model = plotModel;
         }
     }

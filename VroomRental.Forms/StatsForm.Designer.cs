@@ -178,6 +178,7 @@
             PaymentTypePlotButton.TabIndex = 17;
             PaymentTypePlotButton.Text = "Rodzaj płatności";
             PaymentTypePlotButton.UseVisualStyleBackColor = true;
+            PaymentTypePlotButton.Click += PaymentTypePlotButton_Click;
             // 
             // PopularCarsPlotButton
             // 
