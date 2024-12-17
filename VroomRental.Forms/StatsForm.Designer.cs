@@ -36,6 +36,11 @@
             DateResetButton = new Button();
             DateLimitLabel = new Label();
             PeriodPanel = new Panel();
+            PaymentTypePlotButton = new Button();
+            PopularCarsPlotButton = new Button();
+            PopularBrandsPlotButton = new Button();
+            CarTypePlotButton = new Button();
+            FuelTypePlotButton = new Button();
             OptionsPlotButton = new Button();
             PeriodPopularBrand = new Label();
             PeriodPlotView = new OxyPlot.WindowsForms.PlotView();
@@ -59,11 +64,6 @@
             RepairCarLabel = new Label();
             AvailableCarsLabel = new Label();
             CarsAvaiableProgressBar = new ProgressBar();
-            FuelTypePlotButton = new Button();
-            CarTypePlotButton = new Button();
-            PopularBrandsPlotButton = new Button();
-            PopularCarsPlotButton = new Button();
-            PaymentTypePlotButton = new Button();
             panel1.SuspendLayout();
             PeriodPanel.SuspendLayout();
             ReportPanel.SuspendLayout();
@@ -169,6 +169,56 @@
             PeriodPanel.Size = new Size(1339, 1186);
             PeriodPanel.TabIndex = 3;
             // 
+            // PaymentTypePlotButton
+            // 
+            PaymentTypePlotButton.Font = new Font("Segoe UI", 25F);
+            PaymentTypePlotButton.Location = new Point(872, 388);
+            PaymentTypePlotButton.Name = "PaymentTypePlotButton";
+            PaymentTypePlotButton.Size = new Size(393, 63);
+            PaymentTypePlotButton.TabIndex = 17;
+            PaymentTypePlotButton.Text = "Rodzaj płatności";
+            PaymentTypePlotButton.UseVisualStyleBackColor = true;
+            // 
+            // PopularCarsPlotButton
+            // 
+            PopularCarsPlotButton.Font = new Font("Segoe UI", 25F);
+            PopularCarsPlotButton.Location = new Point(452, 388);
+            PopularCarsPlotButton.Name = "PopularCarsPlotButton";
+            PopularCarsPlotButton.Size = new Size(393, 63);
+            PopularCarsPlotButton.TabIndex = 16;
+            PopularCarsPlotButton.Text = "Popularne auta";
+            PopularCarsPlotButton.UseVisualStyleBackColor = true;
+            // 
+            // PopularBrandsPlotButton
+            // 
+            PopularBrandsPlotButton.Font = new Font("Segoe UI", 25F);
+            PopularBrandsPlotButton.Location = new Point(37, 388);
+            PopularBrandsPlotButton.Name = "PopularBrandsPlotButton";
+            PopularBrandsPlotButton.Size = new Size(393, 63);
+            PopularBrandsPlotButton.TabIndex = 15;
+            PopularBrandsPlotButton.Text = "Popularne marki";
+            PopularBrandsPlotButton.UseVisualStyleBackColor = true;
+            // 
+            // CarTypePlotButton
+            // 
+            CarTypePlotButton.Font = new Font("Segoe UI", 25F);
+            CarTypePlotButton.Location = new Point(872, 300);
+            CarTypePlotButton.Name = "CarTypePlotButton";
+            CarTypePlotButton.Size = new Size(393, 63);
+            CarTypePlotButton.TabIndex = 14;
+            CarTypePlotButton.Text = "Rodzaj auta";
+            CarTypePlotButton.UseVisualStyleBackColor = true;
+            // 
+            // FuelTypePlotButton
+            // 
+            FuelTypePlotButton.Font = new Font("Segoe UI", 25F);
+            FuelTypePlotButton.Location = new Point(452, 300);
+            FuelTypePlotButton.Name = "FuelTypePlotButton";
+            FuelTypePlotButton.Size = new Size(393, 63);
+            FuelTypePlotButton.TabIndex = 13;
+            FuelTypePlotButton.Text = "Rodzaj paliwa";
+            FuelTypePlotButton.UseVisualStyleBackColor = true;
+            // 
             // OptionsPlotButton
             // 
             OptionsPlotButton.Font = new Font("Segoe UI", 25F);
@@ -178,6 +228,7 @@
             OptionsPlotButton.TabIndex = 12;
             OptionsPlotButton.Text = "Opcje dodatkowe";
             OptionsPlotButton.UseVisualStyleBackColor = true;
+            OptionsPlotButton.Click += OptionsPlotButton_Click;
             // 
             // PeriodPopularBrand
             // 
@@ -403,56 +454,6 @@
             CarsAvaiableProgressBar.Size = new Size(407, 63);
             CarsAvaiableProgressBar.Step = 1;
             CarsAvaiableProgressBar.TabIndex = 0;
-            // 
-            // FuelTypePlotButton
-            // 
-            FuelTypePlotButton.Font = new Font("Segoe UI", 25F);
-            FuelTypePlotButton.Location = new Point(452, 300);
-            FuelTypePlotButton.Name = "FuelTypePlotButton";
-            FuelTypePlotButton.Size = new Size(393, 63);
-            FuelTypePlotButton.TabIndex = 13;
-            FuelTypePlotButton.Text = "Rodzaj paliwa";
-            FuelTypePlotButton.UseVisualStyleBackColor = true;
-            // 
-            // CarTypePlotButton
-            // 
-            CarTypePlotButton.Font = new Font("Segoe UI", 25F);
-            CarTypePlotButton.Location = new Point(872, 300);
-            CarTypePlotButton.Name = "CarTypePlotButton";
-            CarTypePlotButton.Size = new Size(393, 63);
-            CarTypePlotButton.TabIndex = 14;
-            CarTypePlotButton.Text = "Rodzaj auta";
-            CarTypePlotButton.UseVisualStyleBackColor = true;
-            // 
-            // PopularBrandsPlotButton
-            // 
-            PopularBrandsPlotButton.Font = new Font("Segoe UI", 25F);
-            PopularBrandsPlotButton.Location = new Point(37, 388);
-            PopularBrandsPlotButton.Name = "PopularBrandsPlotButton";
-            PopularBrandsPlotButton.Size = new Size(393, 63);
-            PopularBrandsPlotButton.TabIndex = 15;
-            PopularBrandsPlotButton.Text = "Popularne marki";
-            PopularBrandsPlotButton.UseVisualStyleBackColor = true;
-            // 
-            // PopularCarsPlotButton
-            // 
-            PopularCarsPlotButton.Font = new Font("Segoe UI", 25F);
-            PopularCarsPlotButton.Location = new Point(452, 388);
-            PopularCarsPlotButton.Name = "PopularCarsPlotButton";
-            PopularCarsPlotButton.Size = new Size(393, 63);
-            PopularCarsPlotButton.TabIndex = 16;
-            PopularCarsPlotButton.Text = "Popularne auta";
-            PopularCarsPlotButton.UseVisualStyleBackColor = true;
-            // 
-            // PaymentTypePlotButton
-            // 
-            PaymentTypePlotButton.Font = new Font("Segoe UI", 25F);
-            PaymentTypePlotButton.Location = new Point(872, 388);
-            PaymentTypePlotButton.Name = "PaymentTypePlotButton";
-            PaymentTypePlotButton.Size = new Size(393, 63);
-            PaymentTypePlotButton.TabIndex = 17;
-            PaymentTypePlotButton.Text = "Rodzaj płatności";
-            PaymentTypePlotButton.UseVisualStyleBackColor = true;
             // 
             // StatsForm
             // 

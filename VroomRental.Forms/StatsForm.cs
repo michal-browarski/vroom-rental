@@ -1,8 +1,10 @@
 ﻿using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Configuration;
 using VroomRental.Backend.DB;
 using VroomRental.Backend.DB.QueryServices;
+using VroomRental.Backend.Model;
 
 namespace VroomRental.Forms
 {
@@ -252,6 +254,38 @@ namespace VroomRental.Forms
         private void InitializePeriodPlot()
         {
             // Domyslny wykres - czym to będzie?
+        }
+
+        private void OptionsPlotButton_Click(object sender, EventArgs e)
+        {
+            List<CarReservation> reservations = _carReservationService.GetAllCarReservations()
+                .Where(r => r.StartDate.Date >= startDate &&
+                            r.ActualEndDate.HasValue &&
+                            r.ActualEndDate.Value.Date <= endDate)
+                .ToList();
+
+            var additionalOptions = reservations
+                .SelectMany(r => _carReservationService.GetOptionsFromReservation(r.Id))
+                .GroupBy(o => o.Name)
+                .Select(g => new { Name = g.Key, Count = g.Count() })
+                .ToList();
+
+            var plotModel = new PlotModel() { Title = "Opcje dodatkowe" };
+            var categoryAxis = new CategoryAxis { Position = AxisPosition.Left };
+            categoryAxis.Labels.AddRange(additionalOptions.Select(g => g.Name));
+            plotModel.Axes.Add(categoryAxis);
+
+            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Liczba", Minimum = 0, MajorStep = 1 };
+            plotModel.Axes.Add(valueAxis);
+
+            var columnSeries = new BarSeries { Title = "Opcje dodatkowe" };
+            foreach (var option in additionalOptions)
+            {
+                columnSeries.Items.Add(new BarItem(option.Count));
+            }
+            plotModel.Series.Add(columnSeries);
+
+            PeriodPlotView.Model = plotModel;
         }
     }
 }
