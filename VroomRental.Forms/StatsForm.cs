@@ -326,7 +326,34 @@ namespace VroomRental.Forms
 
         private void CarTypePlotButton_Click(object sender, EventArgs e)
         {
+            List<CarReservation> reservations = _carReservationService.GetAllCarReservations()
+                .Where(r => r.StartDate.Date >= startDate &&
+                    r.ActualEndDate.HasValue &&
+                    r.ActualEndDate.Value.Date <= endDate)
+                .ToList();
 
+            var bodyTypeCounts = reservations
+                .GroupBy(r => r.Car.BodyType)
+                .Select(g => new { BodyType = g.Key, Count = g.Count() })
+                .OrderBy(g => g.Count)
+                .ToList();
+
+            var plotModel = new PlotModel() { Title = "Rodzaj samochodu" };
+            var categoryAxis = new CategoryAxis { Position = AxisPosition.Left };
+            categoryAxis.Labels.AddRange(bodyTypeCounts.Select(g => g.BodyType));
+            plotModel.Axes.Add(categoryAxis);
+
+            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Liczba", Minimum = 0, MajorStep = 1 };
+            plotModel.Axes.Add(valueAxis);
+
+            var columnSeries = new BarSeries { Title = "Rodzaj samochodu" };
+            foreach (var bodyType in bodyTypeCounts)
+            {
+                columnSeries.Items.Add(new BarItem(bodyType.Count));
+            }
+            plotModel.Series.Add(columnSeries);
+
+            PeriodPlotView.Model = plotModel;
         }
 
         private void PopularBrandsPlotButton_Click(object sender, EventArgs e)
