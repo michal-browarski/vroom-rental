@@ -17,6 +17,7 @@ namespace VroomRental.Forms
         private Dictionary<string, int> _brands;
         private DateTime startDate = DateTime.Now;
         private DateTime endDate = DateTime.Now.AddDays(-7);
+        private Button selectedButton;
         public StatsForm()
         {
             InitializeComponent();
@@ -26,18 +27,11 @@ namespace VroomRental.Forms
             _carReservationService = new CarReservationService(databaseService);
             _paymentService = new PaymentService(databaseService);
             _customerService = new CustomerService(databaseService);
+            selectedButton = OptionsPlotButton;
 
             EndDatePicker.MaxDate = DateTime.Now;
             EndDatePicker.Value = startDate;
             StartDatePicker.Value = endDate;
-            InitializeDateRangeComboBox();
-
-            InitializeDailyStats();
-            InitializePeriodStats();
-
-            StartDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
-            EndDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
-            DateRangeComboBox.SelectedValueChanged += (s, e) => InitializePeriodStats();
         }
 
         private void InitializeDateRangeComboBox()
@@ -254,6 +248,11 @@ namespace VroomRental.Forms
 
         private void InitializePeriodPlot()
         {
+            selectedButton.PerformClick();
+        }
+
+        private void OptionsPlotButton_Click(object sender, EventArgs e)
+        {
             List<CarReservation> reservations = _carReservationService.GetAllCarReservations()
                 .Where(r => r.StartDate.Date >= startDate &&
                     r.ActualEndDate.HasValue &&
@@ -283,11 +282,7 @@ namespace VroomRental.Forms
             plotModel.Series.Add(columnSeries);
 
             PeriodPlotView.Model = plotModel;
-        }
-
-        private void OptionsPlotButton_Click(object sender, EventArgs e)
-        {
-            InitializePeriodPlot();
+            selectedButton = OptionsPlotButton;
         }
 
         private void FuelTypePlotButton_Click(object sender, EventArgs e)
@@ -320,6 +315,7 @@ namespace VroomRental.Forms
             plotModel.Series.Add(columnSeries);
 
             PeriodPlotView.Model = plotModel;
+            selectedButton = FuelTypePlotButton;
         }
 
         private void CarTypePlotButton_Click(object sender, EventArgs e)
@@ -352,6 +348,7 @@ namespace VroomRental.Forms
             plotModel.Series.Add(columnSeries);
 
             PeriodPlotView.Model = plotModel;
+            selectedButton = CarTypePlotButton;
         }
 
         private void PopularBrandsPlotButton_Click(object sender, EventArgs e)
@@ -384,6 +381,7 @@ namespace VroomRental.Forms
             plotModel.Series.Add(columnSeries);
 
             PeriodPlotView.Model = plotModel;
+            selectedButton = PopularBrandsPlotButton;
         }
 
         private void PopularCarsPlotButton_Click(object sender, EventArgs e)
@@ -416,6 +414,7 @@ namespace VroomRental.Forms
             plotModel.Series.Add(columnSeries);
 
             PeriodPlotView.Model = plotModel;
+            selectedButton = PopularCarsPlotButton;
         }
 
         private void PaymentTypePlotButton_Click(object sender, EventArgs e)
@@ -430,6 +429,19 @@ namespace VroomRental.Forms
             paymentPlot.Slices.Add(new PieSlice("Gotówka", payments.Where(p => p.PaymentMethod == PaymentMethod.Cash).Count()) { Fill = OxyColor.FromRgb(255, 255, 0) }); // Żółty
             plotModel.Series.Add(paymentPlot);
             PeriodPlotView.Model = plotModel;
+            selectedButton = PaymentTypePlotButton;
+        }
+
+        private void StatsForm_Load(object sender, EventArgs e)
+        {
+            InitializeDateRangeComboBox();
+
+            InitializeDailyStats();
+            InitializePeriodStats();
+
+            StartDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
+            EndDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
+            DateRangeComboBox.SelectedValueChanged += (s, e) => InitializePeriodStats();
         }
     }
 }

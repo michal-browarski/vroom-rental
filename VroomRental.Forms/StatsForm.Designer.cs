@@ -473,6 +473,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Statistics";
             WindowState = FormWindowState.Maximized;
+            Load += StatsForm_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             PeriodPanel.ResumeLayout(false);
