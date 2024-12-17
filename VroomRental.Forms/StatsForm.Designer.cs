@@ -188,6 +188,7 @@
             PopularCarsPlotButton.TabIndex = 16;
             PopularCarsPlotButton.Text = "Popularne auta";
             PopularCarsPlotButton.UseVisualStyleBackColor = true;
+            PopularCarsPlotButton.Click += PopularCarsPlotButton_Click;
             // 
             // PopularBrandsPlotButton
             // 
