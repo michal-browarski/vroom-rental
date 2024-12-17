@@ -1,5 +1,4 @@
 ﻿using OxyPlot;
-using OxyPlot.Axes;
 using OxyPlot.Series;
 using System.Configuration;
 using VroomRental.Backend.DB;
@@ -252,30 +251,7 @@ namespace VroomRental.Forms
 
         private void InitializePeriodPlot()
         {
-            // Domyslny wykres - wykres z markami
-        }
-
-        private void BrandsPlotButton_Click(object sender, EventArgs e)
-        {            
-            // Ile wypożyczeń danej marki
-            //_brands = _carReservationService.GetAllCarReservations()
-            //    .Where(r => r.StartDate.Date >= startDate &&
-            //                r.ActualEndDate.HasValue &&
-            //                r.ActualEndDate.Value.Date <= endDate)
-            //    .GroupBy(r => r.Car.Brand)
-            //    .ToDictionary(g => g.Key, g => g.Count());
-
-            InitializePeriodPlot();
-        }
-
-        private void PaymentMethodPlotButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void OptionsPlotButton_Click(object sender, EventArgs e)
-        {
-
+            // Domyslny wykres - czym to będzie?
         }
     }
 }
