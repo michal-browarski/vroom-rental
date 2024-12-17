@@ -37,6 +37,7 @@ namespace VroomRental.Forms
 
             StartDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
             EndDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
+            DateRangeComboBox.SelectedValueChanged += (s, e) => InitializePeriodStats();
         }
 
         private void InitializeDateRangeComboBox()
@@ -253,15 +254,10 @@ namespace VroomRental.Forms
 
         private void InitializePeriodPlot()
         {
-            // Domyslny wykres - czym to będzie?
-        }
-
-        private void OptionsPlotButton_Click(object sender, EventArgs e)
-        {
             List<CarReservation> reservations = _carReservationService.GetAllCarReservations()
                 .Where(r => r.StartDate.Date >= startDate &&
-                            r.ActualEndDate.HasValue &&
-                            r.ActualEndDate.Value.Date <= endDate)
+                    r.ActualEndDate.HasValue &&
+                    r.ActualEndDate.Value.Date <= endDate)
                 .ToList();
 
             var additionalOptions = reservations
@@ -282,6 +278,42 @@ namespace VroomRental.Forms
             foreach (var option in additionalOptions)
             {
                 columnSeries.Items.Add(new BarItem(option.Count));
+            }
+            plotModel.Series.Add(columnSeries);
+
+            PeriodPlotView.Model = plotModel;
+        }
+
+        private void OptionsPlotButton_Click(object sender, EventArgs e)
+        {
+            InitializePeriodPlot();
+        }
+
+        private void FuelTypePlotButton_Click(object sender, EventArgs e)
+        {
+            List<CarReservation> reservations = _carReservationService.GetAllCarReservations()
+                .Where(r => r.StartDate.Date >= startDate &&
+                    r.ActualEndDate.HasValue &&
+                    r.ActualEndDate.Value.Date <= endDate)
+                .ToList();
+
+            var fuelTypeCounts = reservations
+                .GroupBy(r => r.Car.FuelType)
+                .Select(g => new { FuelType = g.Key, Count = g.Count() })
+                .ToList();
+
+            var plotModel = new PlotModel() { Title = "Rodzaje paliwa" };
+            var categoryAxis = new CategoryAxis { Position = AxisPosition.Left };
+            categoryAxis.Labels.AddRange(fuelTypeCounts.Select(g => g.FuelType));
+            plotModel.Axes.Add(categoryAxis);
+
+            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Liczba", Minimum = 0, MajorStep = 1 };
+            plotModel.Axes.Add(valueAxis);
+
+            var columnSeries = new BarSeries { Title = "Rodzaje paliwa" };
+            foreach (var fuelType in fuelTypeCounts)
+            {
+                columnSeries.Items.Add(new BarItem(fuelType.Count));
             }
             plotModel.Series.Add(columnSeries);
 

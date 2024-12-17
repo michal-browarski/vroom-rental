@@ -218,6 +218,7 @@
             FuelTypePlotButton.TabIndex = 13;
             FuelTypePlotButton.Text = "Rodzaj paliwa";
             FuelTypePlotButton.UseVisualStyleBackColor = true;
+            FuelTypePlotButton.Click += FuelTypePlotButton_Click;
             // 
             // OptionsPlotButton
             // 
