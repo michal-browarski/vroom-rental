@@ -1,9 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using VroomRental.Backend.Model;
-using VroomRental.Backend.DB.QueryServices;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
+using VroomRental.Backend.DB.QueryServices;
+using VroomRental.Backend.Model;
 
 namespace VroomRental.Forms
 {

@@ -1,9 +1,7 @@
 ﻿using OxyPlot;
 using OxyPlot.Axes;
 using OxyPlot.Series;
-using System;
 using System.Configuration;
-using System.Diagnostics;
 using VroomRental.Backend.DB;
 using VroomRental.Backend.DB.QueryServices;
 using VroomRental.Backend.Model;
@@ -397,7 +395,7 @@ namespace VroomRental.Forms
                 .ToList();
 
             var topCars = reservations
-                .GroupBy(r => $"{r.Car.Brand} {r.Car.Model} {r.Car.FuelType}")
+                .GroupBy(r => $"{r.Car.Brand} {r.Car.Model} {r.Car.FuelType} #{r.Car.Id}")
                 .Select(g => new { CarName = g.Key, Count = g.Count() })
                 .OrderBy(g => g.Count)
                 .ToList();
