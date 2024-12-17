@@ -198,6 +198,7 @@
             PopularBrandsPlotButton.TabIndex = 15;
             PopularBrandsPlotButton.Text = "Popularne marki";
             PopularBrandsPlotButton.UseVisualStyleBackColor = true;
+            PopularBrandsPlotButton.Click += PopularBrandsPlotButton_Click;
             // 
             // CarTypePlotButton
             // 
@@ -208,6 +209,7 @@
             CarTypePlotButton.TabIndex = 14;
             CarTypePlotButton.Text = "Rodzaj auta";
             CarTypePlotButton.UseVisualStyleBackColor = true;
+            CarTypePlotButton.Click += CarTypePlotButton_Click;
             // 
             // FuelTypePlotButton
             // 

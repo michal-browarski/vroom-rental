@@ -319,5 +319,41 @@ namespace VroomRental.Forms
 
             PeriodPlotView.Model = plotModel;
         }
+
+        private void CarTypePlotButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PopularBrandsPlotButton_Click(object sender, EventArgs e)
+        {
+            List<CarReservation> reservations = _carReservationService.GetAllCarReservations()
+                .Where(r => r.StartDate.Date >= startDate &&
+                    r.ActualEndDate.HasValue &&
+                    r.ActualEndDate.Value.Date <= endDate)
+                .ToList();
+
+            var topBrands = reservations
+                .GroupBy(r => r.Car.Brand)
+                .Select(g => new { Brand = g.Key, Count = g.Count() })
+                .ToList();
+
+            var plotModel = new PlotModel() { Title = "Topowe marki" };
+            var categoryAxis = new CategoryAxis { Position = AxisPosition.Left };
+            categoryAxis.Labels.AddRange(topBrands.Select(g => g.Brand));
+            plotModel.Axes.Add(categoryAxis);
+
+            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Liczba", Minimum = 0, MajorStep = 1 };
+            plotModel.Axes.Add(valueAxis);
+
+            var columnSeries = new BarSeries { Title = "Topowe marki" };
+            foreach (var brand in topBrands)
+            {
+                columnSeries.Items.Add(new BarItem(brand.Count));
+            }
+            plotModel.Series.Add(columnSeries);
+
+            PeriodPlotView.Model = plotModel;
+        }
     }
 }
