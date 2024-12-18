@@ -1,9 +1,7 @@
-﻿using System;
-using System.Windows.Forms;
-using VroomRental.Backend.Model;
-using VroomRental.Backend.DB.QueryServices;
-using System.Net;
+﻿using System.Net;
 using System.Net.Mail;
+using VroomRental.Backend.DB.QueryServices;
+using VroomRental.Backend.Model;
 
 namespace VroomRental.Forms
 {
@@ -85,12 +83,15 @@ namespace VroomRental.Forms
 
                     decimal totalPrice = CalculateTotalPrice(_selectedReservation, finalMileage, requiresRepair, repairCost);
 
+                    int traveledKilometers = finalMileage - _selectedReservation.Car.Mileage;
+
                     _selectedReservation.ActualEndDate = DateTime.Now;
                     _selectedReservation.Status = ReservationStatus.Ended;
                     _selectedReservation.Car.Mileage = finalMileage;
 
-                    _reservationService.UpdateReservation(_selectedReservation);
+                    _reservationService.UpdateReservation(_selectedReservation, traveledKilometers);
                     _reservationService.UpdateCarStatus(_selectedReservation.Car.Id, CarStatus.Available);
+                    _reservationService.UpdateCarMileage(_selectedReservation.Car.Id, finalMileage);
 
                     // Zapis płatności w bazie danych
                     int paymentMethodId = BlikRadioButton.Checked ? 1 : 2; // 1 = Blik, 2 = Cash
@@ -101,7 +102,7 @@ namespace VroomRental.Forms
                     {
                         string repairDescription = RepairDescriptionTextBox.Text;
 
-                        _reservationService.SaveRepair(_selectedReservation.Car.Id, repairDescription, 1);
+                        _reservationService.SaveRepair(_selectedReservation.Car.Id, repairDescription, 1, repairCost);
                     }
 
                     MessageBox.Show($"Rental has been successfully ended.\nTotal Amount Paid: {totalPrice:C}", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);

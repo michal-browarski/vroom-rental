@@ -33,5 +33,18 @@
                 activeFormInstance.Focus();
             }
         }
+
+        private void StatsButton_Click(object sender, EventArgs e)
+        {
+            if (activeFormInstance == null || activeFormInstance!.IsDisposed)
+            {
+                activeFormInstance = new StatsForm();
+                activeFormInstance.Show();
+            }
+            else
+            {
+                activeFormInstance.Focus();
+            }
+        }
     }
 }

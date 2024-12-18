@@ -17,8 +17,8 @@ namespace VroomRental.Backend.DB.QueryServices
             string query = @"
                 SELECT 
                     r.Reservation_Id, r.Start_Date, r.Planned_End_Date, r.Actual_End_Date, r.Status, 
-                    c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, c.Email AS Customer_Email,
-                    car.Car_Id, car.Brand, car.Model, car.Price_Per_Day, car.Mileage,
+                    c.Customer_Id, c.First_Name AS Customer_First_Name, c.Last_Name AS Customer_Last_Name, c.Email AS Customer_Email, c.Registration_Date AS Customer_Registration_Date,
+                    car.Car_Id, car.Brand, car.Model, car.Price_Per_Day, car.Mileage, car.Fuel_Type, car.Body_Type,
                     e.Employee_Id, e.First_Name AS Employee_First_Name, e.Last_Name AS Employee_Last_Name,
                     p.Amount, p.Payment_Date,
                     dmp.Package_Id, dmp.Package_Name, dmp.Max_Kilometers_Per_Day, dmp.Price AS Package_Price
@@ -53,7 +53,8 @@ namespace VroomRental.Backend.DB.QueryServices
                         Id = Convert.ToInt32(row["Customer_Id"]),
                         FirstName = row["Customer_First_Name"].ToString(),
                         LastName = row["Customer_Last_Name"].ToString(),
-                        Email = row["Customer_Email"].ToString()
+                        Email = row["Customer_Email"].ToString(),
+                        RegistrationDate = (DateTime)row["Customer_Registration_Date"]
                     },
 
                     Car = new Car
@@ -62,7 +63,9 @@ namespace VroomRental.Backend.DB.QueryServices
                         Brand = row["Brand"].ToString(),
                         Model = row["Model"].ToString(),
                         Mileage = Convert.ToInt32(row["Mileage"]),
-                        PricePerDay = Convert.ToDecimal(row["Price_Per_Day"])
+                        PricePerDay = Convert.ToDecimal(row["Price_Per_Day"]),
+                        FuelType = row["Fuel_Type"].ToString(),
+                        BodyType = row["Body_Type"].ToString()
                     },
 
                     Employee = row.IsNull("Employee_Id") ? null : new Employee
@@ -189,7 +192,7 @@ namespace VroomRental.Backend.DB.QueryServices
             return options;
         }
 
-        public void UpdateReservation(CarReservation reservation)
+        public void UpdateReservation(CarReservation reservation, int? traveledKilometers = null)
         {
             string query = @"
                 UPDATE tbl_Car_Reservations
@@ -197,7 +200,8 @@ namespace VroomRental.Backend.DB.QueryServices
                     Start_Date = @StartDate,
                     Planned_End_Date = @PlannedEndDate,
                     Actual_End_Date = @ActualEndDate,
-                    Status = @Status
+                    Status = @Status,
+                    Traveled_Kilometers = @TraveledKilometers
                 WHERE Reservation_Id = @ReservationId";
 
                     var parameters = new Dictionary<string, object>
@@ -206,12 +210,28 @@ namespace VroomRental.Backend.DB.QueryServices
                 { "@PlannedEndDate", reservation.PlannedEndDate },
                 { "@ActualEndDate", reservation.ActualEndDate ?? (object)DBNull.Value },
                 { "@Status", reservation.Status },
+                { "@TraveledKilometers", traveledKilometers ?? (object)DBNull.Value },
                 { "@ReservationId", reservation.Id }
             };
 
             _databaseService.ExecuteNonQuery(query, parameters);
         }
 
+        public void UpdateCarMileage(int carId, int finalmileage)
+        {
+            string query = @"
+                UPDATE tbl_Cars
+                SET Mileage = @Mileage
+                WHERE Car_Id = @CarId";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@Mileage", finalmileage },
+                { "@CarId", carId }
+            };
+
+            _databaseService.ExecuteNonQuery(query, parameters);
+        }
 
         public void UpdateCarStatus(int carId, CarStatus status)
         {
@@ -283,11 +303,11 @@ namespace VroomRental.Backend.DB.QueryServices
             return packages;
         }
 
-        public void SaveRepair(int carId, string description, int employeeId)
+        public void SaveRepair(int carId, string description, int employeeId, decimal cost)
         {
             string query = @"
-                INSERT INTO tbl_Repairs (Car_Id, Report_Date, Description, Status, Employee_Id)
-                VALUES (@CarId, @ReportDate, @Description, @Status, @EmployeeId)";
+                INSERT INTO tbl_Repairs (Car_Id, Report_Date, Description, Status, Employee_Id, Cost)
+                VALUES (@CarId, @ReportDate, @Description, @Status, @EmployeeId, @Cost)";
 
                     var parameters = new Dictionary<string, object>
             {
@@ -295,7 +315,8 @@ namespace VroomRental.Backend.DB.QueryServices
                 { "@ReportDate", DateTime.Now },
                 { "@Description", description },
                 { "@Status", 1 }, // Status: 1 = Open
-                { "@EmployeeId", employeeId }
+                { "@EmployeeId", employeeId },
+                { "@Cost", cost },
             };
 
             _databaseService.ExecuteNonQuery(query, parameters);

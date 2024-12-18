@@ -400,3 +400,4 @@ FodyWeavers.xsd
 App.config
 # JetBrains Rider
 *.sln.iml
+/VroomRental.Forms/App.config

@@ -16,7 +16,7 @@ namespace VroomRental.Backend.DB.QueryServices
         public List<Customer> GetAllCustomersWithAddress()
         {
             string query = @"
-            SELECT c.Customer_Id, c.First_Name, c.Last_Name, c.Phone, c.Email, c.Driver_Licence_Number,
+            SELECT c.Customer_Id, c.First_Name, c.Last_Name, c.Phone, c.Email, c.Driver_Licence_Number, c.Registration_Date,
                    a.Street, a.Home_Number, a.City, a.Zip_Code
             FROM tbl_Customers c
             LEFT JOIN tbl_Addresses a ON c.Customer_Id = a.Customer_Id";
@@ -34,6 +34,7 @@ namespace VroomRental.Backend.DB.QueryServices
                     Phone = row["Phone"].ToString(),
                     Email = row["Email"].ToString(),
                     DriverLicenceNumber = row["Driver_Licence_Number"].ToString(),
+                    RegistrationDate = (DateTime)row["Registration_Date"],
                     Address = new Address
                     {
                         Street = row["Street"].ToString(),
@@ -51,8 +52,8 @@ namespace VroomRental.Backend.DB.QueryServices
         {
             // Dodaj klienta
             string customerQuery = @"
-            INSERT INTO tbl_Customers (First_Name, Last_Name, Phone, Email, Driver_Licence_Number)
-            VALUES (@FirstName, @LastName, @Phone, @Email, @DriverLicenceNumber);
+            INSERT INTO tbl_Customers (First_Name, Last_Name, Phone, Email, Driver_Licence_Number, Registration_Date)
+            VALUES (@FirstName, @LastName, @Phone, @Email, @DriverLicenceNumber, @Registration_Date);
             SELECT SCOPE_IDENTITY();";
 
             var customerParameters = new Dictionary<string, object>
@@ -61,7 +62,8 @@ namespace VroomRental.Backend.DB.QueryServices
                 {"@LastName", customer.LastName },
                 {"@Phone", customer.Phone },
                 {"@Email", customer.Email },
-                {"@DriverLicenceNumber", customer.DriverLicenceNumber }
+                {"@DriverLicenceNumber", customer.DriverLicenceNumber },
+                {"@RegistrationDate", DateTime.Now },
             };
 
             int customerId = Convert.ToInt32(_databaseService.ExecuteScalar(customerQuery, customerParameters));

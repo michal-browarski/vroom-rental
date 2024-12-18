@@ -32,6 +32,7 @@
             CarsButton = new Button();
             EmployeesButton = new Button();
             CustomersButton = new Button();
+            StatsButton = new Button();
             SuspendLayout();
             // 
             // ReservationsButton
@@ -76,11 +77,23 @@
             CustomersButton.Text = "Customers";
             CustomersButton.UseVisualStyleBackColor = true;
             // 
+            // StatsButton
+            // 
+            StatsButton.Font = new Font("Segoe UI", 50F);
+            StatsButton.Location = new Point(24, 513);
+            StatsButton.Name = "StatsButton";
+            StatsButton.Size = new Size(749, 159);
+            StatsButton.TabIndex = 4;
+            StatsButton.Text = "Statistics";
+            StatsButton.UseVisualStyleBackColor = true;
+            StatsButton.Click += StatsButton_Click;
+            // 
             // AdminPanel
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1955, 1054);
+            Controls.Add(StatsButton);
             Controls.Add(CustomersButton);
             Controls.Add(EmployeesButton);
             Controls.Add(CarsButton);
@@ -98,5 +111,6 @@
         private Button CarsButton;
         private Button EmployeesButton;
         private Button CustomersButton;
+        private Button StatsButton;
     }
 }
