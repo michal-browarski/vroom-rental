@@ -63,7 +63,7 @@ namespace VroomRental.Backend.DB.QueryServices
                 {"@Phone", customer.Phone },
                 {"@Email", customer.Email },
                 {"@DriverLicenceNumber", customer.DriverLicenceNumber },
-                {"@RegistrationDate", DateTime.Now },
+                {"@Registration_Date", DateTime.Now },
             };
 
             int customerId = Convert.ToInt32(_databaseService.ExecuteScalar(customerQuery, customerParameters));

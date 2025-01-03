@@ -46,5 +46,31 @@
                 activeFormInstance.Focus();
             }
         }
+
+        private void CustomersButton_Click(object sender, EventArgs e)
+        {
+            if (activeFormInstance == null || activeFormInstance!.IsDisposed)
+            {
+                activeFormInstance = new CustomersForm();
+                activeFormInstance.Show();
+            }
+            else
+            {
+                activeFormInstance.Focus();
+            }
+        }
+
+        private void EmployeesButton_Click(object sender, EventArgs e)
+        {
+            if (activeFormInstance == null || activeFormInstance!.IsDisposed)
+            {
+                activeFormInstance = new EmployeesForm();
+                activeFormInstance.Show();
+            }
+            else
+            {
+                activeFormInstance.Focus();
+            }
+        }
     }
 }
