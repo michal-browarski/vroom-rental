@@ -54,6 +54,7 @@
             PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
             PasswordMaskedTextBox.Size = new Size(308, 47);
             PasswordMaskedTextBox.TabIndex = 1;
+            PasswordMaskedTextBox.UseSystemPasswordChar = true;
             // 
             // LoginLabel
             // 
