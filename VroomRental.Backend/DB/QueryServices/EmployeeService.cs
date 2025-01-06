@@ -131,5 +131,23 @@ namespace VroomRental.Backend.DB.QueryServices
             }
             return employees;
         }
+
+        public byte[] GetStoredPasswordHashFromDatabase(string login)
+        {
+            string query = "SELECT Password FROM tbl_Employees WHERE Login = @Login";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@Login", login }
+            };
+
+            DataTable employeeTable = _databaseService.ExecuteQuery(query, parameters);
+
+            if (employeeTable.Rows.Count == 0)
+                return null;
+
+            DataRow row = employeeTable.Rows[0];
+            return (byte[])row["Password"];
+        }
     }
 }

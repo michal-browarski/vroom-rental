@@ -1,11 +1,15 @@
-﻿namespace VroomRental.Forms
+﻿using VroomRental.Backend.Model;
+
+namespace VroomRental.Forms
 {
     public partial class AdminPanel : Form
     {
         private Form? activeFormInstance;
-        public AdminPanel()
+        private readonly Employee _currentUser;
+        public AdminPanel(Employee currentUser)
         {
             InitializeComponent();
+            _currentUser = currentUser;
         }
 
         private void ReservationsButton_Click(object sender, EventArgs e)
