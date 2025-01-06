@@ -1,18 +1,22 @@
-﻿namespace VroomRental.Forms
+﻿using VroomRental.Backend.Model;
+
+namespace VroomRental.Forms
 {
     public partial class AdminPanel : Form
     {
         private Form? activeFormInstance;
-        public AdminPanel()
+        private readonly Employee _currentUser;
+        public AdminPanel(Employee currentUser)
         {
             InitializeComponent();
+            _currentUser = currentUser;
         }
 
         private void ReservationsButton_Click(object sender, EventArgs e)
         {
             if (activeFormInstance == null || activeFormInstance!.IsDisposed)
             {
-                activeFormInstance = new CarReservationsForm();
+                activeFormInstance = new CarReservationsForm(_currentUser);
                 activeFormInstance.Show();
             }
             else
@@ -25,7 +29,7 @@
         {
             if (activeFormInstance == null || activeFormInstance!.IsDisposed)
             {
-                activeFormInstance = new CarsForm();
+                activeFormInstance = new CarsForm(_currentUser);
                 activeFormInstance.Show();
             }
             else
@@ -44,6 +48,55 @@
             else
             {
                 activeFormInstance.Focus();
+            }
+        }
+
+        private void CustomersButton_Click(object sender, EventArgs e)
+        {
+            if (activeFormInstance == null || activeFormInstance!.IsDisposed)
+            {
+                activeFormInstance = new CustomersForm();
+                activeFormInstance.Show();
+            }
+            else
+            {
+                activeFormInstance.Focus();
+            }
+        }
+
+        private void EmployeesButton_Click(object sender, EventArgs e)
+        {
+            if (activeFormInstance == null || activeFormInstance!.IsDisposed)
+            {
+                activeFormInstance = new EmployeesForm();
+                activeFormInstance.Show();
+            }
+            else
+            {
+                activeFormInstance.Focus();
+            }
+        }
+
+        private void AdminPanel_Load(object sender, EventArgs e)
+        {
+            if (_currentUser.Role == "Admin")
+            {
+                EmployeesButton.Visible = true;
+                CustomersButton.Visible = true;
+                StatsButton.Visible = true;
+                ReservationsButton.Visible = true;
+                CarsButton.Visible = true;
+            }
+
+            if (_currentUser.Role == "Customer Service")
+            {
+                ReservationsButton.Visible = true;
+                CarsButton.Visible = true;
+            }
+
+            if (_currentUser.Role == "Repairs")
+            {
+                // Widoki dla napraw
             }
         }
     }

@@ -8,8 +8,9 @@ namespace VroomRental.Forms
     public partial class CarReservationsForm : Form
     {
         private readonly CarReservationService _carReservationService;
+        private readonly Employee _currentUser;
 
-        public CarReservationsForm()
+        public CarReservationsForm(Employee currentUser)
         {
             InitializeComponent();
 
@@ -30,6 +31,7 @@ namespace VroomRental.Forms
 
             EditButton.Click += EditButton_Click;
             ResetButton.Click += ResetButton_Click;
+            _currentUser = currentUser;
         }
 
         private void InitializeDataGridView()
@@ -381,5 +383,22 @@ namespace VroomRental.Forms
             LoadData();
         }
 
+        private void CarReservationsForm_Load(object sender, EventArgs e)
+        {
+            if (_currentUser.Role != "Admin")
+            {
+                AdditionalOptionsCheckedListBox.Enabled = false;
+                EditButton.Enabled = false;
+                StatusTextBox.Enabled = false;
+                CustomerNameTextBox.Enabled = false;
+                CarDetailsTextBox.Enabled = false;
+                EmployeeNameTextBox.Enabled = false;
+                PaymentDetailsTextBox.Enabled = false;
+                StartDateTextBox.Enabled = false;
+                PlannedEndDateTextBox.Enabled = false;
+                ActualEndDateTextBox.Enabled = false;
+                MileagePackageTextBox.Enabled = false;
+            }
+        }
     }
 }
