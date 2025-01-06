@@ -16,7 +16,7 @@ namespace VroomRental.Forms
         {
             if (activeFormInstance == null || activeFormInstance!.IsDisposed)
             {
-                activeFormInstance = new CarReservationsForm();
+                activeFormInstance = new CarReservationsForm(_currentUser);
                 activeFormInstance.Show();
             }
             else
@@ -29,7 +29,7 @@ namespace VroomRental.Forms
         {
             if (activeFormInstance == null || activeFormInstance!.IsDisposed)
             {
-                activeFormInstance = new CarsForm();
+                activeFormInstance = new CarsForm(_currentUser);
                 activeFormInstance.Show();
             }
             else

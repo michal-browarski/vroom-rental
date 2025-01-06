@@ -8,8 +8,9 @@ namespace VroomRental.Forms
     public partial class CarsForm : Form
     {
         private readonly CarService _carService;
+        private readonly Employee _currentUser;
 
-        public CarsForm()
+        public CarsForm(Employee currentUser)
         {
             InitializeComponent();
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -41,6 +42,7 @@ namespace VroomRental.Forms
 
             SearchButton.Click += SearchButton_Click;
             ResetButton.Click += ResetButton_Click;
+            _currentUser = currentUser;
         }
 
         private void InitializeDataGridView()

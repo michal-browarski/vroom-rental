@@ -84,11 +84,9 @@
             SearchGroupBox.Controls.Add(label9);
             SearchGroupBox.Controls.Add(SearchResetButton);
             SearchGroupBox.Controls.Add(SearchButton);
-            SearchGroupBox.Location = new Point(22, 9);
-            SearchGroupBox.Margin = new Padding(3, 2, 3, 2);
+            SearchGroupBox.Location = new Point(25, 12);
             SearchGroupBox.Name = "SearchGroupBox";
-            SearchGroupBox.Padding = new Padding(3, 2, 3, 2);
-            SearchGroupBox.Size = new Size(842, 104);
+            SearchGroupBox.Size = new Size(962, 139);
             SearchGroupBox.TabIndex = 5;
             SearchGroupBox.TabStop = false;
             SearchGroupBox.Text = "Search";
@@ -96,100 +94,103 @@
             // SearchStatusComboBox
             // 
             SearchStatusComboBox.FormattingEnabled = true;
-            SearchStatusComboBox.Location = new Point(608, 57);
+            SearchStatusComboBox.Location = new Point(695, 76);
+            SearchStatusComboBox.Margin = new Padding(3, 4, 3, 4);
             SearchStatusComboBox.Name = "SearchStatusComboBox";
-            SearchStatusComboBox.Size = new Size(100, 23);
+            SearchStatusComboBox.Size = new Size(114, 28);
             SearchStatusComboBox.TabIndex = 10;
             // 
             // SearchEndDateTextBox
             // 
-            SearchEndDateTextBox.Location = new Point(456, 57);
+            SearchEndDateTextBox.Location = new Point(521, 76);
+            SearchEndDateTextBox.Margin = new Padding(3, 4, 3, 4);
             SearchEndDateTextBox.Name = "SearchEndDateTextBox";
-            SearchEndDateTextBox.Size = new Size(113, 23);
+            SearchEndDateTextBox.Size = new Size(129, 27);
             SearchEndDateTextBox.TabIndex = 9;
             // 
             // SearchStartDateTextBox
             // 
-            SearchStartDateTextBox.Location = new Point(301, 57);
+            SearchStartDateTextBox.Location = new Point(344, 76);
+            SearchStartDateTextBox.Margin = new Padding(3, 4, 3, 4);
             SearchStartDateTextBox.Name = "SearchStartDateTextBox";
-            SearchStartDateTextBox.Size = new Size(113, 23);
+            SearchStartDateTextBox.Size = new Size(129, 27);
             SearchStartDateTextBox.TabIndex = 9;
             // 
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(456, 24);
+            label13.Location = new Point(521, 32);
             label13.Name = "label13";
-            label13.Size = new Size(54, 15);
+            label13.Size = new Size(70, 20);
             label13.TabIndex = 7;
             label13.Text = "End Date";
             // 
             // SearchCarDetailsTextBox
             // 
-            SearchCarDetailsTextBox.Location = new Point(150, 57);
+            SearchCarDetailsTextBox.Location = new Point(171, 76);
+            SearchCarDetailsTextBox.Margin = new Padding(3, 4, 3, 4);
             SearchCarDetailsTextBox.Name = "SearchCarDetailsTextBox";
-            SearchCarDetailsTextBox.Size = new Size(113, 23);
+            SearchCarDetailsTextBox.Size = new Size(129, 27);
             SearchCarDetailsTextBox.TabIndex = 8;
             // 
             // SearchCustomerTextBox
             // 
-            SearchCustomerTextBox.Location = new Point(6, 57);
+            SearchCustomerTextBox.Location = new Point(7, 76);
+            SearchCustomerTextBox.Margin = new Padding(3, 4, 3, 4);
             SearchCustomerTextBox.Name = "SearchCustomerTextBox";
-            SearchCustomerTextBox.Size = new Size(113, 23);
+            SearchCustomerTextBox.Size = new Size(129, 27);
             SearchCustomerTextBox.TabIndex = 7;
             // 
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(608, 24);
+            label12.Location = new Point(695, 32);
             label12.Name = "label12";
-            label12.Size = new Size(39, 15);
+            label12.Size = new Size(49, 20);
             label12.TabIndex = 6;
             label12.Text = "Status";
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(301, 24);
+            label11.Location = new Point(344, 32);
             label11.Name = "label11";
-            label11.Size = new Size(58, 15);
+            label11.Size = new Size(76, 20);
             label11.TabIndex = 6;
             label11.Text = "Start Date";
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(150, 24);
+            label10.Location = new Point(171, 32);
             label10.Name = "label10";
-            label10.Size = new Size(63, 15);
+            label10.Size = new Size(81, 20);
             label10.TabIndex = 5;
             label10.Text = "Car Details";
             // 
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(6, 24);
+            label9.Location = new Point(7, 32);
             label9.Name = "label9";
-            label9.Size = new Size(59, 15);
+            label9.Size = new Size(72, 20);
             label9.TabIndex = 4;
             label9.Text = "Customer";
             // 
             // SearchResetButton
             // 
-            SearchResetButton.Location = new Point(734, 18);
-            SearchResetButton.Margin = new Padding(3, 2, 3, 2);
+            SearchResetButton.Location = new Point(839, 24);
             SearchResetButton.Name = "SearchResetButton";
-            SearchResetButton.Size = new Size(97, 26);
+            SearchResetButton.Size = new Size(111, 35);
             SearchResetButton.TabIndex = 3;
             SearchResetButton.Text = "Reset";
             SearchResetButton.UseVisualStyleBackColor = true;
             // 
             // SearchButton
             // 
-            SearchButton.Location = new Point(734, 68);
-            SearchButton.Margin = new Padding(3, 2, 3, 2);
+            SearchButton.Location = new Point(839, 91);
             SearchButton.Name = "SearchButton";
-            SearchButton.Size = new Size(97, 26);
+            SearchButton.Size = new Size(111, 35);
             SearchButton.TabIndex = 2;
             SearchButton.Text = "Search";
             SearchButton.UseVisualStyleBackColor = true;
@@ -218,11 +219,9 @@
             CarReservationDetailsGroupBox.Controls.Add(ActualEndDateTextBox);
             CarReservationDetailsGroupBox.Controls.Add(StatusTextBox);
             CarReservationDetailsGroupBox.Controls.Add(StatusLabel);
-            CarReservationDetailsGroupBox.Location = new Point(870, 11);
-            CarReservationDetailsGroupBox.Margin = new Padding(3, 2, 3, 2);
+            CarReservationDetailsGroupBox.Location = new Point(994, 15);
             CarReservationDetailsGroupBox.Name = "CarReservationDetailsGroupBox";
-            CarReservationDetailsGroupBox.Padding = new Padding(3, 2, 3, 2);
-            CarReservationDetailsGroupBox.Size = new Size(301, 627);
+            CarReservationDetailsGroupBox.Size = new Size(344, 836);
             CarReservationDetailsGroupBox.TabIndex = 4;
             CarReservationDetailsGroupBox.TabStop = false;
             CarReservationDetailsGroupBox.Text = "Car reservation";
@@ -230,34 +229,31 @@
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(28, 244);
+            label14.Location = new Point(32, 325);
             label14.Name = "label14";
-            label14.Size = new Size(96, 15);
+            label14.Size = new Size(121, 20);
             label14.TabIndex = 36;
             label14.Text = "Mileage Package";
             // 
             // MileagePackageTextBox
             // 
-            MileagePackageTextBox.Location = new Point(148, 241);
-            MileagePackageTextBox.Margin = new Padding(3, 2, 3, 2);
+            MileagePackageTextBox.Location = new Point(169, 321);
             MileagePackageTextBox.Name = "MileagePackageTextBox";
-            MileagePackageTextBox.Size = new Size(110, 23);
+            MileagePackageTextBox.Size = new Size(125, 27);
             MileagePackageTextBox.TabIndex = 35;
             // 
             // StartDateTextBox
             // 
-            StartDateTextBox.Location = new Point(148, 160);
-            StartDateTextBox.Margin = new Padding(3, 2, 3, 2);
+            StartDateTextBox.Location = new Point(169, 213);
             StartDateTextBox.Name = "StartDateTextBox";
-            StartDateTextBox.Size = new Size(110, 23);
+            StartDateTextBox.Size = new Size(125, 27);
             StartDateTextBox.TabIndex = 34;
             // 
             // ResetButton
             // 
-            ResetButton.Location = new Point(161, 586);
-            ResetButton.Margin = new Padding(3, 2, 3, 2);
+            ResetButton.Location = new Point(184, 781);
             ResetButton.Name = "ResetButton";
-            ResetButton.Size = new Size(97, 26);
+            ResetButton.Size = new Size(111, 35);
             ResetButton.TabIndex = 33;
             ResetButton.Text = "Reset";
             ResetButton.UseVisualStyleBackColor = true;
@@ -265,155 +261,148 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(66, 163);
+            label8.Location = new Point(75, 217);
             label8.Name = "label8";
-            label8.Size = new Size(58, 15);
+            label8.Size = new Size(76, 20);
             label8.TabIndex = 32;
             label8.Text = "Start Date";
             // 
             // AdditionalOptionsCheckedListBox
             // 
             AdditionalOptionsCheckedListBox.FormattingEnabled = true;
-            AdditionalOptionsCheckedListBox.Location = new Point(25, 310);
+            AdditionalOptionsCheckedListBox.Location = new Point(29, 413);
+            AdditionalOptionsCheckedListBox.Margin = new Padding(3, 4, 3, 4);
             AdditionalOptionsCheckedListBox.Name = "AdditionalOptionsCheckedListBox";
-            AdditionalOptionsCheckedListBox.Size = new Size(234, 130);
+            AdditionalOptionsCheckedListBox.Size = new Size(267, 158);
             AdditionalOptionsCheckedListBox.TabIndex = 30;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(34, 292);
+            label7.Location = new Point(39, 389);
             label7.Name = "label7";
-            label7.Size = new Size(100, 15);
+            label7.Size = new Size(126, 20);
             label7.TabIndex = 29;
             label7.Text = "Additinal Options";
             // 
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(24, 190);
+            label6.Location = new Point(27, 253);
             label6.Name = "label6";
-            label6.Size = new Size(100, 15);
+            label6.Size = new Size(127, 20);
             label6.TabIndex = 27;
             label6.Text = "Planned End Date";
             // 
             // PlannedEndDateTextBox
             // 
-            PlannedEndDateTextBox.Location = new Point(149, 187);
-            PlannedEndDateTextBox.Margin = new Padding(3, 2, 3, 2);
+            PlannedEndDateTextBox.Location = new Point(170, 249);
             PlannedEndDateTextBox.Name = "PlannedEndDateTextBox";
-            PlannedEndDateTextBox.Size = new Size(110, 23);
+            PlannedEndDateTextBox.Size = new Size(125, 27);
             PlannedEndDateTextBox.TabIndex = 26;
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(32, 136);
+            label5.Location = new Point(37, 181);
             label5.Name = "label5";
-            label5.Size = new Size(92, 15);
+            label5.Size = new Size(115, 20);
             label5.TabIndex = 25;
             label5.Text = "Payment Details";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(30, 109);
+            label4.Location = new Point(34, 145);
             label4.Name = "label4";
-            label4.Size = new Size(94, 15);
+            label4.Size = new Size(119, 20);
             label4.TabIndex = 24;
             label4.Text = "Employee Name";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(61, 82);
+            label3.Location = new Point(70, 109);
             label3.Name = "label3";
-            label3.Size = new Size(63, 15);
+            label3.Size = new Size(81, 20);
             label3.TabIndex = 23;
             label3.Text = "Car Details";
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(30, 55);
+            label2.Location = new Point(34, 73);
             label2.Name = "label2";
-            label2.Size = new Size(94, 15);
+            label2.Size = new Size(116, 20);
             label2.TabIndex = 22;
             label2.Text = "Customer Name";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(33, 217);
+            label1.Location = new Point(38, 289);
             label1.Name = "label1";
-            label1.Size = new Size(91, 15);
+            label1.Size = new Size(116, 20);
             label1.TabIndex = 21;
             label1.Text = "Actual End Date";
             // 
             // EditButton
             // 
-            EditButton.Location = new Point(33, 586);
-            EditButton.Margin = new Padding(3, 2, 3, 2);
+            EditButton.Location = new Point(38, 781);
             EditButton.Name = "EditButton";
-            EditButton.Size = new Size(97, 26);
+            EditButton.Size = new Size(111, 35);
             EditButton.TabIndex = 20;
             EditButton.Text = "Edit";
             EditButton.UseVisualStyleBackColor = true;
             // 
             // PaymentDetailsTextBox
             // 
-            PaymentDetailsTextBox.Location = new Point(149, 133);
-            PaymentDetailsTextBox.Margin = new Padding(3, 2, 3, 2);
+            PaymentDetailsTextBox.Location = new Point(170, 177);
             PaymentDetailsTextBox.Name = "PaymentDetailsTextBox";
-            PaymentDetailsTextBox.Size = new Size(110, 23);
+            PaymentDetailsTextBox.Size = new Size(125, 27);
             PaymentDetailsTextBox.TabIndex = 15;
             // 
             // EmployeeNameTextBox
             // 
-            EmployeeNameTextBox.Location = new Point(149, 106);
-            EmployeeNameTextBox.Margin = new Padding(3, 2, 3, 2);
+            EmployeeNameTextBox.Location = new Point(170, 141);
             EmployeeNameTextBox.Name = "EmployeeNameTextBox";
-            EmployeeNameTextBox.Size = new Size(110, 23);
+            EmployeeNameTextBox.Size = new Size(125, 27);
             EmployeeNameTextBox.TabIndex = 14;
             // 
             // CarDetailsTextBox
             // 
-            CarDetailsTextBox.Location = new Point(149, 79);
-            CarDetailsTextBox.Margin = new Padding(3, 2, 3, 2);
+            CarDetailsTextBox.Location = new Point(170, 105);
             CarDetailsTextBox.Name = "CarDetailsTextBox";
-            CarDetailsTextBox.Size = new Size(110, 23);
+            CarDetailsTextBox.Size = new Size(125, 27);
             CarDetailsTextBox.TabIndex = 13;
             // 
             // CustomerNameTextBox
             // 
-            CustomerNameTextBox.Location = new Point(149, 52);
-            CustomerNameTextBox.Margin = new Padding(3, 2, 3, 2);
+            CustomerNameTextBox.Location = new Point(170, 69);
             CustomerNameTextBox.Name = "CustomerNameTextBox";
-            CustomerNameTextBox.Size = new Size(110, 23);
+            CustomerNameTextBox.Size = new Size(125, 27);
             CustomerNameTextBox.TabIndex = 12;
             // 
             // ActualEndDateTextBox
             // 
-            ActualEndDateTextBox.Location = new Point(149, 214);
-            ActualEndDateTextBox.Margin = new Padding(3, 2, 3, 2);
+            ActualEndDateTextBox.Location = new Point(170, 285);
             ActualEndDateTextBox.Name = "ActualEndDateTextBox";
-            ActualEndDateTextBox.Size = new Size(110, 23);
+            ActualEndDateTextBox.Size = new Size(125, 27);
             ActualEndDateTextBox.TabIndex = 11;
             // 
             // StatusTextBox
             // 
-            StatusTextBox.Location = new Point(149, 26);
-            StatusTextBox.Margin = new Padding(3, 2, 3, 2);
+            StatusTextBox.Location = new Point(170, 35);
             StatusTextBox.Name = "StatusTextBox";
-            StatusTextBox.Size = new Size(110, 23);
+            StatusTextBox.Size = new Size(125, 27);
             StatusTextBox.TabIndex = 9;
             // 
             // StatusLabel
             // 
             StatusLabel.AutoSize = true;
-            StatusLabel.Location = new Point(85, 29);
+            StatusLabel.Location = new Point(97, 39);
             StatusLabel.Name = "StatusLabel";
-            StatusLabel.Size = new Size(39, 15);
+            StatusLabel.Size = new Size(49, 20);
             StatusLabel.TabIndex = 0;
             StatusLabel.Text = "Status";
             // 
@@ -423,28 +412,27 @@
             dataGridCarReservations.AllowUserToDeleteRows = false;
             dataGridCarReservations.AllowUserToResizeRows = false;
             dataGridCarReservations.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridCarReservations.Location = new Point(22, 212);
-            dataGridCarReservations.Margin = new Padding(3, 2, 3, 2);
+            dataGridCarReservations.Location = new Point(25, 283);
             dataGridCarReservations.MultiSelect = false;
             dataGridCarReservations.Name = "dataGridCarReservations";
             dataGridCarReservations.ReadOnly = true;
             dataGridCarReservations.RowHeadersVisible = false;
             dataGridCarReservations.RowHeadersWidth = 51;
             dataGridCarReservations.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridCarReservations.Size = new Size(842, 426);
+            dataGridCarReservations.Size = new Size(962, 568);
             dataGridCarReservations.TabIndex = 3;
             // 
             // CarReservationsForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1183, 649);
+            ClientSize = new Size(1352, 865);
             Controls.Add(SearchGroupBox);
             Controls.Add(CarReservationDetailsGroupBox);
             Controls.Add(dataGridCarReservations);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "CarReservationsForm";
             Text = "CarReservationsForm";
+            Load += CarReservationsForm_Load;
             SearchGroupBox.ResumeLayout(false);
             SearchGroupBox.PerformLayout();
             CarReservationDetailsGroupBox.ResumeLayout(false);
