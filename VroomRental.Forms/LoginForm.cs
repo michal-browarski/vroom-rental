@@ -64,9 +64,10 @@ namespace VroomRental.Forms
 
         private void EnterAdminPanel()
         {
+            this.Hide();
             AdminPanel adminPanel = new AdminPanel(_currentUser);
+            adminPanel.FormClosed += (s, args) => this.Close();
             adminPanel.Show();
-            this.Close();
         }
     }
 }
