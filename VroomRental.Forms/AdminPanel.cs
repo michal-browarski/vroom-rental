@@ -76,5 +76,28 @@ namespace VroomRental.Forms
                 activeFormInstance.Focus();
             }
         }
+
+        private void AdminPanel_Load(object sender, EventArgs e)
+        {
+            if (_currentUser.Role == "Admin")
+            {
+                EmployeesButton.Visible = true;
+                CustomersButton.Visible = true;
+                StatsButton.Visible = true;
+                ReservationsButton.Visible = true;
+                CarsButton.Visible = true;
+            }
+
+            if (_currentUser.Role == "Customer Service")
+            {
+                ReservationsButton.Visible = true;
+                CarsButton.Visible = true;
+            }
+
+            if (_currentUser.Role == "Repairs")
+            {
+                // Widoki dla napraw
+            }
+        }
     }
 }

@@ -38,78 +38,78 @@
             // ReservationsButton
             // 
             ReservationsButton.Font = new Font("Segoe UI", 50F);
-            ReservationsButton.Location = new Point(21, 18);
-            ReservationsButton.Margin = new Padding(3, 2, 3, 2);
+            ReservationsButton.Location = new Point(24, 24);
             ReservationsButton.Name = "ReservationsButton";
-            ReservationsButton.Size = new Size(655, 119);
+            ReservationsButton.Size = new Size(749, 159);
             ReservationsButton.TabIndex = 0;
             ReservationsButton.Text = "Reservations";
             ReservationsButton.UseVisualStyleBackColor = true;
+            ReservationsButton.Visible = false;
             ReservationsButton.Click += ReservationsButton_Click;
             // 
             // CarsButton
             // 
             CarsButton.Font = new Font("Segoe UI", 50F);
-            CarsButton.Location = new Point(1016, 26);
-            CarsButton.Margin = new Padding(3, 2, 3, 2);
+            CarsButton.Location = new Point(24, 222);
             CarsButton.Name = "CarsButton";
-            CarsButton.Size = new Size(655, 119);
+            CarsButton.Size = new Size(749, 159);
             CarsButton.TabIndex = 1;
             CarsButton.Text = "Cars";
             CarsButton.UseVisualStyleBackColor = true;
+            CarsButton.Visible = false;
             CarsButton.Click += CarsButton_Click;
             // 
             // EmployeesButton
             // 
             EmployeesButton.Font = new Font("Segoe UI", 50F);
-            EmployeesButton.Location = new Point(21, 198);
-            EmployeesButton.Margin = new Padding(3, 2, 3, 2);
+            EmployeesButton.Location = new Point(1150, 436);
             EmployeesButton.Name = "EmployeesButton";
-            EmployeesButton.Size = new Size(655, 119);
+            EmployeesButton.Size = new Size(749, 159);
             EmployeesButton.TabIndex = 2;
             EmployeesButton.Text = "Employees";
             EmployeesButton.UseVisualStyleBackColor = true;
+            EmployeesButton.Visible = false;
             EmployeesButton.Click += EmployeesButton_Click;
             // 
             // CustomersButton
             // 
             CustomersButton.Font = new Font("Segoe UI", 50F);
-            CustomersButton.Location = new Point(1016, 208);
-            CustomersButton.Margin = new Padding(3, 2, 3, 2);
+            CustomersButton.Location = new Point(24, 436);
             CustomersButton.Name = "CustomersButton";
-            CustomersButton.Size = new Size(655, 119);
+            CustomersButton.Size = new Size(749, 159);
             CustomersButton.TabIndex = 3;
             CustomersButton.Text = "Customers";
             CustomersButton.UseVisualStyleBackColor = true;
+            CustomersButton.Visible = false;
             CustomersButton.Click += CustomersButton_Click;
             // 
             // StatsButton
             // 
             StatsButton.Font = new Font("Segoe UI", 50F);
-            StatsButton.Location = new Point(21, 385);
-            StatsButton.Margin = new Padding(3, 2, 3, 2);
+            StatsButton.Location = new Point(24, 662);
             StatsButton.Name = "StatsButton";
-            StatsButton.Size = new Size(655, 119);
+            StatsButton.Size = new Size(749, 159);
             StatsButton.TabIndex = 4;
             StatsButton.Text = "Statistics";
             StatsButton.UseVisualStyleBackColor = true;
+            StatsButton.Visible = false;
             StatsButton.Click += StatsButton_Click;
             // 
             // AdminPanel
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1711, 790);
+            ClientSize = new Size(1955, 1053);
             Controls.Add(StatsButton);
             Controls.Add(CustomersButton);
             Controls.Add(EmployeesButton);
             Controls.Add(CarsButton);
             Controls.Add(ReservationsButton);
-            Margin = new Padding(3, 2, 3, 2);
             Name = "AdminPanel";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Admin Panel";
             WindowState = FormWindowState.Maximized;
+            Load += AdminPanel_Load;
             ResumeLayout(false);
         }
 
