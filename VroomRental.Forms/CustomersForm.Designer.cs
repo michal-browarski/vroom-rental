@@ -274,7 +274,7 @@
             // AddButton
             // 
             AddButton.Font = new Font("Segoe UI", 25F);
-            AddButton.Location = new Point(41, 88);
+            AddButton.Location = new Point(39, 88);
             AddButton.Name = "AddButton";
             AddButton.Size = new Size(342, 101);
             AddButton.TabIndex = 18;
@@ -304,7 +304,7 @@
             // EditButton
             // 
             EditButton.Font = new Font("Segoe UI", 25F);
-            EditButton.Location = new Point(52, 244);
+            EditButton.Location = new Point(52, 257);
             EditButton.Name = "EditButton";
             EditButton.Size = new Size(342, 101);
             EditButton.TabIndex = 20;
