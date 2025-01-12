@@ -5,6 +5,7 @@ using System.Configuration;
 using VroomRental.Backend.DB;
 using VroomRental.Backend.DB.QueryServices;
 using VroomRental.Backend.Model;
+using VroomRental.Backend.Reports;
 
 namespace VroomRental.Forms
 {
@@ -18,6 +19,7 @@ namespace VroomRental.Forms
         private DateTime startDate = DateTime.Now;
         private DateTime endDate = DateTime.Now.AddDays(-7);
         private Button selectedButton;
+        private PDFReportGenerator _reportGenerator;
         public StatsForm()
         {
             InitializeComponent();
@@ -28,6 +30,7 @@ namespace VroomRental.Forms
             _paymentService = new PaymentService(databaseService);
             _customerService = new CustomerService(databaseService);
             selectedButton = OptionsPlotButton;
+            _reportGenerator = new PDFReportGenerator();
 
             EndDatePicker.MaxDate = DateTime.Now;
             EndDatePicker.Value = startDate;
@@ -442,6 +445,11 @@ namespace VroomRental.Forms
             StartDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
             EndDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
             DateRangeComboBox.SelectedValueChanged += (s, e) => InitializePeriodStats();
+        }
+
+        private void DailyReportButton_Click(object sender, EventArgs e)
+        {
+            _reportGenerator.GenerateDailyReport(DateTime.Now);
         }
     }
 }

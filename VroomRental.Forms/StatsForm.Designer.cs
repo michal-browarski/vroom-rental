@@ -347,6 +347,7 @@
             DailyReportButton.TabIndex = 5;
             DailyReportButton.Text = "Dzień";
             DailyReportButton.UseVisualStyleBackColor = true;
+            DailyReportButton.Click += DailyReportButton_Click;
             // 
             // DailyPanel
             // 
