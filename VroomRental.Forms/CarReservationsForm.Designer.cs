@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CarReservationsForm));
             SearchGroupBox = new GroupBox();
             SearchStatusComboBox = new ComboBox();
             SearchEndDateTextBox = new TextBox();
@@ -440,6 +441,7 @@
             Controls.Add(SearchGroupBox);
             Controls.Add(CarReservationDetailsGroupBox);
             Controls.Add(dataGridCarReservations);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "CarReservationsForm";
             StartPosition = FormStartPosition.CenterScreen;
             WindowState = FormWindowState.Maximized;

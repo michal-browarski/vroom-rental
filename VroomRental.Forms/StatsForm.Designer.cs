@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatsForm));
             panel1 = new Panel();
             DateRangeComboBox = new ComboBox();
             label1 = new Label();
@@ -469,9 +470,9 @@
             Controls.Add(ReportPanel);
             Controls.Add(PeriodPanel);
             Controls.Add(panel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StatsForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Statistics";
             WindowState = FormWindowState.Maximized;
             Load += StatsForm_Load;
             panel1.ResumeLayout(false);

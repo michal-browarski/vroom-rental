@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AdminPanel));
             ReservationsButton = new Button();
             CarsButton = new Button();
             EmployeesButton = new Button();
@@ -105,9 +106,10 @@
             Controls.Add(EmployeesButton);
             Controls.Add(CarsButton);
             Controls.Add(ReservationsButton);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AdminPanel";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Admin Panel";
+            Text = "Vroom Rental";
             WindowState = FormWindowState.Maximized;
             Load += AdminPanel_Load;
             ResumeLayout(false);

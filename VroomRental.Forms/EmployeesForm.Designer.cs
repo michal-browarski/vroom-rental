@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EmployeesForm));
             groupBox1 = new GroupBox();
             SearchButton = new Button();
             SearchResetButton = new Button();
@@ -442,6 +443,7 @@
             Controls.Add(groupBox2);
             Controls.Add(dataGridEmployees);
             Controls.Add(groupBox1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "EmployeesForm";
             StartPosition = FormStartPosition.CenterScreen;
