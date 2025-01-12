@@ -21,6 +21,7 @@ namespace VroomRental.Forms
         private Button selectedButton;
         private PDFReportGenerator _reportGenerator;
         private DailyReport _dailyReport;
+        private PeriodicReport _periodicReport;
         public StatsForm()
         {
             InitializeComponent();
@@ -250,6 +251,11 @@ namespace VroomRental.Forms
             PeriodPopularBrand.Text = $"Top brand: {topBrand}";
 
             InitializePeriodPlot();
+
+            _periodicReport = 
+                new(profit: sumPayment, averageProfit: meanPayment, rentalsNumber: rentCount, 
+                averageRentalTime: averageRentalDuration, newCustomers: newCustomers, 
+                topBrand: topBrand);
         }
 
         private void InitializePeriodPlot()
@@ -457,7 +463,7 @@ namespace VroomRental.Forms
 
         private void PeriodReportButton_Click(object sender, EventArgs e)
         {
-            _reportGenerator.GeneratePeriodicReport(startDate, endDate);
+            _reportGenerator.GeneratePeriodicReport(startDate, endDate, _periodicReport);
         }
     }
 }

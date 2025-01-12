@@ -71,7 +71,7 @@ namespace VroomRental.Backend.Reports
             document.GeneratePdf(filePath);
         }
 
-        public void GeneratePeriodicReport(DateTime start, DateTime end)
+        public void GeneratePeriodicReport(DateTime start, DateTime end, PeriodicReport periodicData)
         {
             string formattedDateStart = start.ToString("yyyy-MM-dd");
             string formattedDateEnd= end.ToString("yyyy-MM-dd");
@@ -95,17 +95,33 @@ namespace VroomRental.Backend.Reports
                         {
                             table.ColumnsDefinition(columns =>
                             {
-                                columns.RelativeColumn(3); // Tabela 1
-                                columns.RelativeColumn(1); // Tabela 2
-                                columns.RelativeColumn(2); // Tabela 3
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
                             });
 
                             table.Header(header =>
                             {
-                                header.Cell().Element(CellStyle).Text("Tabela 1");
-                                header.Cell().Element(CellStyle).Text("Tabela 2");
-                                header.Cell().Element(CellStyle).Text("Tabela 3");
+                                header.Cell().Element(CellStyle).Text("Stats");
+                                header.Cell().Element(CellStyle).Text("Liczba");
                             });
+
+                            table.Cell().Row(1).Column(1).Element(Block).Text("Zysk");
+                            table.Cell().Row(1).Column(2).Element(Block).Text($"{periodicData.Profit}");
+
+                            table.Cell().Row(2).Column(1).Element(Block).Text("Średni zysk/dzień");
+                            table.Cell().Row(2).Column(2).Element(Block).Text($"{periodicData.AverageProfitPerDay}");
+
+                            table.Cell().Row(3).Column(1).Element(Block).Text("Wypożyczenia");
+                            table.Cell().Row(3).Column(2).Element(Block).Text($"{periodicData.RentalsNumber}");
+
+                            table.Cell().Row(4).Column(1).Element(Block).Text("Średni czas wypożyczenia");
+                            table.Cell().Row(4).Column(2).Element(Block).Text($"{periodicData.AverageRentalTime}");
+
+                            table.Cell().Row(5).Column(1).Element(Block).Text("Nowi klienci");
+                            table.Cell().Row(5).Column(2).Element(Block).Text($"{periodicData.NewCustomers}");
+
+                            table.Cell().Row(6).Column(1).Element(Block).Text("Najpopularniejsza marka");
+                            table.Cell().Row(6).Column(2).Element(Block).Text($"{periodicData.TopBrandInPeriod}");
 
                             page.Footer()
                                 .AlignRight()
