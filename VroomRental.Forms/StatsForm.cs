@@ -141,13 +141,11 @@ namespace VroomRental.Forms
             decimal todayPayments;
             string? topBrandToday;
 
-
             // Dzisiejsze wypożyczenia
             var allRented = _carReservationService.GetAllCarReservations();
             todayRentals = allRented
                 .Count(r => r.StartDate.Date == DateTime.Today);
             TodayRentalsLabel.Text = $"Dzisiejsze wypożyczenia {todayRentals}";
-
 
             // Dzisiejsze płatności
             var allPayments = _paymentService.GetAllPayments();
@@ -155,7 +153,6 @@ namespace VroomRental.Forms
                 .Where(p => p.PaymentDate.HasValue && p.PaymentDate.Value.Date == DateTime.Today)
                 .Sum(p => p.Amount);
             TodayPaymentsLabel.Text = $"Zapłacono dzisiaj {todayPayments} zł";
-
 
             // Najpopularniejsza marka dzisiaj
             topBrandToday = allRented

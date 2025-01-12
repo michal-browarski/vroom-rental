@@ -1,11 +1,6 @@
 ﻿using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace VroomRental.Backend.Reports
 {
@@ -34,17 +29,33 @@ namespace VroomRental.Backend.Reports
                         {
                             table.ColumnsDefinition(columns =>
                             {
-                                columns.RelativeColumn(3); // Tabela 1
-                                columns.RelativeColumn(1); // Tabela 2
-                                columns.RelativeColumn(2); // Tabela 3
+                                columns.RelativeColumn();
+                                columns.RelativeColumn();
                             });
 
                             table.Header(header =>
                             {
-                                header.Cell().Element(CellStyle).Text("Tabela 1");
-                                header.Cell().Element(CellStyle).Text("Tabela 2");
-                                header.Cell().Element(CellStyle).Text("Tabela 3");
+                                header.Cell().Element(CellStyle).Text("Stats");
+                                header.Cell().Element(CellStyle).Text("Liczba");
                             });
+
+                            table.Cell().Row(1).Column(1).Element(Block).Text("Wypożyczenia");
+                            table.Cell().Row(1).Column(2).Element(Block).Text("1000");
+
+                            table.Cell().Row(2).Column(1).Element(Block).Text("Płatności");
+                            table.Cell().Row(2).Column(2).Element(Block).Text("1000");
+
+                            table.Cell().Row(3).Column(1).Element(Block).Text("Najpopularniejsza marka");
+                            table.Cell().Row(3).Column(2).Element(Block).Text("Toyota");
+
+                            table.Cell().Row(4).Column(1).Element(Block).Text("Dostępne samochody");
+                            table.Cell().Row(4).Column(2).Element(Block).Text("Liczba - Procent");
+
+                            table.Cell().Row(5).Column(1).Element(Block).Text("Samochody w naprawie");
+                            table.Cell().Row(5).Column(2).Element(Block).Text("Liczba - Procent");
+
+                            table.Cell().Row(6).Column(1).Element(Block).Text("Zalegające zwroty");
+                            table.Cell().Row(6).Column(2).Element(Block).Text("1000");
 
                             page.Footer()
                                 .AlignRight()
@@ -113,6 +124,18 @@ namespace VroomRental.Backend.Reports
         private IContainer CellStyle(IContainer container)
         {
             return container.Padding(5).BorderBottom(1).BorderColor(Colors.Grey.Lighten2);
-        } 
+        }
+        
+        private IContainer Block(IContainer container)
+        {
+            return container
+                    .Border(1)
+                    .Background(Colors.Grey.Lighten3)
+                    .ShowOnce()
+                    .MinWidth(50)
+                    .MinHeight(50)
+                    .AlignCenter()
+                    .AlignMiddle();
+        }
     }
 }
