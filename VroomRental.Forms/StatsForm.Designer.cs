@@ -337,6 +337,7 @@
             PeriodReportButton.TabIndex = 6;
             PeriodReportButton.Text = "Okres";
             PeriodReportButton.UseVisualStyleBackColor = true;
+            PeriodReportButton.Click += PeriodReportButton_Click;
             // 
             // DailyReportButton
             // 

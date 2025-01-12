@@ -470,5 +470,10 @@ namespace VroomRental.Forms
 
             _reportGenerator.GenerateDailyReport(selectedDate);
         }
+
+        private void PeriodReportButton_Click(object sender, EventArgs e)
+        {
+            _reportGenerator.GeneratePeriodicReport(startDate, endDate);
+        }
     }
 }
