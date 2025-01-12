@@ -449,7 +449,26 @@ namespace VroomRental.Forms
 
         private void DailyReportButton_Click(object sender, EventArgs e)
         {
-            _reportGenerator.GenerateDailyReport(DateTime.Now);
+            var result = MessageBox.Show("Czy chcesz użyć dzisiejszej daty?", "Wybór daty", MessageBoxButtons.YesNo);
+
+            DateTime selectedDate;
+
+            if (result == DialogResult.Yes)
+            {
+                selectedDate = DateTime.Now;
+            }
+            else
+            {
+                string input = Microsoft.VisualBasic.Interaction.InputBox("Wpisz datę (yyyy-MM-dd):", "Wybór daty", DateTime.Now.ToString("yyyy-MM-dd"));
+
+                if (!DateTime.TryParse(input, out selectedDate))
+                {
+                    MessageBox.Show("Niepoprawny format daty. Użyto dzisiejszej daty.");
+                    selectedDate = DateTime.Now;
+                }
+            }
+
+            _reportGenerator.GenerateDailyReport(selectedDate);
         }
     }
 }
