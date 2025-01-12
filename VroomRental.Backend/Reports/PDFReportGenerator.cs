@@ -6,9 +6,9 @@ namespace VroomRental.Backend.Reports
 {
     public class PDFReportGenerator
     {
-        public void GenerateDailyReport(DateTime date)
+        public void GenerateDailyReport(DailyReport dailyData)
         {
-            string formattedDate = date.ToString("yyyy-MM-dd");
+            string formattedDate = DateTime.Now.ToString("yyyy-MM-dd");
             string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"VroomRental Report {formattedDate}.pdf");
 
             var document = Document.Create(container =>
@@ -40,22 +40,22 @@ namespace VroomRental.Backend.Reports
                             });
 
                             table.Cell().Row(1).Column(1).Element(Block).Text("Wypożyczenia");
-                            table.Cell().Row(1).Column(2).Element(Block).Text("1000");
+                            table.Cell().Row(1).Column(2).Element(Block).Text($"{dailyData.RentedCarsNumber}");
 
                             table.Cell().Row(2).Column(1).Element(Block).Text("Płatności");
-                            table.Cell().Row(2).Column(2).Element(Block).Text("1000");
+                            table.Cell().Row(2).Column(2).Element(Block).Text($"{dailyData.PaymentAmount}");
 
                             table.Cell().Row(3).Column(1).Element(Block).Text("Najpopularniejsza marka");
-                            table.Cell().Row(3).Column(2).Element(Block).Text("Toyota");
+                            table.Cell().Row(3).Column(2).Element(Block).Text($"{dailyData.TopBrand}");
 
                             table.Cell().Row(4).Column(1).Element(Block).Text("Dostępne samochody");
-                            table.Cell().Row(4).Column(2).Element(Block).Text("Liczba - Procent");
+                            table.Cell().Row(4).Column(2).Element(Block).Text($"{dailyData.AvailableCarsNumber}");
 
                             table.Cell().Row(5).Column(1).Element(Block).Text("Samochody w naprawie");
-                            table.Cell().Row(5).Column(2).Element(Block).Text("Liczba - Procent");
+                            table.Cell().Row(5).Column(2).Element(Block).Text($"{dailyData.CarsInRepairNumber}");
 
                             table.Cell().Row(6).Column(1).Element(Block).Text("Zalegające zwroty");
-                            table.Cell().Row(6).Column(2).Element(Block).Text("1000");
+                            table.Cell().Row(6).Column(2).Element(Block).Text($"{dailyData.DelaysNumber}");
 
                             page.Footer()
                                 .AlignRight()

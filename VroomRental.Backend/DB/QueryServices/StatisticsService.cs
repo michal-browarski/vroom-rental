@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using VroomRental.Backend.DB.QueryServices;
 using VroomRental.Backend.Model;
 
 namespace VroomRental.Backend.DB.QueryServices
@@ -45,3 +46,4 @@ namespace VroomRental.Backend.DB.QueryServices
         }
     }
 }
+

@@ -20,6 +20,7 @@ namespace VroomRental.Forms
         private DateTime endDate = DateTime.Now.AddDays(-7);
         private Button selectedButton;
         private PDFReportGenerator _reportGenerator;
+        private DailyReport _dailyReport;
         public StatsForm()
         {
             InitializeComponent();
@@ -183,6 +184,11 @@ namespace VroomRental.Forms
             dailyPlot.Slices.Add(new PieSlice("W naprawie", progress.Item3) { Fill = OxyColor.FromRgb(255, 0, 0) }); // Czerwony
             dailyModel.Series.Add(dailyPlot);
             DailyPlotView.Model = dailyModel;
+
+            _dailyReport = 
+                new(rentedCars: todayRentals, payments: todayPayments, topBrand: topBrandToday, 
+                totalCars: progress.Item4, availableCars: progress.Item1, carsInRepair: progress.Item3,
+                delays: delays);
         }
 
         private void InitializePeriodStats()
@@ -446,26 +452,7 @@ namespace VroomRental.Forms
 
         private void DailyReportButton_Click(object sender, EventArgs e)
         {
-            var result = MessageBox.Show("Czy chcesz użyć dzisiejszej daty?", "Wybór daty", MessageBoxButtons.YesNo);
-
-            DateTime selectedDate;
-
-            if (result == DialogResult.Yes)
-            {
-                selectedDate = DateTime.Now;
-            }
-            else
-            {
-                string input = Microsoft.VisualBasic.Interaction.InputBox("Wpisz datę (yyyy-MM-dd):", "Wybór daty", DateTime.Now.ToString("yyyy-MM-dd"));
-
-                if (!DateTime.TryParse(input, out selectedDate))
-                {
-                    MessageBox.Show("Niepoprawny format daty. Użyto dzisiejszej daty.");
-                    selectedDate = DateTime.Now;
-                }
-            }
-
-            _reportGenerator.GenerateDailyReport(selectedDate);
+            _reportGenerator.GenerateDailyReport(_dailyReport);
         }
 
         private void PeriodReportButton_Click(object sender, EventArgs e)
