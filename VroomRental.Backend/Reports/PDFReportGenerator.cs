@@ -1,6 +1,7 @@
 ﻿using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System.ComponentModel;
 
 namespace VroomRental.Backend.Reports
 {
@@ -8,7 +9,7 @@ namespace VroomRental.Backend.Reports
     {
         public void GenerateDailyReport(DailyReport dailyData)
         {
-            string formattedDate = DateTime.Now.ToString("yyyy-MM-dd");
+            string formattedDate = DateTime.Now.ToString("dd-MM-yyyy");
             string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"VroomRental Report {formattedDate}.pdf");
 
             var document = Document.Create(container =>
@@ -73,8 +74,8 @@ namespace VroomRental.Backend.Reports
 
         public void GeneratePeriodicReport(DateTime start, DateTime end, PeriodicReport periodicData)
         {
-            string formattedDateStart = start.ToString("yyyy-MM-dd");
-            string formattedDateEnd= end.ToString("yyyy-MM-dd");
+            string formattedDateStart = start.ToString("dd-MM-yyyy");
+            string formattedDateEnd= end.ToString("dd-MM-yyyy");
             string filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), $"VroomRental Report {formattedDateStart} - {formattedDateEnd}.pdf");
 
             var document = Document.Create(container =>
@@ -87,7 +88,7 @@ namespace VroomRental.Backend.Reports
                     page.DefaultTextStyle(x => x.FontSize(12));
 
                     page.Header()
-                        .Text($"Vroom Rental Report for {formattedDateStart} - {formattedDateEnd}")
+                        .Text(CreateReportTitle(start, end))
                         .SemiBold().FontSize(20).FontColor(Colors.Blue.Medium);
 
                     page.Content()
@@ -135,6 +136,33 @@ namespace VroomRental.Backend.Reports
             });
 
             document.GeneratePdf(filePath);
+        }
+
+        private string CreateReportTitle(DateTime start, DateTime end)
+        {
+            // Full Month
+            if (start.Month == end.Month && start.Year == end.Year)
+            {
+                return $"Vroom Rental Report: {start:MMMM yyyy}";
+            }
+
+            // Full Quarter
+            int startQuarter = (start.Month - 1) / (3 + 1);
+            int endQuarter = (end.Month - 1) / (3 + 1);
+
+            if (startQuarter == endQuarter && start.Year == end.Year)
+            {
+                return $"Vroom Rental Report Q{startQuarter} {start.Year}";
+            }
+
+            // Same year
+            if (start.Year == end.Year)
+            {
+                return $"Vroom Rental Report {start:dd MMMM} - {end:dd MMMM yyyy}";
+            }
+
+            // Different year
+            return $"{start:dd MMMM yyyy} - {end:dd MMMM yyyy}";
         }
 
         private IContainer CellStyle(IContainer container)
