@@ -139,19 +139,17 @@ namespace VroomRental.Backend.Reports
 
         private string CreateReportTitle(DateTime start, DateTime end)
         {
-            // Full Month
             if (start.Month == end.Month && start.Year == end.Year)
             {
-                return $"Vroom Rental Report: {start:MMMM yyyy}";
-            }
-
-            // Full Quarter
-            int startQuarter = (start.Month - 1) / (3 + 1);
-            int endQuarter = (end.Month - 1) / (3 + 1);
-
-            if (startQuarter == endQuarter && start.Year == end.Year)
-            {
-                return $"Vroom Rental Report Q{startQuarter} {start.Year}";
+                // Full Month
+                if (start.Day == 1 && end.Day == DateTime.DaysInMonth(start.Year, start.Month))
+                {
+                    return $"Vroom Rental Report: {start:MMMM yyyy}";
+                }
+                else
+                {
+                    return $"{start:dd} - {end:dd MMMM yyyy}";
+                }
             }
 
             // Same year
