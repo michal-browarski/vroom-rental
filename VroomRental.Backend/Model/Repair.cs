@@ -10,5 +10,6 @@
         public decimal Cost { get; set; }
         public Employee Employee { get; set; }
         public Car Car { get; set; }
+        public string CarDetails { get; set; }
     }
 }

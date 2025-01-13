@@ -86,6 +86,7 @@ namespace VroomRental.Forms
                 StatsButton.Visible = true;
                 ReservationsButton.Visible = true;
                 CarsButton.Visible = true;
+                RepairsButton.Visible = true;
             }
 
             if (_currentUser.Role == "Customer Service")
@@ -97,6 +98,19 @@ namespace VroomRental.Forms
             if (_currentUser.Role == "Repairs")
             {
                 // Widoki dla napraw
+            }
+        }
+
+        private void RepairsButton_Click(object sender, EventArgs e)
+        {
+            if (activeFormInstance == null || activeFormInstance!.IsDisposed)
+            {
+                activeFormInstance = new RepairsForm();
+                activeFormInstance.Show();
+            }
+            else
+            {
+                activeFormInstance.Focus();
             }
         }
     }
