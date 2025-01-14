@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EndRentalForm));
             label1 = new Label();
             FinalMileageNumericUpDown = new NumericUpDown();
             MileageStatusLabel = new Label();
@@ -214,10 +215,10 @@
             Controls.Add(MileageStatusLabel);
             Controls.Add(FinalMileageNumericUpDown);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(3, 4, 3, 4);
             Name = "EndRentalForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "EndRentalForm";
             ((System.ComponentModel.ISupportInitialize)FinalMileageNumericUpDown).EndInit();
             ((System.ComponentModel.ISupportInitialize)RepairCostNumericUpDown).EndInit();
             ResumeLayout(false);

@@ -119,9 +119,9 @@
             Controls.Add(LoginLabel);
             Controls.Add(PasswordMaskedTextBox);
             Controls.Add(LoginTextBox);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "LoginForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Login";
             ((System.ComponentModel.ISupportInitialize)LogoPictureBox).EndInit();
             ResumeLayout(false);
             PerformLayout();

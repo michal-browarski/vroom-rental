@@ -30,6 +30,7 @@
         {
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CarsForm));
             dataGridCars = new DataGridView();
             CarDetailsGroupBox = new GroupBox();
             TextBoxesGroupBox = new GroupBox();
@@ -117,8 +118,7 @@
             dataGridCars.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridCars.Dock = DockStyle.Fill;
             dataGridCars.GridColor = SystemColors.Window;
-            dataGridCars.Location = new Point(3, 208);
-            dataGridCars.Margin = new Padding(3, 2, 3, 2);
+            dataGridCars.Location = new Point(3, 277);
             dataGridCars.MultiSelect = false;
             dataGridCars.Name = "dataGridCars";
             dataGridCars.ReadOnly = true;
@@ -126,7 +126,7 @@
             dataGridCars.RowHeadersWidthSizeMode = DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
             dataGridCars.RowTemplate.Height = 60;
             dataGridCars.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridCars.Size = new Size(1504, 851);
+            dataGridCars.Size = new Size(1720, 1135);
             dataGridCars.TabIndex = 0;
             // 
             // CarDetailsGroupBox
@@ -135,12 +135,10 @@
             CarDetailsGroupBox.Controls.Add(ActionsGroupBox);
             CarDetailsGroupBox.Dock = DockStyle.Fill;
             CarDetailsGroupBox.Font = new Font("Segoe UI", 18F);
-            CarDetailsGroupBox.Location = new Point(1513, 2);
-            CarDetailsGroupBox.Margin = new Padding(3, 2, 3, 2);
+            CarDetailsGroupBox.Location = new Point(1729, 3);
             CarDetailsGroupBox.Name = "CarDetailsGroupBox";
-            CarDetailsGroupBox.Padding = new Padding(3, 2, 3, 2);
             CarsTableLayout.SetRowSpan(CarDetailsGroupBox, 2);
-            CarDetailsGroupBox.Size = new Size(405, 1057);
+            CarDetailsGroupBox.Size = new Size(463, 1409);
             CarDetailsGroupBox.TabIndex = 1;
             CarDetailsGroupBox.TabStop = false;
             CarDetailsGroupBox.Text = "Car";
@@ -169,30 +167,27 @@
             TextBoxesGroupBox.Controls.Add(LastInspectionTextBox);
             TextBoxesGroupBox.Controls.Add(StatusTextBox);
             TextBoxesGroupBox.FlatStyle = FlatStyle.Flat;
-            TextBoxesGroupBox.Location = new Point(4, 38);
-            TextBoxesGroupBox.Margin = new Padding(3, 2, 3, 2);
+            TextBoxesGroupBox.Location = new Point(5, 51);
             TextBoxesGroupBox.Name = "TextBoxesGroupBox";
-            TextBoxesGroupBox.Padding = new Padding(3, 2, 3, 2);
-            TextBoxesGroupBox.Size = new Size(396, 783);
+            TextBoxesGroupBox.Size = new Size(453, 1044);
             TextBoxesGroupBox.TabIndex = 25;
             TextBoxesGroupBox.TabStop = false;
             // 
             // FuelTypeTextBox
             // 
             FuelTypeTextBox.Font = new Font("Segoe UI", 18F);
-            FuelTypeTextBox.Location = new Point(204, 178);
-            FuelTypeTextBox.Margin = new Padding(3, 2, 3, 2);
+            FuelTypeTextBox.Location = new Point(233, 237);
             FuelTypeTextBox.Name = "FuelTypeTextBox";
-            FuelTypeTextBox.Size = new Size(184, 39);
+            FuelTypeTextBox.Size = new Size(210, 47);
             FuelTypeTextBox.TabIndex = 21;
             // 
             // label7
             // 
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI", 18F);
-            label7.Location = new Point(5, 178);
+            label7.Location = new Point(6, 237);
             label7.Name = "label7";
-            label7.Size = new Size(117, 32);
+            label7.Size = new Size(144, 41);
             label7.TabIndex = 22;
             label7.Text = "Fuel Type";
             // 
@@ -200,123 +195,117 @@
             // 
             LastInspectionLabel.AutoSize = true;
             LastInspectionLabel.Font = new Font("Segoe UI", 18F);
-            LastInspectionLabel.Location = new Point(5, 376);
+            LastInspectionLabel.Location = new Point(6, 501);
             LastInspectionLabel.Name = "LastInspectionLabel";
-            LastInspectionLabel.Size = new Size(172, 32);
+            LastInspectionLabel.Size = new Size(215, 41);
             LastInspectionLabel.TabIndex = 8;
             LastInspectionLabel.Text = "Last inspection";
             // 
             // ModelTextBox
             // 
             ModelTextBox.Font = new Font("Segoe UI", 18F);
-            ModelTextBox.Location = new Point(204, 98);
-            ModelTextBox.Margin = new Padding(3, 2, 3, 2);
+            ModelTextBox.Location = new Point(233, 131);
             ModelTextBox.Name = "ModelTextBox";
-            ModelTextBox.Size = new Size(184, 39);
+            ModelTextBox.Size = new Size(210, 47);
             ModelTextBox.TabIndex = 10;
             // 
             // PriceLabel
             // 
             PriceLabel.AutoSize = true;
             PriceLabel.Font = new Font("Segoe UI", 18F);
-            PriceLabel.Location = new Point(5, 337);
+            PriceLabel.Location = new Point(6, 449);
             PriceLabel.Name = "PriceLabel";
-            PriceLabel.Size = new Size(115, 32);
+            PriceLabel.Size = new Size(145, 41);
             PriceLabel.TabIndex = 7;
             PriceLabel.Text = "Price/Day";
             // 
             // BodyTypeTextBox
             // 
             BodyTypeTextBox.Font = new Font("Segoe UI", 18F);
-            BodyTypeTextBox.Location = new Point(204, 138);
-            BodyTypeTextBox.Margin = new Padding(3, 2, 3, 2);
+            BodyTypeTextBox.Location = new Point(233, 184);
             BodyTypeTextBox.Name = "BodyTypeTextBox";
-            BodyTypeTextBox.Size = new Size(184, 39);
+            BodyTypeTextBox.Size = new Size(210, 47);
             BodyTypeTextBox.TabIndex = 11;
             // 
             // MileageLabel
             // 
             MileageLabel.AutoSize = true;
             MileageLabel.Font = new Font("Segoe UI", 18F);
-            MileageLabel.Location = new Point(5, 297);
+            MileageLabel.Location = new Point(6, 396);
             MileageLabel.Name = "MileageLabel";
-            MileageLabel.Size = new Size(100, 32);
+            MileageLabel.Size = new Size(124, 41);
             MileageLabel.TabIndex = 6;
             MileageLabel.Text = "Mileage";
             // 
             // BrandTextBox
             // 
             BrandTextBox.Font = new Font("Segoe UI", 18F);
-            BrandTextBox.Location = new Point(204, 58);
-            BrandTextBox.Margin = new Padding(3, 2, 3, 2);
+            BrandTextBox.Location = new Point(233, 77);
             BrandTextBox.Name = "BrandTextBox";
-            BrandTextBox.Size = new Size(184, 39);
+            BrandTextBox.Size = new Size(210, 47);
             BrandTextBox.TabIndex = 9;
             // 
             // ProductionYearLabel
             // 
             ProductionYearLabel.AutoSize = true;
             ProductionYearLabel.Font = new Font("Segoe UI", 18F);
-            ProductionYearLabel.Location = new Point(5, 218);
+            ProductionYearLabel.Location = new Point(6, 291);
             ProductionYearLabel.Name = "ProductionYearLabel";
-            ProductionYearLabel.Size = new Size(58, 32);
+            ProductionYearLabel.Size = new Size(73, 41);
             ProductionYearLabel.TabIndex = 5;
             ProductionYearLabel.Text = "Year";
             // 
             // ColorTextBox
             // 
             ColorTextBox.Font = new Font("Segoe UI", 18F);
-            ColorTextBox.Location = new Point(204, 257);
-            ColorTextBox.Margin = new Padding(3, 2, 3, 2);
+            ColorTextBox.Location = new Point(233, 343);
             ColorTextBox.Name = "ColorTextBox";
-            ColorTextBox.Size = new Size(184, 39);
+            ColorTextBox.Size = new Size(210, 47);
             ColorTextBox.TabIndex = 12;
             // 
             // StatusLabel
             // 
             StatusLabel.AutoSize = true;
             StatusLabel.Font = new Font("Segoe UI", 18F);
-            StatusLabel.Location = new Point(5, 416);
+            StatusLabel.Location = new Point(6, 555);
             StatusLabel.Name = "StatusLabel";
-            StatusLabel.Size = new Size(78, 32);
+            StatusLabel.Size = new Size(98, 41);
             StatusLabel.TabIndex = 4;
             StatusLabel.Text = "Status";
             // 
             // YearTextBox
             // 
             YearTextBox.Font = new Font("Segoe UI", 18F);
-            YearTextBox.Location = new Point(204, 218);
-            YearTextBox.Margin = new Padding(3, 2, 3, 2);
+            YearTextBox.Location = new Point(233, 291);
             YearTextBox.Name = "YearTextBox";
-            YearTextBox.Size = new Size(184, 39);
+            YearTextBox.Size = new Size(210, 47);
             YearTextBox.TabIndex = 13;
             // 
             // ColorLabel
             // 
             ColorLabel.AutoSize = true;
             ColorLabel.Font = new Font("Segoe UI", 18F);
-            ColorLabel.Location = new Point(5, 257);
+            ColorLabel.Location = new Point(6, 343);
             ColorLabel.Name = "ColorLabel";
-            ColorLabel.Size = new Size(71, 32);
+            ColorLabel.Size = new Size(90, 41);
             ColorLabel.TabIndex = 3;
             ColorLabel.Text = "Color";
             // 
             // MileageTextBox
             // 
             MileageTextBox.Font = new Font("Segoe UI", 18F);
-            MileageTextBox.Location = new Point(204, 297);
-            MileageTextBox.Margin = new Padding(3, 2, 3, 2);
+            MileageTextBox.Location = new Point(233, 396);
             MileageTextBox.Name = "MileageTextBox";
-            MileageTextBox.Size = new Size(184, 39);
+            MileageTextBox.Size = new Size(210, 47);
             MileageTextBox.TabIndex = 14;
             // 
             // BodyTypeLabel
             // 
             BodyTypeLabel.AutoSize = true;
             BodyTypeLabel.Font = new Font("Segoe UI", 18F);
-            BodyTypeLabel.Location = new Point(5, 138);
+            BodyTypeLabel.Location = new Point(6, 184);
             BodyTypeLabel.Name = "BodyTypeLabel";
-            BodyTypeLabel.Size = new Size(126, 32);
+            BodyTypeLabel.Size = new Size(157, 41);
             BodyTypeLabel.TabIndex = 2;
             BodyTypeLabel.Text = "Body Type";
             // 
@@ -324,47 +313,44 @@
             // 
             ModelLabel.AutoSize = true;
             ModelLabel.Font = new Font("Segoe UI", 18F);
-            ModelLabel.Location = new Point(5, 98);
+            ModelLabel.Location = new Point(6, 131);
             ModelLabel.Name = "ModelLabel";
-            ModelLabel.Size = new Size(83, 32);
+            ModelLabel.Size = new Size(104, 41);
             ModelLabel.TabIndex = 1;
             ModelLabel.Text = "Model";
             // 
             // PriceTextBox
             // 
             PriceTextBox.Font = new Font("Segoe UI", 18F);
-            PriceTextBox.Location = new Point(204, 337);
-            PriceTextBox.Margin = new Padding(3, 2, 3, 2);
+            PriceTextBox.Location = new Point(233, 449);
             PriceTextBox.Name = "PriceTextBox";
-            PriceTextBox.Size = new Size(184, 39);
+            PriceTextBox.Size = new Size(210, 47);
             PriceTextBox.TabIndex = 15;
             // 
             // BrandLabel
             // 
             BrandLabel.AutoSize = true;
             BrandLabel.Font = new Font("Segoe UI", 18F);
-            BrandLabel.Location = new Point(5, 58);
+            BrandLabel.Location = new Point(6, 77);
             BrandLabel.Name = "BrandLabel";
-            BrandLabel.Size = new Size(76, 32);
+            BrandLabel.Size = new Size(95, 41);
             BrandLabel.TabIndex = 0;
             BrandLabel.Text = "Brand";
             // 
             // LastInspectionTextBox
             // 
             LastInspectionTextBox.Font = new Font("Segoe UI", 18F);
-            LastInspectionTextBox.Location = new Point(204, 376);
-            LastInspectionTextBox.Margin = new Padding(3, 2, 3, 2);
+            LastInspectionTextBox.Location = new Point(233, 501);
             LastInspectionTextBox.Name = "LastInspectionTextBox";
-            LastInspectionTextBox.Size = new Size(184, 39);
+            LastInspectionTextBox.Size = new Size(210, 47);
             LastInspectionTextBox.TabIndex = 16;
             // 
             // StatusTextBox
             // 
             StatusTextBox.Font = new Font("Segoe UI", 18F);
-            StatusTextBox.Location = new Point(204, 416);
-            StatusTextBox.Margin = new Padding(3, 2, 3, 2);
+            StatusTextBox.Location = new Point(233, 555);
             StatusTextBox.Name = "StatusTextBox";
-            StatusTextBox.Size = new Size(184, 39);
+            StatusTextBox.Size = new Size(210, 47);
             StatusTextBox.TabIndex = 17;
             // 
             // ActionsGroupBox
@@ -375,21 +361,18 @@
             ActionsGroupBox.Controls.Add(RemoveButton);
             ActionsGroupBox.Controls.Add(EditButton);
             ActionsGroupBox.FlatStyle = FlatStyle.Flat;
-            ActionsGroupBox.Location = new Point(4, 868);
-            ActionsGroupBox.Margin = new Padding(3, 2, 3, 2);
+            ActionsGroupBox.Location = new Point(5, 1157);
             ActionsGroupBox.Name = "ActionsGroupBox";
-            ActionsGroupBox.Padding = new Padding(3, 2, 3, 2);
-            ActionsGroupBox.Size = new Size(393, 184);
+            ActionsGroupBox.Size = new Size(449, 245);
             ActionsGroupBox.TabIndex = 24;
             ActionsGroupBox.TabStop = false;
             // 
             // AddButton
             // 
             AddButton.Font = new Font("Segoe UI", 18F);
-            AddButton.Location = new Point(5, 22);
-            AddButton.Margin = new Padding(3, 2, 3, 2);
+            AddButton.Location = new Point(6, 29);
             AddButton.Name = "AddButton";
-            AddButton.Size = new Size(166, 59);
+            AddButton.Size = new Size(190, 79);
             AddButton.TabIndex = 18;
             AddButton.Text = "Add";
             AddButton.UseVisualStyleBackColor = true;
@@ -398,10 +381,9 @@
             // ResetCarButton
             // 
             ResetCarButton.Font = new Font("Segoe UI", 18F);
-            ResetCarButton.Location = new Point(216, 121);
-            ResetCarButton.Margin = new Padding(3, 2, 3, 2);
+            ResetCarButton.Location = new Point(247, 161);
             ResetCarButton.Name = "ResetCarButton";
-            ResetCarButton.Size = new Size(166, 59);
+            ResetCarButton.Size = new Size(190, 79);
             ResetCarButton.TabIndex = 23;
             ResetCarButton.Text = "Reset";
             ResetCarButton.UseVisualStyleBackColor = true;
@@ -410,10 +392,9 @@
             // RemoveButton
             // 
             RemoveButton.Font = new Font("Segoe UI", 18F);
-            RemoveButton.Location = new Point(216, 22);
-            RemoveButton.Margin = new Padding(3, 2, 3, 2);
+            RemoveButton.Location = new Point(247, 29);
             RemoveButton.Name = "RemoveButton";
-            RemoveButton.Size = new Size(166, 59);
+            RemoveButton.Size = new Size(190, 79);
             RemoveButton.TabIndex = 19;
             RemoveButton.Text = "Remove";
             RemoveButton.UseVisualStyleBackColor = true;
@@ -422,10 +403,9 @@
             // EditButton
             // 
             EditButton.Font = new Font("Segoe UI", 18F);
-            EditButton.Location = new Point(5, 121);
-            EditButton.Margin = new Padding(3, 2, 3, 2);
+            EditButton.Location = new Point(6, 161);
             EditButton.Name = "EditButton";
-            EditButton.Size = new Size(166, 59);
+            EditButton.Size = new Size(190, 79);
             EditButton.TabIndex = 20;
             EditButton.Text = "Edit";
             EditButton.UseVisualStyleBackColor = true;
@@ -454,31 +434,31 @@
             SearchGroupBox.Controls.Add(SearchButton);
             SearchGroupBox.Controls.Add(SearchBrandTextBox);
             SearchGroupBox.Dock = DockStyle.Fill;
-            SearchGroupBox.Location = new Point(3, 2);
-            SearchGroupBox.Margin = new Padding(3, 2, 3, 2);
+            SearchGroupBox.Location = new Point(3, 3);
             SearchGroupBox.Name = "SearchGroupBox";
-            SearchGroupBox.Padding = new Padding(3, 2, 3, 2);
-            SearchGroupBox.Size = new Size(1504, 202);
+            SearchGroupBox.Size = new Size(1720, 268);
             SearchGroupBox.TabIndex = 2;
             SearchGroupBox.TabStop = false;
             // 
             // SearchYearNumericUpDown2
             // 
             SearchYearNumericUpDown2.Font = new Font("Segoe UI", 18F);
-            SearchYearNumericUpDown2.Location = new Point(997, 142);
+            SearchYearNumericUpDown2.Location = new Point(1139, 189);
+            SearchYearNumericUpDown2.Margin = new Padding(3, 4, 3, 4);
             SearchYearNumericUpDown2.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
             SearchYearNumericUpDown2.Name = "SearchYearNumericUpDown2";
-            SearchYearNumericUpDown2.Size = new Size(208, 39);
+            SearchYearNumericUpDown2.Size = new Size(238, 47);
             SearchYearNumericUpDown2.TabIndex = 23;
             // 
             // SearchPriceNumericUpDown2
             // 
             SearchPriceNumericUpDown2.DecimalPlaces = 2;
             SearchPriceNumericUpDown2.Font = new Font("Segoe UI", 18F);
-            SearchPriceNumericUpDown2.Location = new Point(997, 50);
+            SearchPriceNumericUpDown2.Location = new Point(1139, 67);
+            SearchPriceNumericUpDown2.Margin = new Padding(3, 4, 3, 4);
             SearchPriceNumericUpDown2.Maximum = new decimal(new int[] { 100000000, 0, 0, 0 });
             SearchPriceNumericUpDown2.Name = "SearchPriceNumericUpDown2";
-            SearchPriceNumericUpDown2.Size = new Size(208, 39);
+            SearchPriceNumericUpDown2.Size = new Size(238, 47);
             SearchPriceNumericUpDown2.TabIndex = 22;
             SearchPriceNumericUpDown2.ThousandsSeparator = true;
             // 
@@ -486,18 +466,19 @@
             // 
             SearchFuelTypeComboBox.Font = new Font("Segoe UI", 18F);
             SearchFuelTypeComboBox.FormattingEnabled = true;
-            SearchFuelTypeComboBox.Location = new Point(508, 143);
+            SearchFuelTypeComboBox.Location = new Point(581, 191);
+            SearchFuelTypeComboBox.Margin = new Padding(3, 4, 3, 4);
             SearchFuelTypeComboBox.Name = "SearchFuelTypeComboBox";
-            SearchFuelTypeComboBox.Size = new Size(210, 40);
+            SearchFuelTypeComboBox.Size = new Size(239, 49);
             SearchFuelTypeComboBox.TabIndex = 21;
             // 
             // label9
             // 
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI", 18F);
-            label9.Location = new Point(508, 110);
+            label9.Location = new Point(581, 147);
             label9.Name = "label9";
-            label9.Size = new Size(117, 32);
+            label9.Size = new Size(144, 41);
             label9.TabIndex = 20;
             label9.Text = "Fuel Type";
             // 
@@ -505,10 +486,9 @@
             // 
             ResetButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             ResetButton.Font = new Font("Segoe UI", 18F);
-            ResetButton.Location = new Point(1254, 45);
-            ResetButton.Margin = new Padding(3, 2, 3, 2);
+            ResetButton.Location = new Point(1434, 60);
             ResetButton.Name = "ResetButton";
-            ResetButton.Size = new Size(245, 42);
+            ResetButton.Size = new Size(280, 56);
             ResetButton.TabIndex = 19;
             ResetButton.Text = "Reset";
             ResetButton.UseVisualStyleBackColor = true;
@@ -518,38 +498,41 @@
             // 
             SearchPriceNumericUpDown.DecimalPlaces = 2;
             SearchPriceNumericUpDown.Font = new Font("Segoe UI", 18F);
-            SearchPriceNumericUpDown.Location = new Point(754, 51);
+            SearchPriceNumericUpDown.Location = new Point(862, 68);
+            SearchPriceNumericUpDown.Margin = new Padding(3, 4, 3, 4);
             SearchPriceNumericUpDown.Maximum = new decimal(new int[] { 100000000, 0, 0, 0 });
             SearchPriceNumericUpDown.Name = "SearchPriceNumericUpDown";
-            SearchPriceNumericUpDown.Size = new Size(208, 39);
+            SearchPriceNumericUpDown.Size = new Size(238, 47);
             SearchPriceNumericUpDown.TabIndex = 18;
             SearchPriceNumericUpDown.ThousandsSeparator = true;
             // 
             // SearchYearNumericUpDown
             // 
             SearchYearNumericUpDown.Font = new Font("Segoe UI", 18F);
-            SearchYearNumericUpDown.Location = new Point(754, 143);
+            SearchYearNumericUpDown.Location = new Point(862, 191);
+            SearchYearNumericUpDown.Margin = new Padding(3, 4, 3, 4);
             SearchYearNumericUpDown.Maximum = new decimal(new int[] { 3000, 0, 0, 0 });
             SearchYearNumericUpDown.Name = "SearchYearNumericUpDown";
-            SearchYearNumericUpDown.Size = new Size(208, 39);
+            SearchYearNumericUpDown.Size = new Size(238, 47);
             SearchYearNumericUpDown.TabIndex = 17;
             // 
             // SearchStatusComboBox
             // 
             SearchStatusComboBox.Font = new Font("Segoe UI", 18F);
             SearchStatusComboBox.FormattingEnabled = true;
-            SearchStatusComboBox.Location = new Point(508, 52);
+            SearchStatusComboBox.Location = new Point(581, 69);
+            SearchStatusComboBox.Margin = new Padding(3, 4, 3, 4);
             SearchStatusComboBox.Name = "SearchStatusComboBox";
-            SearchStatusComboBox.Size = new Size(210, 40);
+            SearchStatusComboBox.Size = new Size(239, 49);
             SearchStatusComboBox.TabIndex = 16;
             // 
             // label8
             // 
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI", 18F);
-            label8.Location = new Point(508, 17);
+            label8.Location = new Point(581, 23);
             label8.Name = "label8";
-            label8.Size = new Size(78, 32);
+            label8.Size = new Size(98, 41);
             label8.TabIndex = 15;
             label8.Text = "Status";
             // 
@@ -557,9 +540,9 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 18F);
-            label5.Location = new Point(948, 17);
+            label5.Location = new Point(1083, 23);
             label5.Name = "label5";
-            label5.Size = new Size(65, 32);
+            label5.Size = new Size(82, 41);
             label5.TabIndex = 13;
             label5.Text = "Price";
             // 
@@ -567,9 +550,9 @@
             // 
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI", 18F);
-            label6.Location = new Point(948, 110);
+            label6.Location = new Point(1083, 147);
             label6.Name = "label6";
-            label6.Size = new Size(58, 32);
+            label6.Size = new Size(73, 41);
             label6.TabIndex = 11;
             label6.Text = "Year";
             // 
@@ -577,66 +560,63 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 18F);
-            label4.Location = new Point(265, 108);
+            label4.Location = new Point(303, 144);
             label4.Name = "label4";
-            label4.Size = new Size(126, 32);
+            label4.Size = new Size(157, 41);
             label4.TabIndex = 9;
             label4.Text = "Body Type";
             // 
             // SearchBodyTypeTextBox
             // 
             SearchBodyTypeTextBox.Font = new Font("Segoe UI", 18F);
-            SearchBodyTypeTextBox.Location = new Point(265, 143);
-            SearchBodyTypeTextBox.Margin = new Padding(3, 2, 3, 2);
+            SearchBodyTypeTextBox.Location = new Point(303, 191);
             SearchBodyTypeTextBox.Name = "SearchBodyTypeTextBox";
-            SearchBodyTypeTextBox.Size = new Size(210, 39);
+            SearchBodyTypeTextBox.Size = new Size(239, 47);
             SearchBodyTypeTextBox.TabIndex = 8;
             // 
             // label3
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 18F);
-            label3.Location = new Point(265, 17);
+            label3.Location = new Point(303, 23);
             label3.Name = "label3";
-            label3.Size = new Size(71, 32);
+            label3.Size = new Size(90, 41);
             label3.TabIndex = 7;
             label3.Text = "Color";
             // 
             // SearchColorTextBox
             // 
             SearchColorTextBox.Font = new Font("Segoe UI", 18F);
-            SearchColorTextBox.Location = new Point(265, 52);
-            SearchColorTextBox.Margin = new Padding(3, 2, 3, 2);
+            SearchColorTextBox.Location = new Point(303, 69);
             SearchColorTextBox.Name = "SearchColorTextBox";
-            SearchColorTextBox.Size = new Size(210, 39);
+            SearchColorTextBox.Size = new Size(239, 47);
             SearchColorTextBox.TabIndex = 6;
             // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 18F);
-            label2.Location = new Point(18, 104);
+            label2.Location = new Point(21, 139);
             label2.Name = "label2";
-            label2.Size = new Size(83, 32);
+            label2.Size = new Size(104, 41);
             label2.TabIndex = 5;
             label2.Text = "Model";
             // 
             // SearchModelTextBox
             // 
             SearchModelTextBox.Font = new Font("Segoe UI", 18F);
-            SearchModelTextBox.Location = new Point(18, 142);
-            SearchModelTextBox.Margin = new Padding(3, 2, 3, 2);
+            SearchModelTextBox.Location = new Point(21, 189);
             SearchModelTextBox.Name = "SearchModelTextBox";
-            SearchModelTextBox.Size = new Size(210, 39);
+            SearchModelTextBox.Size = new Size(239, 47);
             SearchModelTextBox.TabIndex = 4;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 18F);
-            label1.Location = new Point(18, 17);
+            label1.Location = new Point(21, 23);
             label1.Name = "label1";
-            label1.Size = new Size(76, 32);
+            label1.Size = new Size(95, 41);
             label1.TabIndex = 3;
             label1.Text = "Brand";
             // 
@@ -644,10 +624,9 @@
             // 
             SearchButton.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             SearchButton.Font = new Font("Segoe UI", 18F);
-            SearchButton.Location = new Point(1254, 136);
-            SearchButton.Margin = new Padding(3, 2, 3, 2);
+            SearchButton.Location = new Point(1434, 181);
             SearchButton.Name = "SearchButton";
-            SearchButton.Size = new Size(245, 42);
+            SearchButton.Size = new Size(280, 56);
             SearchButton.TabIndex = 2;
             SearchButton.Text = "Search";
             SearchButton.UseVisualStyleBackColor = true;
@@ -656,10 +635,9 @@
             // SearchBrandTextBox
             // 
             SearchBrandTextBox.Font = new Font("Segoe UI", 18F);
-            SearchBrandTextBox.Location = new Point(18, 53);
-            SearchBrandTextBox.Margin = new Padding(3, 2, 3, 2);
+            SearchBrandTextBox.Location = new Point(21, 71);
             SearchBrandTextBox.Name = "SearchBrandTextBox";
-            SearchBrandTextBox.Size = new Size(210, 39);
+            SearchBrandTextBox.Size = new Size(239, 47);
             SearchBrandTextBox.TabIndex = 0;
             // 
             // CarsTableLayout
@@ -672,26 +650,24 @@
             CarsTableLayout.Controls.Add(CarDetailsGroupBox, 1, 0);
             CarsTableLayout.Dock = DockStyle.Fill;
             CarsTableLayout.Location = new Point(0, 0);
-            CarsTableLayout.Margin = new Padding(3, 2, 3, 2);
             CarsTableLayout.Name = "CarsTableLayout";
             CarsTableLayout.RowCount = 2;
             CarsTableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 19.42393F));
             CarsTableLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 80.57607F));
-            CarsTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 15F));
-            CarsTableLayout.Size = new Size(1921, 1061);
+            CarsTableLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            CarsTableLayout.Size = new Size(2195, 1415);
             CarsTableLayout.TabIndex = 3;
             // 
             // CarsForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSize = true;
-            ClientSize = new Size(1921, 1061);
+            ClientSize = new Size(2195, 1415);
             Controls.Add(CarsTableLayout);
-            Margin = new Padding(3, 2, 3, 2);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "CarsForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Cars";
             WindowState = FormWindowState.Maximized;
             ((System.ComponentModel.ISupportInitialize)dataGridCars).EndInit();
             CarDetailsGroupBox.ResumeLayout(false);

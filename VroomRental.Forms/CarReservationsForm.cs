@@ -400,5 +400,10 @@ namespace VroomRental.Forms
                 MileagePackageTextBox.Enabled = false;
             }
         }
+
+        private void SearchGroupBox_Enter(object sender, EventArgs e)
+        {
+
+        }
     }
 }
