@@ -138,14 +138,23 @@ namespace VroomRental.Forms
                     {
                         selectedRepair.Status = status;
 
-                        // Ustawianie wartości EndDate w zależności od statusu
                         if (status == RepairStatus.Done)
                         {
                             selectedRepair.EndDate = EndDatePicker.Value;
+
+                            selectedRepair.Car.Status = CarStatus.Available;
+                        }
+                        else if (status == RepairStatus.InRepair)
+                        {
+                            selectedRepair.EndDate = null;
+
+                            selectedRepair.Car.Status = CarStatus.InRepair;
                         }
                         else
                         {
-                            selectedRepair.EndDate = null; // Ustaw null dla innych statusów
+                            selectedRepair.EndDate = null;
+
+                            selectedRepair.Car.Status = CarStatus.InRepair;
                         }
                     }
                     else
@@ -156,10 +165,15 @@ namespace VroomRental.Forms
 
                     selectedRepair.Cost = decimal.TryParse(CostTextBox.Text, out var cost) ? cost : 0;
 
+                    // Aktualizacja naprawy w bazie danych
                     _repairService.UpdateRepair(selectedRepair);
+
+                    // Aktualizacja statusu samochodu w bazie danych
+                    _carService.UpdateCar(selectedRepair.Car);
+
                     LoadRepairs();
                     ResetInputs();
-                    MessageBox.Show("Repair updated successfully.");
+                    MessageBox.Show("Repair and car status updated successfully.");
                 }
             }
             else
@@ -167,6 +181,7 @@ namespace VroomRental.Forms
                 MessageBox.Show("Please select a repair and fill in all fields.");
             }
         }
+
 
 
         private void RemoveButton_Click(object sender, EventArgs e)

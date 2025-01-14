@@ -90,5 +90,23 @@ namespace VroomRental.Backend.DB.QueryServices
 
             _databaseService.ExecuteNonQuery(query, parameters);
         }
+
+        public void UpdateCar(Car car)
+        {
+            string query = @"
+                UPDATE tbl_Cars
+                SET 
+                    Status = @Status
+                WHERE Car_Id = @CarId";
+
+            var parameters = new Dictionary<string, object>
+            {
+                { "@Status", (int)car.Status },
+                { "@CarId", car.Id }
+            };
+
+            _databaseService.ExecuteNonQuery(query, parameters);
+        }
+
     }
 }
