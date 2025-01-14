@@ -5,6 +5,7 @@ using System.Configuration;
 using VroomRental.Backend.DB;
 using VroomRental.Backend.DB.QueryServices;
 using VroomRental.Backend.Model;
+using VroomRental.Backend.Reports;
 
 namespace VroomRental.Forms
 {
@@ -18,6 +19,9 @@ namespace VroomRental.Forms
         private DateTime startDate = DateTime.Now;
         private DateTime endDate = DateTime.Now.AddDays(-7);
         private Button selectedButton;
+        private PDFReportGenerator _reportGenerator;
+        private DailyReport _dailyReport;
+        private PeriodicReport _periodicReport;
         public StatsForm()
         {
             InitializeComponent();
@@ -28,6 +32,7 @@ namespace VroomRental.Forms
             _paymentService = new PaymentService(databaseService);
             _customerService = new CustomerService(databaseService);
             selectedButton = OptionsPlotButton;
+            _reportGenerator = new PDFReportGenerator();
 
             EndDatePicker.MaxDate = DateTime.Now;
             EndDatePicker.Value = startDate;
@@ -138,13 +143,11 @@ namespace VroomRental.Forms
             decimal todayPayments;
             string? topBrandToday;
 
-
             // Dzisiejsze wypożyczenia
             var allRented = _carReservationService.GetAllCarReservations();
             todayRentals = allRented
                 .Count(r => r.StartDate.Date == DateTime.Today);
             TodayRentalsLabel.Text = $"Dzisiejsze wypożyczenia {todayRentals}";
-
 
             // Dzisiejsze płatności
             var allPayments = _paymentService.GetAllPayments();
@@ -152,7 +155,6 @@ namespace VroomRental.Forms
                 .Where(p => p.PaymentDate.HasValue && p.PaymentDate.Value.Date == DateTime.Today)
                 .Sum(p => p.Amount);
             TodayPaymentsLabel.Text = $"Zapłacono dzisiaj {todayPayments} zł";
-
 
             // Najpopularniejsza marka dzisiaj
             topBrandToday = allRented
@@ -183,6 +185,11 @@ namespace VroomRental.Forms
             dailyPlot.Slices.Add(new PieSlice("W naprawie", progress.Item3) { Fill = OxyColor.FromRgb(255, 0, 0) }); // Czerwony
             dailyModel.Series.Add(dailyPlot);
             DailyPlotView.Model = dailyModel;
+
+            _dailyReport = 
+                new(rentedCars: todayRentals, payments: todayPayments, topBrand: topBrandToday, 
+                totalCars: progress.Item4, availableCars: progress.Item1, carsInRepair: progress.Item3,
+                delays: delays);
         }
 
         private void InitializePeriodStats()
@@ -244,6 +251,11 @@ namespace VroomRental.Forms
             PeriodPopularBrand.Text = $"Top brand: {topBrand}";
 
             InitializePeriodPlot();
+
+            _periodicReport = 
+                new(profit: sumPayment, averageProfit: meanPayment, rentalsNumber: rentCount, 
+                averageRentalTime: averageRentalDuration, newCustomers: newCustomers, 
+                topBrand: topBrand);
         }
 
         private void InitializePeriodPlot()
@@ -442,6 +454,16 @@ namespace VroomRental.Forms
             StartDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
             EndDatePicker.ValueChanged += (s, e) => InitializePeriodStats();
             DateRangeComboBox.SelectedValueChanged += (s, e) => InitializePeriodStats();
+        }
+
+        private void DailyReportButton_Click(object sender, EventArgs e)
+        {
+            _reportGenerator.GenerateDailyReport(_dailyReport);
+        }
+
+        private void PeriodReportButton_Click(object sender, EventArgs e)
+        {
+            _reportGenerator.GeneratePeriodicReport(startDate, endDate, _periodicReport);
         }
     }
 }
