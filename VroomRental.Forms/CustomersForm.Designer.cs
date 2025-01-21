@@ -67,7 +67,6 @@
             label1 = new Label();
             FirstNameTextBox = new TextBox();
             BrandLabel = new Label();
-            ActionsGroupBox = new GroupBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridCustomers).BeginInit();
             groupBox2.SuspendLayout();
@@ -251,7 +250,6 @@
             groupBox2.Controls.Add(label1);
             groupBox2.Controls.Add(FirstNameTextBox);
             groupBox2.Controls.Add(BrandLabel);
-            groupBox2.Controls.Add(ActionsGroupBox);
             groupBox2.Font = new Font("Segoe UI", 25F);
             groupBox2.Location = new Point(1413, 12);
             groupBox2.Name = "groupBox2";
@@ -491,18 +489,6 @@
             BrandLabel.TabIndex = 27;
             BrandLabel.Text = "First Name";
             // 
-            // ActionsGroupBox
-            // 
-            ActionsGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ActionsGroupBox.FlatStyle = FlatStyle.Flat;
-            ActionsGroupBox.Location = new Point(607, 1256);
-            ActionsGroupBox.Margin = new Padding(3, 2, 3, 2);
-            ActionsGroupBox.Name = "ActionsGroupBox";
-            ActionsGroupBox.Padding = new Padding(3, 2, 3, 2);
-            ActionsGroupBox.Size = new Size(362, 193);
-            ActionsGroupBox.TabIndex = 25;
-            ActionsGroupBox.TabStop = false;
-            // 
             // CustomersForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -559,7 +545,6 @@
         private Label label1;
         private TextBox FirstNameTextBox;
         private Label BrandLabel;
-        private GroupBox ActionsGroupBox;
         private GroupBox groupBox3;
         private Button AddButton;
         private Button ResetButton;

@@ -53,9 +53,9 @@
             label1.Font = new Font("Segoe UI", 15.75F);
             label1.Location = new Point(14, 12);
             label1.Name = "label1";
-            label1.Size = new Size(168, 37);
+            label1.Size = new Size(119, 37);
             label1.TabIndex = 0;
-            label1.Text = "Stan licznika:";
+            label1.Text = "Mileage:";
             // 
             // FinalMileageNumericUpDown
             // 
@@ -83,9 +83,9 @@
             label3.Font = new Font("Segoe UI", 15.75F);
             label3.Location = new Point(14, 307);
             label3.Name = "label3";
-            label3.Size = new Size(416, 37);
+            label3.Size = new Size(230, 37);
             label3.TabIndex = 3;
-            label3.Text = "Czy samochód wymaga naprawy?";
+            label3.Text = "Is repair required?";
             // 
             // RepairCheckBox
             // 
@@ -94,9 +94,9 @@
             RepairCheckBox.Location = new Point(14, 351);
             RepairCheckBox.Margin = new Padding(3, 4, 3, 4);
             RepairCheckBox.Name = "RepairCheckBox";
-            RepairCheckBox.Size = new Size(141, 41);
+            RepairCheckBox.Size = new Size(77, 41);
             RepairCheckBox.TabIndex = 4;
-            RepairCheckBox.Text = "naprawa";
+            RepairCheckBox.Text = "yes";
             RepairCheckBox.UseVisualStyleBackColor = true;
             // 
             // label4
@@ -105,9 +105,9 @@
             label4.Font = new Font("Segoe UI", 15.75F);
             label4.Location = new Point(14, 460);
             label4.Name = "label4";
-            label4.Size = new Size(218, 37);
+            label4.Size = new Size(135, 37);
             label4.TabIndex = 5;
-            label4.Text = "Kara za stan auta";
+            label4.Text = "Repair fee";
             // 
             // RepairCostNumericUpDown
             // 
@@ -173,9 +173,9 @@
             label2.Font = new Font("Segoe UI", 15.75F);
             label2.Location = new Point(14, 649);
             label2.Name = "label2";
-            label2.Size = new Size(212, 37);
+            label2.Size = new Size(226, 37);
             label2.TabIndex = 11;
-            label2.Text = "Forma płatności:";
+            label2.Text = "Payment Method:";
             // 
             // BlikCodeTextBox
             // 

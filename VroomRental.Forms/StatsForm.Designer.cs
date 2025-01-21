@@ -145,9 +145,9 @@
             DateLimitLabel.Font = new Font("Segoe UI", 25F);
             DateLimitLabel.Location = new Point(27, 21);
             DateLimitLabel.Name = "DateLimitLabel";
-            DateLimitLabel.Size = new Size(343, 57);
+            DateLimitLabel.Size = new Size(279, 57);
             DateLimitLabel.TabIndex = 2;
-            DateLimitLabel.Text = "Określ zakres dat";
+            DateLimitLabel.Text = "Define period";
             // 
             // PeriodPanel
             // 
@@ -262,21 +262,21 @@
             // 
             NewCustomersLabel.AutoSize = true;
             NewCustomersLabel.Font = new Font("Segoe UI", 25F);
-            NewCustomersLabel.Location = new Point(951, 123);
+            NewCustomersLabel.Location = new Point(906, 123);
             NewCustomersLabel.Name = "NewCustomersLabel";
-            NewCustomersLabel.Size = new Size(339, 57);
+            NewCustomersLabel.Size = new Size(401, 57);
             NewCustomersLabel.TabIndex = 4;
-            NewCustomersLabel.Text = "Nowi klienci: 000";
+            NewCustomersLabel.Text = "New customers: 000";
             // 
             // MeanRentalTimeLabel
             // 
             MeanRentalTimeLabel.AutoSize = true;
             MeanRentalTimeLabel.Font = new Font("Segoe UI", 25F);
-            MeanRentalTimeLabel.Location = new Point(666, 33);
+            MeanRentalTimeLabel.Location = new Point(814, 33);
             MeanRentalTimeLabel.Name = "MeanRentalTimeLabel";
-            MeanRentalTimeLabel.Size = new Size(636, 57);
+            MeanRentalTimeLabel.Size = new Size(463, 57);
             MeanRentalTimeLabel.TabIndex = 3;
-            MeanRentalTimeLabel.Text = "Średni czas wypożyczenia: 00 dni";
+            MeanRentalTimeLabel.Text = "Average Rental Time 00";
             // 
             // PeriodRentalLabel
             // 
@@ -284,9 +284,9 @@
             PeriodRentalLabel.Font = new Font("Segoe UI", 25F);
             PeriodRentalLabel.Location = new Point(37, 201);
             PeriodRentalLabel.Name = "PeriodRentalLabel";
-            PeriodRentalLabel.Size = new Size(447, 57);
+            PeriodRentalLabel.Size = new Size(317, 57);
             PeriodRentalLabel.TabIndex = 2;
-            PeriodRentalLabel.Text = "Wypożyczenia: 000000";
+            PeriodRentalLabel.Text = "Rentals: 000000";
             // 
             // TotalPaymentLabel
             // 
@@ -294,9 +294,9 @@
             TotalPaymentLabel.Font = new Font("Segoe UI", 25F);
             TotalPaymentLabel.Location = new Point(37, 33);
             TotalPaymentLabel.Name = "TotalPaymentLabel";
-            TotalPaymentLabel.Size = new Size(397, 57);
+            TotalPaymentLabel.Size = new Size(406, 57);
             TotalPaymentLabel.TabIndex = 0;
-            TotalPaymentLabel.Text = "Zyski: 1000000,00 zł";
+            TotalPaymentLabel.Text = "Profit: 1000000,00 zł";
             // 
             // MeanLabel
             // 
@@ -304,9 +304,9 @@
             MeanLabel.Font = new Font("Segoe UI", 25F);
             MeanLabel.Location = new Point(37, 123);
             MeanLabel.Name = "MeanLabel";
-            MeanLabel.Size = new Size(444, 57);
+            MeanLabel.Size = new Size(456, 57);
             MeanLabel.TabIndex = 1;
-            MeanLabel.Text = "Średnia: 1000000,00 zł";
+            MeanLabel.Text = "Average: 1000000,00 zł";
             // 
             // ReportPanel
             // 
