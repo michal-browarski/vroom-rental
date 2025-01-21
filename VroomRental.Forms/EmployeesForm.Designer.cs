@@ -47,11 +47,6 @@
             ResetButton = new Button();
             RemoveButton = new Button();
             EditButton = new Button();
-            groupBox3 = new GroupBox();
-            button1 = new Button();
-            button2 = new Button();
-            button3 = new Button();
-            button4 = new Button();
             PasswordTextBox = new TextBox();
             label4 = new Label();
             LoginTextBox = new TextBox();
@@ -62,12 +57,10 @@
             label1 = new Label();
             FirstNameTextBox = new TextBox();
             BrandLabel = new Label();
-            ActionsGroupBox = new GroupBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridEmployees).BeginInit();
             groupBox2.SuspendLayout();
             groupBox4.SuspendLayout();
-            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -208,7 +201,6 @@
             // groupBox2
             // 
             groupBox2.Controls.Add(groupBox4);
-            groupBox2.Controls.Add(groupBox3);
             groupBox2.Controls.Add(PasswordTextBox);
             groupBox2.Controls.Add(label4);
             groupBox2.Controls.Add(LoginTextBox);
@@ -219,7 +211,6 @@
             groupBox2.Controls.Add(label1);
             groupBox2.Controls.Add(FirstNameTextBox);
             groupBox2.Controls.Add(BrandLabel);
-            groupBox2.Controls.Add(ActionsGroupBox);
             groupBox2.Font = new Font("Segoe UI", 25F);
             groupBox2.Location = new Point(1413, 12);
             groupBox2.Name = "groupBox2";
@@ -287,66 +278,6 @@
             EditButton.TabIndex = 20;
             EditButton.Text = "Edit";
             EditButton.UseVisualStyleBackColor = true;
-            // 
-            // groupBox3
-            // 
-            groupBox3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            groupBox3.Controls.Add(button1);
-            groupBox3.Controls.Add(button2);
-            groupBox3.Controls.Add(button3);
-            groupBox3.Controls.Add(button4);
-            groupBox3.FlatStyle = FlatStyle.Flat;
-            groupBox3.Location = new Point(606, 1256);
-            groupBox3.Margin = new Padding(3, 2, 3, 2);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Padding = new Padding(3, 2, 3, 2);
-            groupBox3.Size = new Size(362, 193);
-            groupBox3.TabIndex = 26;
-            groupBox3.TabStop = false;
-            // 
-            // button1
-            // 
-            button1.Font = new Font("Segoe UI", 18F);
-            button1.Location = new Point(6, 32);
-            button1.Margin = new Padding(3, 2, 3, 2);
-            button1.Name = "button1";
-            button1.Size = new Size(135, 55);
-            button1.TabIndex = 18;
-            button1.Text = "Add";
-            button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            button2.Font = new Font("Segoe UI", 18F);
-            button2.Location = new Point(220, 131);
-            button2.Margin = new Padding(3, 2, 3, 2);
-            button2.Name = "button2";
-            button2.Size = new Size(135, 55);
-            button2.TabIndex = 23;
-            button2.Text = "Reset";
-            button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            button3.Font = new Font("Segoe UI", 18F);
-            button3.Location = new Point(220, 32);
-            button3.Margin = new Padding(3, 2, 3, 2);
-            button3.Name = "button3";
-            button3.Size = new Size(135, 55);
-            button3.TabIndex = 19;
-            button3.Text = "Remove";
-            button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            button4.Font = new Font("Segoe UI", 18F);
-            button4.Location = new Point(6, 131);
-            button4.Margin = new Padding(3, 2, 3, 2);
-            button4.Name = "button4";
-            button4.Size = new Size(135, 55);
-            button4.TabIndex = 20;
-            button4.Text = "Edit";
-            button4.UseVisualStyleBackColor = true;
             // 
             // PasswordTextBox
             // 
@@ -443,18 +374,6 @@
             BrandLabel.TabIndex = 27;
             BrandLabel.Text = "First Name";
             // 
-            // ActionsGroupBox
-            // 
-            ActionsGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ActionsGroupBox.FlatStyle = FlatStyle.Flat;
-            ActionsGroupBox.Location = new Point(786, 1764);
-            ActionsGroupBox.Margin = new Padding(3, 2, 3, 2);
-            ActionsGroupBox.Name = "ActionsGroupBox";
-            ActionsGroupBox.Padding = new Padding(3, 2, 3, 2);
-            ActionsGroupBox.Size = new Size(362, 193);
-            ActionsGroupBox.TabIndex = 25;
-            ActionsGroupBox.TabStop = false;
-            // 
             // EmployeesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -473,7 +392,6 @@
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox4.ResumeLayout(false);
-            groupBox3.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -492,11 +410,6 @@
         private Label label9;
         private DataGridView dataGridEmployees;
         private GroupBox groupBox2;
-        private GroupBox groupBox3;
-        private Button button1;
-        private Button button2;
-        private Button button3;
-        private Button button4;
         private TextBox PasswordTextBox;
         private Label label4;
         private TextBox LoginTextBox;
@@ -507,7 +420,6 @@
         private Label label1;
         private TextBox FirstNameTextBox;
         private Label BrandLabel;
-        private GroupBox ActionsGroupBox;
         private GroupBox groupBox4;
         private Button AddButton;
         private Button ResetButton;
