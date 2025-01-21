@@ -252,10 +252,36 @@ namespace VroomRental.Forms
 
             InitializePeriodPlot();
 
+            reservations = reservations
+                .Where(r => r.StartDate.Date >= startDate &&
+                    r.ActualEndDate.HasValue &&
+                    r.ActualEndDate.Value.Date <= endDate)
+                .ToList();
+
+            var fuelTypeCounts = reservations
+                .GroupBy(r => r.Car.FuelType)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            var bodyTypeCounts = reservations
+                .GroupBy(r => r.Car.BodyType)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            var topBrands = reservations
+                .GroupBy(r => r.Car.Brand)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            var topCars = reservations
+                .GroupBy(r => $"{r.Car.Brand} {r.Car.Model} {r.Car.FuelType} #{r.Car.Id}")
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            var periodPayments = _paymentService.GetAllPayments()
+                .Where(p => p.PaymentDate.HasValue && p.PaymentDate.Value.Date >= startDate && p.PaymentDate.Value.Date <= endDate)
+                .ToList();
+
             _periodicReport = 
                 new(profit: sumPayment, averageProfit: meanPayment, rentalsNumber: rentCount, 
                 averageRentalTime: averageRentalDuration, newCustomers: newCustomers, 
-                topBrand: topBrand);
+                topBrand: topBrand, fuelTypeCounts: fuelTypeCounts, bodyTypeCounts: bodyTypeCounts, topBrands: topBrands, topCars: topCars, periodPayments: periodPayments);
         }
 
         private void InitializePeriodPlot()

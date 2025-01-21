@@ -120,8 +120,82 @@ namespace VroomRental.Backend.Reports
                             table.Cell().Row(5).Column(1).Element(Block).Text("Nowi klienci");
                             table.Cell().Row(5).Column(2).Element(Block).Text($"{periodicData.NewCustomers}");
 
-                            table.Cell().Row(6).Column(1).Element(Block).Text("Najpopularniejsza marka");
-                            table.Cell().Row(6).Column(2).Element(Block).Text($"{periodicData.TopBrandInPeriod}");
+                            int totalFuelTypes = periodicData.FuelTypeCounts.Sum(kvp => kvp.Value);
+                            int totalBodyTypes = periodicData.BodyTypeCounts.Sum(kvp => kvp.Value);
+
+                            // Typ paliwa: Petrol
+                            int petrolCount = periodicData.FuelTypeCounts.TryGetValue("Petrol", out int petrolValue) ? petrolValue : 0;
+                            double petrolPercentage = totalFuelTypes > 0 ? (petrolCount / (double)totalFuelTypes * 100) : 0;
+                            table.Cell().Row(7).Column(1).Element(Block).Text("Typ paliwa: Petrol");
+                            table.Cell().Row(7).Column(2).Element(Block).Text($"{petrolCount} - {petrolPercentage:0.00}%");
+
+                            // Typ paliwa: Diesel
+                            int dieselCount = periodicData.FuelTypeCounts.TryGetValue("Diesel", out int dieselValue) ? dieselValue : 0;
+                            double dieselPercentage = totalFuelTypes > 0 ? (dieselCount / (double)totalFuelTypes * 100) : 0;
+                            table.Cell().Row(8).Column(1).Element(Block).Text("Typ paliwa: Diesel");
+                            table.Cell().Row(8).Column(2).Element(Block).Text($"{dieselCount} - {dieselPercentage:0.00}%");
+
+                            // Typ paliwa: Electric
+                            int electricCount = periodicData.FuelTypeCounts.TryGetValue("Electric", out int electricValue) ? electricValue : 0;
+                            double electricPercentage = totalFuelTypes > 0 ? (electricCount / (double)totalFuelTypes * 100) : 0;
+                            table.Cell().Row(9).Column(1).Element(Block).Text("Typ paliwa: Electric");
+                            table.Cell().Row(9).Column(2).Element(Block).Text($"{electricCount} - {electricPercentage:0.00}%");
+
+                            // Typ paliwa: Hybrid
+                            int hybridCount = periodicData.FuelTypeCounts.TryGetValue("Hybrid", out int hybridValue) ? hybridValue : 0;
+                            double hybridPercentage = totalFuelTypes > 0 ? (hybridCount / (double)totalFuelTypes * 100) : 0;
+                            table.Cell().Row(10).Column(1).Element(Block).Text("Typ paliwa: Hybrid");
+                            table.Cell().Row(10).Column(2).Element(Block).Text($"{hybridCount} - {hybridPercentage:0.00}%");
+
+                            // Rodzaj nadwozia: Coupe
+                            int coupeCount = periodicData.BodyTypeCounts.TryGetValue("Coupe", out int coupeValue) ? coupeValue : 0;
+                            double coupePercentage = totalBodyTypes > 0 ? (coupeCount / (double)totalBodyTypes * 100) : 0;
+                            table.Cell().Row(11).Column(1).Element(Block).Text("Rodzaj nadwozia: Coupe");
+                            table.Cell().Row(11).Column(2).Element(Block).Text($"{coupeCount} - {coupePercentage:0.00}%");
+
+                            // Rodzaj nadwozia: Hatchback
+                            int hatchbackCount = periodicData.BodyTypeCounts.TryGetValue("Hatchback", out int hatchbackValue) ? hatchbackValue : 0;
+                            double hatchbackPercentage = totalBodyTypes > 0 ? (hatchbackCount / (double)totalBodyTypes * 100) : 0;
+                            table.Cell().Row(12).Column(1).Element(Block).Text("Rodzaj nadwozia: Hatchback");
+                            table.Cell().Row(12).Column(2).Element(Block).Text($"{hatchbackCount} - {hatchbackPercentage:0.00}%");
+
+                            // Rodzaj nadwozia: Sedan
+                            int sedanCount = periodicData.BodyTypeCounts.TryGetValue("Sedan", out int sedanValue) ? sedanValue : 0;
+                            double sedanPercentage = totalBodyTypes > 0 ? (sedanCount / (double)totalBodyTypes * 100) : 0;
+                            table.Cell().Row(13).Column(1).Element(Block).Text("Rodzaj nadwozia: Sedan");
+                            table.Cell().Row(13).Column(2).Element(Block).Text($"{sedanCount} - {sedanPercentage:0.00}%");
+
+                            // Rodzaj nadwozia: SUV
+                            int suvCount = periodicData.BodyTypeCounts.TryGetValue("SUV", out int suvValue) ? suvValue : 0;
+                            double suvPercentage = totalBodyTypes > 0 ? (suvCount / (double)totalBodyTypes * 100) : 0;
+                            table.Cell().Row(14).Column(1).Element(Block).Text("Rodzaj nadwozia: SUV");
+                            table.Cell().Row(14).Column(2).Element(Block).Text($"{suvCount} - {suvPercentage:0.00}%");
+
+                            // Top Brand
+                            table.Cell().Row(15).Column(1).Element(Block).Text("Top Brand: ");
+                            table.Cell().Row(15).Column(2).Element(Block).Text($"{periodicData.TopBrandInPeriod}");
+
+                            // Top Car
+                            var topCar = periodicData.TopCars
+                                .OrderByDescending(kvp => kvp.Value)
+                                .FirstOrDefault();
+
+                            table.Cell().Row(16).Column(1).Element(Block).Text("Top Car: ");
+                            table.Cell().Row(16).Column(2).Element(Block).Text($"{topCar.Key}");
+
+                            // Płatności
+                            int blikPaymentsCount = periodicData.PeriodPayments.Count(p => p.PaymentMethod == Model.PaymentMethod.Card);
+                            int cashPaymentsCount = periodicData.PeriodPayments.Count(p => p.PaymentMethod == Model.PaymentMethod.Cash);
+                            int totalPaymentsCount = periodicData.PeriodPayments.Count();
+
+                            double blikPercentage = totalPaymentsCount > 0 ? (blikPaymentsCount / (double)totalPaymentsCount) * 100 : 0;
+                            double cashPercentage = totalPaymentsCount > 0 ? (cashPaymentsCount / (double)totalPaymentsCount) * 100 : 0;
+
+                            table.Cell().Row(17).Column(1).Element(Block).Text("Płatności BLIK: ");
+                            table.Cell().Row(17).Column(2).Element(Block).Text($"{blikPaymentsCount} ({blikPercentage:0.00}%)");
+
+                            table.Cell().Row(18).Column(1).Element(Block).Text("Płatności gotówką");
+                            table.Cell().Row(18).Column(2).Element(Block).Text($"{cashPaymentsCount} ({cashPercentage:0.00}%)");
 
                             page.Footer()
                                 .AlignRight()
