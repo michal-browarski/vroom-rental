@@ -2,6 +2,7 @@
 using System.Net.Mail;
 using VroomRental.Backend.DB.QueryServices;
 using VroomRental.Backend.Model;
+using System.Configuration;
 
 namespace VroomRental.Forms
 {
@@ -232,7 +233,7 @@ namespace VroomRental.Forms
             // Konfiguracja SMTP
             string smtpServer = "smtp.sendgrid.net";
             int smtpPort = 587;
-            string apiKey = "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";
+            string apiKey = ConfigurationManager.AppSettings["ApiKey"];
 
             MailMessage mail = new MailMessage
             {
