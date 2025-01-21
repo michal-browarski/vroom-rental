@@ -51,7 +51,7 @@ namespace VroomRental.Forms
 
             dataGridCars.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Marka",
+                HeaderText = "Brand",
                 DataPropertyName = "Brand",
                 Name = "ColumnBrand"
             });
@@ -65,28 +65,28 @@ namespace VroomRental.Forms
 
             dataGridCars.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Rok Produkcji",
+                HeaderText = "Production Year",
                 DataPropertyName = "ProductionYear",
                 Name = "ColumnProductionYear"
             });
 
             dataGridCars.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Kolor",
+                HeaderText = "Color",
                 DataPropertyName = "Color",
                 Name = "ColumnColor"
             });
 
             dataGridCars.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Cena za Dzień",
+                HeaderText = "Price Per Day",
                 DataPropertyName = "PricePerDay",
                 Name = "ColumnPricePerDay"
             });
 
             dataGridCars.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Rodzaj",
+                HeaderText = "Body Type",
                 DataPropertyName = "BodyType",
                 Name = "ColumnBodyType"
             });
@@ -100,7 +100,7 @@ namespace VroomRental.Forms
 
             dataGridCars.Columns.Add(new DataGridViewTextBoxColumn
             {
-                HeaderText = "Paliwo",
+                HeaderText = "Fuel Type",
                 DataPropertyName = "FuelType",
                 Name = "ColumnFuelType"
             });
@@ -131,7 +131,7 @@ namespace VroomRental.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Wystąpił błąd podczas ładowania danych: " + ex.Message);
+                MessageBox.Show("Data loading error: " + ex.Message);
             }
         }
 
@@ -215,7 +215,7 @@ namespace VroomRental.Forms
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Wystąpił błąd podczas wyszukiwania: " + ex.Message);
+                MessageBox.Show("Search Error: " + ex.Message);
             }
         }
 
@@ -294,7 +294,7 @@ namespace VroomRental.Forms
             }
             else
             {
-                MessageBox.Show("Uzupełnij wszystkie pola przed dodaniem nowego samochodu.");
+                MessageBox.Show("Fill all fields before adding a new car.");
             }
         }
 
@@ -307,8 +307,8 @@ namespace VroomRental.Forms
 
                 if (selectedCar != null)
                 {
-                    var confirmResult = MessageBox.Show("Czy na pewno chcesz usunąć ten samochód?",
-                                                        "Potwierdzenie usunięcia",
+                    var confirmResult = MessageBox.Show("Are you sure you want to remove this car?",
+                                                        "Confirm deletion",
                                                         MessageBoxButtons.YesNo);
 
                     if (confirmResult == DialogResult.Yes)
@@ -321,7 +321,7 @@ namespace VroomRental.Forms
             }
             else
             {
-                MessageBox.Show("Wybierz samochód do usunięcia.");
+                MessageBox.Show("Choose car to delete.");
             }
         }
 
@@ -356,7 +356,7 @@ namespace VroomRental.Forms
             }
             else
             {
-                MessageBox.Show("Uzupełnij wszystkie pola i wybierz samochód do edycji.");
+                MessageBox.Show("Fill all fields and choose car to edit");
             }
         }
 

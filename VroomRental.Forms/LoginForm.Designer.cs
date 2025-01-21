@@ -70,11 +70,11 @@
             // 
             PasswordLabel.AutoSize = true;
             PasswordLabel.Font = new Font("Segoe UI", 18F);
-            PasswordLabel.Location = new Point(194, 322);
+            PasswordLabel.Location = new Point(173, 322);
             PasswordLabel.Name = "PasswordLabel";
-            PasswordLabel.Size = new Size(93, 41);
+            PasswordLabel.Size = new Size(143, 41);
             PasswordLabel.TabIndex = 3;
-            PasswordLabel.Text = "Hasło";
+            PasswordLabel.Text = "Password";
             // 
             // AppNameLabel
             // 
@@ -103,7 +103,7 @@
             LoginButton.Name = "LoginButton";
             LoginButton.Size = new Size(315, 61);
             LoginButton.TabIndex = 6;
-            LoginButton.Text = "Zaloguj";
+            LoginButton.Text = "Enter";
             LoginButton.UseVisualStyleBackColor = true;
             LoginButton.Click += LoginButton_Click;
             // 

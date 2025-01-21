@@ -41,18 +41,18 @@ namespace VroomRental.Forms
 
         private void InitializeDateRangeComboBox()
         {
-            DateRangeComboBox.Items.Add("1 tydzień");
-            DateRangeComboBox.Items.Add("1 miesiąc");
-            DateRangeComboBox.Items.Add("Obecny miesiąc");
-            DateRangeComboBox.Items.Add("Poprzedni miesiąc");
-            DateRangeComboBox.Items.Add("Obecny kwartał");
-            DateRangeComboBox.Items.Add("Poprzedni kwartał");
+            DateRangeComboBox.Items.Add("1 week");
+            DateRangeComboBox.Items.Add("1 month");
+            DateRangeComboBox.Items.Add("Current month");
+            DateRangeComboBox.Items.Add("Previous month");
+            DateRangeComboBox.Items.Add("Current quarter");
+            DateRangeComboBox.Items.Add("Previous quarter");
             DateRangeComboBox.SelectedIndex = 0;
 
             DateRangeComboBox.SelectedIndexChanged += DateRangeComboBox_SelectedIndexChanged;
 
             // Ustaw początkowe wartości dla zakresu dat
-            SetDateRangeForSelection("1 tydzień");
+            SetDateRangeForSelection("1 week");
         }
 
         private void DateRangeComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -69,22 +69,22 @@ namespace VroomRental.Forms
 
             switch (range)
             {
-                case "1 tydzień":
+                case "1 week":
                     StartDatePicker.Value = now.AddDays(-7);
                     EndDatePicker.Value = now;
                     break;
 
-                case "1 miesiąc":
+                case "1 month":
                     StartDatePicker.Value = now.AddMonths(-1);
                     EndDatePicker.Value = now;
                     break;
 
-                case "Obecny miesiąc":
+                case "Current month":
                     StartDatePicker.Value = new DateTime(now.Year, now.Month, 1);
                     EndDatePicker.Value = now;
                     break;
 
-                case "Poprzedni miesiąc":
+                case "Previous month":
                     DateTime firstDayOfPreviousMonth = new DateTime(now.Year, now.Month, 1).AddMonths(-1);
                     StartDatePicker.Value = firstDayOfPreviousMonth;
                     EndDatePicker.Value = firstDayOfPreviousMonth.AddMonths(1).AddDays(-1) > now
@@ -92,7 +92,7 @@ namespace VroomRental.Forms
                                           : firstDayOfPreviousMonth.AddMonths(1).AddDays(-1);
                     break;
 
-                case "Obecny kwartał":
+                case "Current quarter":
                     int currentQuarter = (now.Month - 1) / 3 + 1;
                     int firstMonthOfQuarter = (currentQuarter - 1) * 3 + 1;
                     DateTime firstDayOfQuarter = new DateTime(now.Year, firstMonthOfQuarter, 1);
@@ -101,7 +101,7 @@ namespace VroomRental.Forms
                     EndDatePicker.Value = lastDayOfQuarter > now ? now : lastDayOfQuarter;
                     break;
 
-                case "Poprzedni kwartał":
+                case "Previous quarter":
                     int previousQuarter = ((now.Month - 1) / 3);
                     if (previousQuarter == 0)
                     {
@@ -147,14 +147,14 @@ namespace VroomRental.Forms
             var allRented = _carReservationService.GetAllCarReservations();
             todayRentals = allRented
                 .Count(r => r.StartDate.Date == DateTime.Today);
-            TodayRentalsLabel.Text = $"Dzisiejsze wypożyczenia {todayRentals}";
+            TodayRentalsLabel.Text = $"Today rentals {todayRentals}";
 
             // Dzisiejsze płatności
             var allPayments = _paymentService.GetAllPayments();
             todayPayments = allPayments
                 .Where(p => p.PaymentDate.HasValue && p.PaymentDate.Value.Date == DateTime.Today)
                 .Sum(p => p.Amount);
-            TodayPaymentsLabel.Text = $"Zapłacono dzisiaj {todayPayments} zł";
+            TodayPaymentsLabel.Text = $"Paid today {todayPayments} zł";
 
             // Najpopularniejsza marka dzisiaj
             topBrandToday = allRented
@@ -167,22 +167,22 @@ namespace VroomRental.Forms
             // Dostępne samochody - progress bar
             CarsAvaiableProgressBar.Maximum = progress.Item4;
             CarsAvaiableProgressBar.Value = progress.Item1;
-            AvailableCarsLabel.Text = $"Dostępne samochody {CarsAvaiableProgressBar.Value}/{CarsAvaiableProgressBar.Maximum}";
+            AvailableCarsLabel.Text = $"Available cars {CarsAvaiableProgressBar.Value}/{CarsAvaiableProgressBar.Maximum}";
 
             // Samochody w naprawie - progress bar
             RepairCarsProgressBar.Maximum = progress.Item4;
             RepairCarsProgressBar.Value = progress.Item3;
-            RepairCarLabel.Text = $"Samochody w naprawie {RepairCarsProgressBar.Value}/{RepairCarsProgressBar.Maximum}";
+            RepairCarLabel.Text = $"Cars in repair {RepairCarsProgressBar.Value}/{RepairCarsProgressBar.Maximum}";
 
             // Zalegające zwroty
-            LateReturnLabel.Text = $"Zalegające zwroty {delays}";
+            LateReturnLabel.Text = $"Delays {delays}";
 
             // Status samochodów - wykres kołowy
             PlotModel dailyModel = new();
             PieSeries dailyPlot = new() { InsideLabelPosition = 0.5, AngleSpan = 360, StartAngle = 0, FontSize = 25 };
-            dailyPlot.Slices.Add(new PieSlice("Dostępne", progress.Item1) { Fill = OxyColor.FromRgb(0, 255, 0) }); // Zielony
-            dailyPlot.Slices.Add(new PieSlice("Wypożyczone", progress.Item2) { Fill = OxyColor.FromRgb(255, 255, 0) }); // Żółty
-            dailyPlot.Slices.Add(new PieSlice("W naprawie", progress.Item3) { Fill = OxyColor.FromRgb(255, 0, 0) }); // Czerwony
+            dailyPlot.Slices.Add(new PieSlice("Available", progress.Item1) { Fill = OxyColor.FromRgb(0, 255, 0) }); // Zielony
+            dailyPlot.Slices.Add(new PieSlice("Rented", progress.Item2) { Fill = OxyColor.FromRgb(255, 255, 0) }); // Żółty
+            dailyPlot.Slices.Add(new PieSlice("In repair", progress.Item3) { Fill = OxyColor.FromRgb(255, 0, 0) }); // Czerwony
             dailyModel.Series.Add(dailyPlot);
             DailyPlotView.Model = dailyModel;
 
@@ -206,17 +206,17 @@ namespace VroomRental.Forms
             decimal sumPayment = payments
                 .Where(p => p.PaymentDate.HasValue && p.PaymentDate.Value.Date >= startDate && p.PaymentDate.Value.Date <= endDate)
                 .Sum(p => p.Amount);
-            TotalPaymentLabel.Text = $"Zyski: {sumPayment} zł";
+            TotalPaymentLabel.Text = $"Profit: {sumPayment} zł";
 
             // Średni zysk na dzień
             decimal meanPayment = Math.Round(sumPayment / (endDate - startDate).Days + 1, 2);
-            MeanLabel.Text = $"Średnia: {meanPayment} zł";
+            MeanLabel.Text = $"Average: {meanPayment} zł";
 
             // Liczba wypożyczeń
             int rentCount = reservations
                 .Where(r => r.StartDate.Date >= startDate && r.ActualEndDate.HasValue && r.ActualEndDate.Value.Date <= endDate)
                 .Count();
-            PeriodRentalLabel.Text = $"Wypożyczenia: {rentCount}";
+            PeriodRentalLabel.Text = $"Rentals: {rentCount}";
 
             // Średni czas wypożyczenia
             var filteredReservations = reservations
@@ -232,13 +232,13 @@ namespace VroomRental.Forms
 
             averageRentalDuration = Math.Round(averageRentalDuration, 1);
 
-            MeanRentalTimeLabel.Text = $"Średni czas wypożyczenia: {averageRentalDuration}";
+            MeanRentalTimeLabel.Text = $"Average rental time: {averageRentalDuration}";
 
             // Nowi klienci
             int newCustomers = customers
                 .Where(c => c.RegistrationDate >= startDate && c.RegistrationDate <= endDate)
                 .Count();
-            NewCustomersLabel.Text = $"Nowi klienci: {newCustomers}"; ;
+            NewCustomersLabel.Text = $"New customers: {newCustomers}"; ;
 
             // Najpopularniejsza marka w okresie
             string? topBrand = reservations
@@ -304,15 +304,15 @@ namespace VroomRental.Forms
                 .OrderBy(g => g.Count)
                 .ToList();
 
-            var plotModel = new PlotModel() { Title = "Opcje dodatkowe" };
+            var plotModel = new PlotModel() { Title = "Additional Options" };
             var categoryAxis = new CategoryAxis { Position = AxisPosition.Left };
             categoryAxis.Labels.AddRange(additionalOptions.Select(g => g.Name));
             plotModel.Axes.Add(categoryAxis);
 
-            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Liczba", Minimum = 0, MajorStep = 1 };
+            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Number", Minimum = 0, MajorStep = 1 };
             plotModel.Axes.Add(valueAxis);
 
-            var columnSeries = new BarSeries { Title = "Opcje dodatkowe" };
+            var columnSeries = new BarSeries { Title = "Additional Options" };
             foreach (var option in additionalOptions)
             {
                 columnSeries.Items.Add(new BarItem(option.Count));
@@ -337,15 +337,15 @@ namespace VroomRental.Forms
                 .OrderBy(g => g.Count)
                 .ToList();
 
-            var plotModel = new PlotModel() { Title = "Rodzaje paliwa" };
+            var plotModel = new PlotModel() { Title = "Fuel type" };
             var categoryAxis = new CategoryAxis { Position = AxisPosition.Left };
             categoryAxis.Labels.AddRange(fuelTypeCounts.Select(g => g.FuelType));
             plotModel.Axes.Add(categoryAxis);
 
-            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Liczba", Minimum = 0, MajorStep = 1 };
+            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Number", Minimum = 0, MajorStep = 1 };
             plotModel.Axes.Add(valueAxis);
 
-            var columnSeries = new BarSeries { Title = "Rodzaje paliwa" };
+            var columnSeries = new BarSeries { Title = "Fuel type" };
             foreach (var fuelType in fuelTypeCounts)
             {
                 columnSeries.Items.Add(new BarItem(fuelType.Count));
@@ -370,15 +370,15 @@ namespace VroomRental.Forms
                 .OrderBy(g => g.Count)
                 .ToList();
 
-            var plotModel = new PlotModel() { Title = "Rodzaj samochodu" };
+            var plotModel = new PlotModel() { Title = "Body type" };
             var categoryAxis = new CategoryAxis { Position = AxisPosition.Left };
             categoryAxis.Labels.AddRange(bodyTypeCounts.Select(g => g.BodyType));
             plotModel.Axes.Add(categoryAxis);
 
-            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Liczba", Minimum = 0, MajorStep = 1 };
+            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Number", Minimum = 0, MajorStep = 1 };
             plotModel.Axes.Add(valueAxis);
 
-            var columnSeries = new BarSeries { Title = "Rodzaj samochodu" };
+            var columnSeries = new BarSeries { Title = "Body type" };
             foreach (var bodyType in bodyTypeCounts)
             {
                 columnSeries.Items.Add(new BarItem(bodyType.Count));
@@ -403,15 +403,15 @@ namespace VroomRental.Forms
                 .OrderBy(g => g.Count)
                 .ToList();
 
-            var plotModel = new PlotModel() { Title = "Topowe marki" };
+            var plotModel = new PlotModel() { Title = "Top brands" };
             var categoryAxis = new CategoryAxis { Position = AxisPosition.Left };
             categoryAxis.Labels.AddRange(topBrands.Select(g => g.Brand));
             plotModel.Axes.Add(categoryAxis);
 
-            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Liczba", Minimum = 0, MajorStep = 1 };
+            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Number", Minimum = 0, MajorStep = 1 };
             plotModel.Axes.Add(valueAxis);
 
-            var columnSeries = new BarSeries { Title = "Topowe marki" };
+            var columnSeries = new BarSeries { Title = "Top brands" };
             foreach (var brand in topBrands)
             {
                 columnSeries.Items.Add(new BarItem(brand.Count));
@@ -436,15 +436,15 @@ namespace VroomRental.Forms
                 .OrderBy(g => g.Count)
                 .ToList();
 
-            var plotModel = new PlotModel() { Title = "Topowe samochody" };
+            var plotModel = new PlotModel() { Title = "Top cars" };
             var categoryAxis = new CategoryAxis { Position = AxisPosition.Left };
             categoryAxis.Labels.AddRange(topCars.Select(g => g.CarName));
             plotModel.Axes.Add(categoryAxis);
 
-            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Liczba", Minimum = 0, MajorStep = 1 };
+            var valueAxis = new LinearAxis { Position = AxisPosition.Bottom, Title = "Number", Minimum = 0, MajorStep = 1 };
             plotModel.Axes.Add(valueAxis);
 
-            var columnSeries = new BarSeries { Title = "Topowe samochody" };
+            var columnSeries = new BarSeries { Title = "Top cars" };
             foreach (var car in topCars)
             {
                 columnSeries.Items.Add(new BarItem(car.Count));
@@ -461,7 +461,7 @@ namespace VroomRental.Forms
                 .Where(p => p.PaymentDate.HasValue && p.PaymentDate.Value.Date >= startDate && p.PaymentDate.Value.Date <= endDate)
                 .ToList();
 
-            var plotModel = new PlotModel() { Title = "Metody płatności" };
+            var plotModel = new PlotModel() { Title = "Payment methods" };
             PieSeries paymentPlot = new() { InsideLabelPosition = 0.5, AngleSpan = 360, StartAngle = 0, FontSize = 25 };
             paymentPlot.Slices.Add(new PieSlice("Blik", payments.Where(p => p.PaymentMethod == PaymentMethod.Card).Count()) { Fill = OxyColor.FromRgb(0, 255, 0) }); // Zielony
             paymentPlot.Slices.Add(new PieSlice("Gotówka", payments.Where(p => p.PaymentMethod == PaymentMethod.Cash).Count()) { Fill = OxyColor.FromRgb(255, 255, 0) }); // Żółty

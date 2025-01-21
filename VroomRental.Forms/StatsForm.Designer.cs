@@ -177,7 +177,7 @@
             PaymentTypePlotButton.Name = "PaymentTypePlotButton";
             PaymentTypePlotButton.Size = new Size(393, 63);
             PaymentTypePlotButton.TabIndex = 17;
-            PaymentTypePlotButton.Text = "Rodzaj płatności";
+            PaymentTypePlotButton.Text = "Payment Method";
             PaymentTypePlotButton.UseVisualStyleBackColor = true;
             PaymentTypePlotButton.Click += PaymentTypePlotButton_Click;
             // 
@@ -188,7 +188,7 @@
             PopularCarsPlotButton.Name = "PopularCarsPlotButton";
             PopularCarsPlotButton.Size = new Size(393, 63);
             PopularCarsPlotButton.TabIndex = 16;
-            PopularCarsPlotButton.Text = "Popularne auta";
+            PopularCarsPlotButton.Text = "Popular cars";
             PopularCarsPlotButton.UseVisualStyleBackColor = true;
             PopularCarsPlotButton.Click += PopularCarsPlotButton_Click;
             // 
@@ -199,7 +199,7 @@
             PopularBrandsPlotButton.Name = "PopularBrandsPlotButton";
             PopularBrandsPlotButton.Size = new Size(393, 63);
             PopularBrandsPlotButton.TabIndex = 15;
-            PopularBrandsPlotButton.Text = "Popularne marki";
+            PopularBrandsPlotButton.Text = "Popular brands";
             PopularBrandsPlotButton.UseVisualStyleBackColor = true;
             PopularBrandsPlotButton.Click += PopularBrandsPlotButton_Click;
             // 
@@ -210,7 +210,7 @@
             CarTypePlotButton.Name = "CarTypePlotButton";
             CarTypePlotButton.Size = new Size(393, 63);
             CarTypePlotButton.TabIndex = 14;
-            CarTypePlotButton.Text = "Rodzaj auta";
+            CarTypePlotButton.Text = "Body Type";
             CarTypePlotButton.UseVisualStyleBackColor = true;
             CarTypePlotButton.Click += CarTypePlotButton_Click;
             // 
@@ -221,7 +221,7 @@
             FuelTypePlotButton.Name = "FuelTypePlotButton";
             FuelTypePlotButton.Size = new Size(393, 63);
             FuelTypePlotButton.TabIndex = 13;
-            FuelTypePlotButton.Text = "Rodzaj paliwa";
+            FuelTypePlotButton.Text = "Fuel Type";
             FuelTypePlotButton.UseVisualStyleBackColor = true;
             FuelTypePlotButton.Click += FuelTypePlotButton_Click;
             // 
@@ -232,7 +232,7 @@
             OptionsPlotButton.Name = "OptionsPlotButton";
             OptionsPlotButton.Size = new Size(393, 63);
             OptionsPlotButton.TabIndex = 12;
-            OptionsPlotButton.Text = "Opcje dodatkowe";
+            OptionsPlotButton.Text = "Add. Options";
             OptionsPlotButton.UseVisualStyleBackColor = true;
             OptionsPlotButton.Click += OptionsPlotButton_Click;
             // 
@@ -325,9 +325,9 @@
             ReportLabel.Font = new Font("Segoe UI", 25F);
             ReportLabel.Location = new Point(21, 21);
             ReportLabel.Name = "ReportLabel";
-            ReportLabel.Size = new Size(353, 57);
+            ReportLabel.Size = new Size(331, 57);
             ReportLabel.TabIndex = 7;
-            ReportLabel.Text = "Wygeneruj raport";
+            ReportLabel.Text = "Generate Report";
             // 
             // PeriodReportButton
             // 
@@ -336,7 +336,7 @@
             PeriodReportButton.Name = "PeriodReportButton";
             PeriodReportButton.Size = new Size(174, 63);
             PeriodReportButton.TabIndex = 6;
-            PeriodReportButton.Text = "Okres";
+            PeriodReportButton.Text = "Period";
             PeriodReportButton.UseVisualStyleBackColor = true;
             PeriodReportButton.Click += PeriodReportButton_Click;
             // 
@@ -347,7 +347,7 @@
             DailyReportButton.Name = "DailyReportButton";
             DailyReportButton.Size = new Size(174, 63);
             DailyReportButton.TabIndex = 5;
-            DailyReportButton.Text = "Dzień";
+            DailyReportButton.Text = "Day";
             DailyReportButton.UseVisualStyleBackColor = true;
             DailyReportButton.Click += DailyReportButton_Click;
             // 
@@ -385,20 +385,20 @@
             TodayPaymentsLabel.Font = new Font("Segoe UI", 25F);
             TodayPaymentsLabel.Location = new Point(15, 388);
             TodayPaymentsLabel.Name = "TodayPaymentsLabel";
-            TodayPaymentsLabel.Size = new Size(436, 57);
+            TodayPaymentsLabel.Size = new Size(311, 57);
             TodayPaymentsLabel.TabIndex = 7;
-            TodayPaymentsLabel.Text = "Zapłacono dzisiaj 0,00";
+            TodayPaymentsLabel.Text = "Paid today 0,00";
             TodayPaymentsLabel.TextAlign = ContentAlignment.TopRight;
             // 
             // TodayRentalsLabel
             // 
             TodayRentalsLabel.AutoSize = true;
             TodayRentalsLabel.Font = new Font("Segoe UI", 25F);
-            TodayRentalsLabel.Location = new Point(594, 277);
+            TodayRentalsLabel.Location = new Point(682, 287);
             TodayRentalsLabel.Name = "TodayRentalsLabel";
-            TodayRentalsLabel.Size = new Size(503, 57);
+            TodayRentalsLabel.Size = new Size(305, 57);
             TodayRentalsLabel.TabIndex = 6;
-            TodayRentalsLabel.Text = "Dzisiejsze wypożyczenia 0";
+            TodayRentalsLabel.Text = "Today rentals 0";
             TodayRentalsLabel.TextAlign = ContentAlignment.TopRight;
             // 
             // DailyPlotView
@@ -416,19 +416,19 @@
             // 
             LateReturnLabel.AutoSize = true;
             LateReturnLabel.Font = new Font("Segoe UI", 25F);
-            LateReturnLabel.Location = new Point(707, 388);
+            LateReturnLabel.Location = new Point(697, 391);
             LateReturnLabel.Name = "LateReturnLabel";
-            LateReturnLabel.Size = new Size(390, 57);
+            LateReturnLabel.Size = new Size(180, 57);
             LateReturnLabel.TabIndex = 4;
-            LateReturnLabel.Text = "Zalegające zwroty 0";
+            LateReturnLabel.Text = "Delays 0";
             LateReturnLabel.TextAlign = ContentAlignment.TopRight;
             // 
             // RepairCarsProgressBar
             // 
-            RepairCarsProgressBar.Location = new Point(690, 155);
+            RepairCarsProgressBar.Location = new Point(570, 155);
             RepairCarsProgressBar.MarqueeAnimationSpeed = 0;
             RepairCarsProgressBar.Name = "RepairCarsProgressBar";
-            RepairCarsProgressBar.Size = new Size(407, 63);
+            RepairCarsProgressBar.Size = new Size(527, 63);
             RepairCarsProgressBar.Step = 1;
             RepairCarsProgressBar.TabIndex = 3;
             // 
@@ -438,9 +438,9 @@
             RepairCarLabel.Font = new Font("Segoe UI", 25F);
             RepairCarLabel.Location = new Point(15, 155);
             RepairCarLabel.Name = "RepairCarLabel";
-            RepairCarLabel.Size = new Size(538, 57);
+            RepairCarLabel.Size = new Size(345, 57);
             RepairCarLabel.TabIndex = 2;
-            RepairCarLabel.Text = "Samochody w naprawie 0/0";
+            RepairCarLabel.Text = "Cars in repair 0/0";
             RepairCarLabel.TextAlign = ContentAlignment.TopRight;
             // 
             // AvailableCarsLabel
@@ -449,17 +449,17 @@
             AvailableCarsLabel.Font = new Font("Segoe UI", 25F);
             AvailableCarsLabel.Location = new Point(15, 48);
             AvailableCarsLabel.Name = "AvailableCarsLabel";
-            AvailableCarsLabel.Size = new Size(503, 57);
+            AvailableCarsLabel.Size = new Size(349, 57);
             AvailableCarsLabel.TabIndex = 1;
-            AvailableCarsLabel.Text = "Dostępne samochody 0/0";
+            AvailableCarsLabel.Text = "Available cars 0/0";
             AvailableCarsLabel.TextAlign = ContentAlignment.TopRight;
             // 
             // CarsAvaiableProgressBar
             // 
-            CarsAvaiableProgressBar.Location = new Point(690, 48);
+            CarsAvaiableProgressBar.Location = new Point(570, 48);
             CarsAvaiableProgressBar.MarqueeAnimationSpeed = 0;
             CarsAvaiableProgressBar.Name = "CarsAvaiableProgressBar";
-            CarsAvaiableProgressBar.Size = new Size(407, 63);
+            CarsAvaiableProgressBar.Size = new Size(527, 63);
             CarsAvaiableProgressBar.Step = 1;
             CarsAvaiableProgressBar.TabIndex = 0;
             // 

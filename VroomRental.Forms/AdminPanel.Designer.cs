@@ -152,7 +152,7 @@
             LogoutButton.Name = "LogoutButton";
             LogoutButton.Size = new Size(587, 106);
             LogoutButton.TabIndex = 5;
-            LogoutButton.Text = "Wyloguj";
+            LogoutButton.Text = "Logout";
             LogoutButton.UseVisualStyleBackColor = true;
             LogoutButton.Click += LogoutButton_Click;
             // 

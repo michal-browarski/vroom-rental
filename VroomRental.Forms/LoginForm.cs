@@ -27,7 +27,7 @@ namespace VroomRental.Forms
         {
             if (!VerifyPassword(PasswordMaskedTextBox.Text, LoginTextBox.Text))
             {
-                MessageBox.Show("Nieprawidłowy login lub hasło. Spróbuj ponownie");
+                MessageBox.Show("Incorrect login or password. Try again.");
             }
             else
             {
