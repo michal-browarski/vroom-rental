@@ -44,7 +44,6 @@
             label9 = new Label();
             dataGridCustomers = new DataGridView();
             groupBox2 = new GroupBox();
-            groupBox3 = new GroupBox();
             AddButton = new Button();
             ResetButton = new Button();
             RemoveButton = new Button();
@@ -67,11 +66,9 @@
             label1 = new Label();
             FirstNameTextBox = new TextBox();
             BrandLabel = new Label();
-            ActionsGroupBox = new GroupBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridCustomers).BeginInit();
             groupBox2.SuspendLayout();
-            groupBox3.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox1
@@ -232,7 +229,6 @@
             // 
             // groupBox2
             // 
-            groupBox2.Controls.Add(groupBox3);
             groupBox2.Controls.Add(ZipCodeTextBox);
             groupBox2.Controls.Add(label8);
             groupBox2.Controls.Add(CityTextBox);
@@ -251,7 +247,6 @@
             groupBox2.Controls.Add(label1);
             groupBox2.Controls.Add(FirstNameTextBox);
             groupBox2.Controls.Add(BrandLabel);
-            groupBox2.Controls.Add(ActionsGroupBox);
             groupBox2.Font = new Font("Segoe UI", 25F);
             groupBox2.Location = new Point(1413, 12);
             groupBox2.Name = "groupBox2";
@@ -259,22 +254,6 @@
             groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "Customer Details";
-            // 
-            // groupBox3
-            // 
-            groupBox3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            groupBox3.Controls.Add(AddButton);
-            groupBox3.Controls.Add(ResetButton);
-            groupBox3.Controls.Add(RemoveButton);
-            groupBox3.Controls.Add(EditButton);
-            groupBox3.FlatStyle = FlatStyle.Flat;
-            groupBox3.Location = new Point(34, 643);
-            groupBox3.Margin = new Padding(3, 2, 3, 2);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Padding = new Padding(3, 2, 3, 2);
-            groupBox3.Size = new Size(757, 298);
-            groupBox3.TabIndex = 26;
-            groupBox3.TabStop = false;
             // 
             // AddButton
             // 
@@ -491,18 +470,6 @@
             BrandLabel.TabIndex = 27;
             BrandLabel.Text = "First Name";
             // 
-            // ActionsGroupBox
-            // 
-            ActionsGroupBox.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            ActionsGroupBox.FlatStyle = FlatStyle.Flat;
-            ActionsGroupBox.Location = new Point(607, 1256);
-            ActionsGroupBox.Margin = new Padding(3, 2, 3, 2);
-            ActionsGroupBox.Name = "ActionsGroupBox";
-            ActionsGroupBox.Padding = new Padding(3, 2, 3, 2);
-            ActionsGroupBox.Size = new Size(362, 193);
-            ActionsGroupBox.TabIndex = 25;
-            ActionsGroupBox.TabStop = false;
-            // 
             // CustomersForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -520,7 +487,6 @@
             ((System.ComponentModel.ISupportInitialize)dataGridCustomers).EndInit();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
-            groupBox3.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -559,8 +525,6 @@
         private Label label1;
         private TextBox FirstNameTextBox;
         private Label BrandLabel;
-        private GroupBox ActionsGroupBox;
-        private GroupBox groupBox3;
         private Button AddButton;
         private Button ResetButton;
         private Button RemoveButton;
