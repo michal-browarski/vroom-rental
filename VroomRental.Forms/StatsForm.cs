@@ -464,7 +464,7 @@ namespace VroomRental.Forms
             var plotModel = new PlotModel() { Title = "Payment methods" };
             PieSeries paymentPlot = new() { InsideLabelPosition = 0.5, AngleSpan = 360, StartAngle = 0, FontSize = 25 };
             paymentPlot.Slices.Add(new PieSlice("Blik", payments.Where(p => p.PaymentMethod == PaymentMethod.Card).Count()) { Fill = OxyColor.FromRgb(0, 255, 0) }); // Zielony
-            paymentPlot.Slices.Add(new PieSlice("Gotówka", payments.Where(p => p.PaymentMethod == PaymentMethod.Cash).Count()) { Fill = OxyColor.FromRgb(255, 255, 0) }); // Żółty
+            paymentPlot.Slices.Add(new PieSlice("Cash", payments.Where(p => p.PaymentMethod == PaymentMethod.Cash).Count()) { Fill = OxyColor.FromRgb(255, 255, 0) }); // Żółty
             plotModel.Series.Add(paymentPlot);
             PeriodPlotView.Model = plotModel;
             selectedButton = PaymentTypePlotButton;
