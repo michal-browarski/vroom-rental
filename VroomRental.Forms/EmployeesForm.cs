@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Security.Cryptography;
 using System.Text;
 using VroomRental.Backend.DB;
 using VroomRental.Backend.DB.QueryServices;
@@ -99,7 +100,7 @@ namespace VroomRental.Forms
                         LastName = LastNameTextBox.Text,
                         RoleId = roleId.Value, // Przypisanie ID roli
                         Login = LoginTextBox.Text,
-                        Password = HashPassword(PasswordTextBox.Text) // Konwersja hasła na hash
+                        Password = HashPassword(PasswordMaskedTextBox.Text) // Konwersja hasła na hash
                     };
 
                     _employeeService.AddEmployee(newEmployee);
@@ -135,17 +136,11 @@ namespace VroomRental.Forms
             return null; // Jeśli nazwa roli jest nieprawidłowa
         }
 
-        private string HashPassword(string password)
+        private byte[] HashPassword(string password)
         {
-            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            using (SHA256 sha256 = SHA256.Create())
             {
-                byte[] bytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
-                StringBuilder builder = new StringBuilder();
-                foreach (var b in bytes)
-                {
-                    builder.Append(b.ToString("x2")); // Konwertuj każdy bajt do formatu heksadecymalnego
-                }
-                return builder.ToString();
+                return sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
             }
         }
 
@@ -170,7 +165,7 @@ namespace VroomRental.Forms
                         selectedEmployee.LastName = LastNameTextBox.Text;
                         selectedEmployee.RoleId = roleId.Value; // Przypisanie ID roli
                         selectedEmployee.Login = LoginTextBox.Text;
-                        selectedEmployee.Password = HashPassword(PasswordTextBox.Text); // Zakładamy, że hasło jest wprowadzone jako plain text
+                        selectedEmployee.Password = HashPassword(PasswordMaskedTextBox.Text); // Zakładamy, że hasło jest wprowadzone jako plain text
 
                         _employeeService.EditEmployee(selectedEmployee);
                         LoadEmployees();
@@ -230,7 +225,7 @@ namespace VroomRental.Forms
             LastNameTextBox.Clear();
             RoleTextBox.Clear();
             LoginTextBox.Clear();
-            PasswordTextBox.Clear();
+            PasswordMaskedTextBox.Clear();
         }
 
         private bool IsInputValid()
@@ -239,7 +234,7 @@ namespace VroomRental.Forms
                    !string.IsNullOrWhiteSpace(LastNameTextBox.Text) &&
                    !string.IsNullOrWhiteSpace(RoleTextBox.Text) &&
                    !string.IsNullOrWhiteSpace(LoginTextBox.Text) &&
-                   !string.IsNullOrWhiteSpace(PasswordTextBox.Text);
+                   !string.IsNullOrWhiteSpace(PasswordMaskedTextBox.Text);
         }
 
         private void SearchEmployees()
@@ -306,7 +301,7 @@ namespace VroomRental.Forms
                     FirstNameTextBox.Text = selectedEmployee.FirstName;
                     LastNameTextBox.Text = selectedEmployee.LastName;
                     LoginTextBox.Text = selectedEmployee.Login;
-                    PasswordTextBox.Text = selectedEmployee.Password;
+                    PasswordMaskedTextBox.Text = "should-not-see";
                     RoleTextBox.Text = selectedEmployee.Role;
                 }
             }

@@ -50,18 +50,11 @@ namespace VroomRental.Backend.DB.QueryServices
                     { "@LastName", employee.LastName },
                     { "@Role", employee.RoleId },
                     { "@Login", employee.Login },
-                    { "@Password", ConvertPasswordToBinary(employee.Password) }
+                    { "@Password", employee.Password }
                 };
 
             _databaseService.ExecuteNonQuery(query, parameters);
         }
-
-        private byte[] ConvertPasswordToBinary(string password)
-        {
-            // Konwertujemy hasło na byte[] za pomocą UTF-8
-            return System.Text.Encoding.UTF8.GetBytes(password);
-        }
-
 
         // Edytowanie istniejącego pracownika
         public void EditEmployee(Employee employee)
@@ -81,7 +74,7 @@ namespace VroomRental.Backend.DB.QueryServices
             { "@LastName", employee.LastName },
             { "@Role", employee.RoleId },
             { "@Login", employee.Login },
-            { "@Password", ConvertPasswordToBinary(employee.Password)  },
+            { "@Password", employee.Password  },
             { "@EmployeeId", employee.Id }
         };
 

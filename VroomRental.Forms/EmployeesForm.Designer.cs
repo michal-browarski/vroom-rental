@@ -57,6 +57,7 @@
             label1 = new Label();
             FirstNameTextBox = new TextBox();
             BrandLabel = new Label();
+            PasswordMaskedTextBox = new MaskedTextBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridEmployees).BeginInit();
             groupBox2.SuspendLayout();
@@ -197,6 +198,7 @@
             // 
             // groupBox2
             // 
+            groupBox2.Controls.Add(PasswordMaskedTextBox);
             groupBox2.Controls.Add(groupBox4);
             groupBox2.Controls.Add(PasswordTextBox);
             groupBox2.Controls.Add(label4);
@@ -362,6 +364,14 @@
             BrandLabel.TabIndex = 27;
             BrandLabel.Text = "First Name";
             // 
+            // PasswordMaskedTextBox
+            // 
+            PasswordMaskedTextBox.Location = new Point(386, 561);
+            PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
+            PasswordMaskedTextBox.Size = new Size(507, 63);
+            PasswordMaskedTextBox.TabIndex = 46;
+            PasswordMaskedTextBox.UseSystemPasswordChar = true;
+            // 
             // EmployeesForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -414,5 +424,6 @@
         private Button ResetButton;
         private Button RemoveButton;
         private Button EditButton;
+        private MaskedTextBox PasswordMaskedTextBox;
     }
 }
