@@ -42,12 +42,12 @@
             label9 = new Label();
             dataGridEmployees = new DataGridView();
             groupBox2 = new GroupBox();
+            PasswordMaskedTextBox = new MaskedTextBox();
             groupBox4 = new GroupBox();
             AddButton = new Button();
             ResetButton = new Button();
             RemoveButton = new Button();
             EditButton = new Button();
-            PasswordTextBox = new TextBox();
             label4 = new Label();
             LoginTextBox = new TextBox();
             label3 = new Label();
@@ -57,7 +57,6 @@
             label1 = new Label();
             FirstNameTextBox = new TextBox();
             BrandLabel = new Label();
-            PasswordMaskedTextBox = new MaskedTextBox();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridEmployees).BeginInit();
             groupBox2.SuspendLayout();
@@ -200,7 +199,6 @@
             // 
             groupBox2.Controls.Add(PasswordMaskedTextBox);
             groupBox2.Controls.Add(groupBox4);
-            groupBox2.Controls.Add(PasswordTextBox);
             groupBox2.Controls.Add(label4);
             groupBox2.Controls.Add(LoginTextBox);
             groupBox2.Controls.Add(label3);
@@ -219,6 +217,14 @@
             groupBox2.TabIndex = 4;
             groupBox2.TabStop = false;
             groupBox2.Text = "Employee Details";
+            // 
+            // PasswordMaskedTextBox
+            // 
+            PasswordMaskedTextBox.Location = new Point(382, 478);
+            PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
+            PasswordMaskedTextBox.Size = new Size(507, 63);
+            PasswordMaskedTextBox.TabIndex = 46;
+            PasswordMaskedTextBox.UseSystemPasswordChar = true;
             // 
             // groupBox4
             // 
@@ -273,14 +279,6 @@
             EditButton.TabIndex = 20;
             EditButton.Text = "Edit";
             EditButton.UseVisualStyleBackColor = true;
-            // 
-            // PasswordTextBox
-            // 
-            PasswordTextBox.Font = new Font("Segoe UI", 25F);
-            PasswordTextBox.Location = new Point(382, 465);
-            PasswordTextBox.Name = "PasswordTextBox";
-            PasswordTextBox.Size = new Size(507, 63);
-            PasswordTextBox.TabIndex = 36;
             // 
             // label4
             // 
@@ -364,14 +362,6 @@
             BrandLabel.TabIndex = 27;
             BrandLabel.Text = "First Name";
             // 
-            // PasswordMaskedTextBox
-            // 
-            PasswordMaskedTextBox.Location = new Point(386, 561);
-            PasswordMaskedTextBox.Name = "PasswordMaskedTextBox";
-            PasswordMaskedTextBox.Size = new Size(507, 63);
-            PasswordMaskedTextBox.TabIndex = 46;
-            PasswordMaskedTextBox.UseSystemPasswordChar = true;
-            // 
             // EmployeesForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -409,7 +399,6 @@
         private Label label9;
         private DataGridView dataGridEmployees;
         private GroupBox groupBox2;
-        private TextBox PasswordTextBox;
         private Label label4;
         private TextBox LoginTextBox;
         private Label label3;
