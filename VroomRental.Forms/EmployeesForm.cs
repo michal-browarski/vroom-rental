@@ -100,7 +100,7 @@ namespace VroomRental.Forms
                         LastName = LastNameTextBox.Text,
                         RoleId = roleId.Value, // Przypisanie ID roli
                         Login = LoginTextBox.Text,
-                        Password = HashPassword(PasswordMaskedTextBox.Text) // Konwersja hasła na hash
+                        Password = HashPassword(PasswordMaskedTextBox.Text).ToString() // Konwersja hasła na hash
                     };
 
                     _employeeService.AddEmployee(newEmployee);
@@ -165,7 +165,7 @@ namespace VroomRental.Forms
                         selectedEmployee.LastName = LastNameTextBox.Text;
                         selectedEmployee.RoleId = roleId.Value; // Przypisanie ID roli
                         selectedEmployee.Login = LoginTextBox.Text;
-                        selectedEmployee.Password = HashPassword(PasswordMaskedTextBox.Text); // Zakładamy, że hasło jest wprowadzone jako plain text
+                        selectedEmployee.Password = HashPassword(PasswordMaskedTextBox.Text).ToString(); // Zakładamy, że hasło jest wprowadzone jako plain text
 
                         _employeeService.EditEmployee(selectedEmployee);
                         LoadEmployees();
